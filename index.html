@@ -14,22 +14,311 @@
     <link rel="apple-touch-icon" href="./icon-192.png">
 
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-    background:radial-gradient(circle at top,#0f172a 0,#020617 55%,#000 100%);
-    color:#e5e7eb;
+        *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
 }
-
+body{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    background:radial-gradient(circle at top,#0f172a 0,#020617 55%,#000 100%);
+    color:#e5e7eb;
+    min-height:100vh;
+    width:100%;
+    overflow-x:hidden;
+}
 .app{
     width:100%;
     max-width:430px;
     margin:0 auto;
     padding:24px 12px 40px 12px;
-    box-sizing:border-box;
+    display:block;
 }
+h1{
+    text-align:center;
+    color:#4ade80;
+    margin-top:12px;
+    margin-bottom:6px;
+    font-size:26px;
+    letter-spacing:2px;
+    font-weight:800;
+}
+.card{
+    background:rgba(15,23,42,0.96);
+    border-radius:16px;
+    padding:16px;
+    margin-bottom:12px;
+    box-shadow:0 12px 35px rgba(0,0,0,0.55);
+    border:1px solid rgba(148,163,184,0.15);
+    width:100%;
+    display:block;
+}
+label{
+    font-size:11px;
+    color:#94a3b8;
+    display:block;
+    margin-bottom:3px;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+}
+input,select{
+    width:100%;
+    padding:9px 11px;
+    background:rgba(15,23,42,0.95);
+    border:1px solid #1e293b;
+    color:#e5e7eb;
+    border-radius:10px;
+    font-size:13px;
+    display:block;
+}
+.btn{
+    width:100%;
+    padding:13px;
+    background:linear-gradient(135deg,#4ade80,#22c55e);
+    color:#020617;
+    border:none;
+    border-radius:999px;
+    font-weight:600;
+    font-size:14px;
+    cursor:pointer;
+    box-shadow:0 8px 18px rgba(34,197,94,0.35);
+    transition:transform .12s ease,box-shadow .12s ease;
+    display:block;
+    margin-top:8px;
+}
+.btn:active{
+    opacity:.85;
+    transform:translateY(0);
+}
+.btn-online{
+    width:100%;
+    padding:10px;
+    background:rgba(15,23,42,0.9);
+    border:1px solid #38bdf8;
+    color:#e0f2fe;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:500;
+    cursor:pointer;
+    margin-bottom:6px;
+    display:block;
+}
+.btn-save-food{
+    width:100%;
+    padding:9px;
+    background:rgba(24,24,27,0.9);
+    border:1px dashed #facc15;
+    color:#facc15;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:500;
+    cursor:pointer;
+    margin-bottom:8px;
+    display:none;
+}
+.btn-clear{
+    margin-top:10px;
+    background:rgba(24,24,27,0.95);
+    border:1px solid #f97373;
+    color:#fecaca;
+    padding:9px;
+    border-radius:12px;
+    width:100%;
+    font-size:12px;
+    cursor:pointer;
+    display:block;
+}
+.bar{
+    height:7px;
+    background:rgba(15,23,42,0.95);
+    border-radius:999px;
+    margin:6px 0;
+    overflow:hidden;
+    border:1px solid #1f2937;
+    width:100%;
+}
+.bar-fill{
+    height:100%;
+    border-radius:999px;
+    transition:width .35s ease;
+}
+.meal-tabs{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+    margin-bottom:10px;
+}
+.meal-tab{
+    flex:1;
+    min-width:70px;
+    padding:7px 4px;
+    background:#0f172a;
+    border:1px solid #1f2937;
+    color:#9ca3af;
+    border-radius:10px;
+    font-size:11px;
+    font-weight:600;
+    cursor:pointer;
+    text-align:center;
+}
+.meal-tab.on{
+    background:#4ade80;
+    color:#020617;
+    border-color:#4ade80;
+}
+.food-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:8px 10px;
+    background:#0f172a;
+    border-radius:10px;
+    margin-bottom:6px;
+    border:1px solid #1f2937;
+}
+.food-item button{
+    background:none;
+    border:none;
+    color:#f87171;
+    font-size:16px;
+    cursor:pointer;
+    flex-shrink:0;
+    margin-left:8px;
+}
+.qty-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin:8px 0;
+}
+.qty-btn{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    border:2px solid #4ade80;
+    background:rgba(15,23,42,0.9);
+    color:#bbf7d0;
+    font-size:20px;
+    font-weight:bold;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+.water-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    margin:10px 0;
+}
+.water-btn{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:2px solid #38bdf8;
+    background:rgba(15,23,42,0.95);
+    color:#e0f2fe;
+    font-size:22px;
+    font-weight:bold;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+.water-cups{
+    display:flex;
+    flex-wrap:wrap;
+    gap:4px;
+    margin:8px 0;
+    justify-content:center;
+}
+.water-cup{opacity:.2;font-size:20px;}
+.water-cup.full{opacity:1;}
+.nav-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    margin-bottom:8px;
+}
+.nav-btn{
+    background:rgba(15,23,42,0.95);
+    border:1px solid #4ade80;
+    color:#bbf7d0;
+    border-radius:999px;
+    padding:6px 14px;
+    font-size:12px;
+    cursor:pointer;
+}
+.section-sep{
+    border:none;
+    border-top:1px solid #1f2937;
+    margin:12px 0;
+}
+.bank-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    cursor:pointer;
+    padding:4px 0;
+}
+.my-food-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:6px 8px;
+    background:#0f172a;
+    border-radius:8px;
+    margin-bottom:4px;
+    font-size:12px;
+}
+.my-food-row span{color:#9ca3af;font-size:11px;}
+.my-food-row button{
+    background:none;
+    border:none;
+    color:#f87171;
+    cursor:pointer;
+    font-size:14px;
+}
+.quick-list{
+    max-height:200px;
+    overflow-y:auto;
+    margin-bottom:8px;
+}
+.quick-item{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 4px;
+    border-bottom:1px solid #1f2937;
+}
+.quick-item label{
+    text-transform:none;
+    font-size:12px;
+    color:#e5e7eb;
+    cursor:pointer;
+    margin:0;
+}
+.week-row{
+    display:flex;
+    justify-content:space-between;
+    font-size:11px;
+    padding:4px 0;
+    border-bottom:1px solid #1f2937;
+}
+.week-val{color:#e5e7eb;}
+.tag-ok{color:#4ade80;}
+.tag-low{color:#facc15;}
+.tag-high{color:#f87171;}
+.hidden{display:none!important;}
+#onlineStatus{font-size:11px;color:#9ca3af;margin-top:4px;min-height:16px;}
+#hint{font-size:11px;color:#4ade80;margin:4px 0;}
+#histNote{font-size:11px;color:#facc15;text-align:center;min-height:16px;margin-bottom:4px;}
+#navLabel{font-size:13px;color:#e5e7eb;font-weight:600;text-align:center;}
+#dayTitle{font-size:15px;font-weight:700;color:#4ade80;margin-bottom:8px;}
         h1{text-align:center;color:#4ade80;margin-bottom:16px;font-size:22px;letter-spacing:1px}
         .card{background:#111827;border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 4px 24px rgba(0,0,0,0.4)}
         .row{display:flex;gap:8px;margin-bottom:8px}
