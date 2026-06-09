@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#0f172a">
+<link rel="manifest" href="./manifest.json">
 <title>GogãoFitness</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -13,8 +14,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 h1{text-align:center;color:#4ade80;margin-top:12px;margin-bottom:6px;font-size:26px;letter-spacing:2px;font-weight:800}
 .card{background:rgba(15,23,42,0.96);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 12px 35px rgba(0,0,0,0.55);border:1px solid rgba(148,163,184,0.15);width:100%;display:block}
 label{font-size:11px;color:#94a3b8;display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:.03em}
-input,select{width:100%;padding:9px 11px;background:rgba(15,23,42,0.95);border:1px solid #1e293b;color:#e5e7eb;border-radius:10px;font-size:13px;display:block;margin-bottom:6px}
-.btn{width:100%;padding:13px;background:linear-gradient(135deg,#4ade80,#22c55e);color:#020617;border:none;border-radius:999px;font-weight:600;font-size:14px;cursor:pointer;box-shadow:0 8px 18px rgba(34,197,94,0.35);display:block;margin-top:8px}
+input,select{
+    width:100%;
+    padding:9px 11px;
+    background:rgba(15,23,42,0.95);
+    border:1px solid #1e293b;
+    color:#e5e7eb;
+    border-radius:10px;
+    font-size:13px;
+    display:block;
+    margin-bottom:6px;
+}
+
+/* deixa o select mais alto, jeito de lista */
+#foodSel{
+    height:120px;
+}.btn{width:100%;padding:13px;background:linear-gradient(135deg,#4ade80,#22c55e);color:#020617;border:none;border-radius:999px;font-weight:600;font-size:14px;cursor:pointer;box-shadow:0 8px 18px rgba(34,197,94,0.35);display:block;margin-top:8px}
 .btn:active{opacity:.85}
 .btn-sec{width:100%;padding:10px;background:rgba(15,23,42,0.9);border:1px solid #38bdf8;color:#e0f2fe;border-radius:999px;font-size:12px;font-weight:500;cursor:pointer;margin-bottom:6px;display:block}
 .btn-yellow{width:100%;padding:9px;background:rgba(24,24,27,0.9);border:1px dashed #facc15;color:#facc15;border-radius:999px;font-size:12px;font-weight:500;cursor:pointer;margin-bottom:8px;display:none}
@@ -48,6 +63,7 @@ input,select{width:100%;padding:9px 11px;background:rgba(15,23,42,0.95);border:1
 .tag-low{color:#facc15}
 .tag-high{color:#f87171}
 .hidden{display:none!important}
+#onlineStatus{font-size:11px;color:#9ca3af;margin-top:4px;min-height:16px}
 #hint{font-size:11px;color:#4ade80;margin:4px 0}
 #histNote{font-size:11px;color:#facc15;text-align:center;min-height:16px;margin-bottom:4px}
 #navLabel{font-size:13px;color:#e5e7eb;font-weight:600;text-align:center}
@@ -65,6 +81,7 @@ hr{border:none;border-top:1px solid #1f2937;margin:12px 0}
     </span>
   </p>
 
+  <!-- PESO & METAS -->
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
       <span style="font-size:13px;font-weight:600">⚖️ Peso & Metas</span>
@@ -72,21 +89,22 @@ hr{border:none;border-top:1px solid #1f2937;margin:12px 0}
     </div>
     <label>Peso atual (kg)</label>
     <input type="number" id="pesoAtual" placeholder="ex: 90">
-    <label>Peso objetivo (kg)</label>
+    <label>Peso meta (kg)</label>
     <input type="number" id="pesoMeta" placeholder="ex: 80">
-    <label>Fator proteína (g/kg)</label>
+    <label>Fator proteína (g/kg) — ex: 2</label>
     <input type="number" id="fatorProt" value="2" step="0.1">
     <button class="btn" onclick="calcProtFromPeso()">🧮 Calcular meta prot</button>
     <hr>
-    <label>Meta kcal</label>
+    <label>Meta calorias (kcal)</label>
     <input type="number" id="goalCal" value="2000">
     <label>Meta proteína (g)</label>
     <input type="number" id="goalProt" value="120">
     <label>Meta água (copos)</label>
     <input type="number" id="goalWater" value="8">
-    <button class="btn" onclick="saveGoals()">💾 Salvar</button>
+    <button class="btn" onclick="saveGoals()">💾 Salvar metas</button>
   </div>
 
+  <!-- NAVEGAÇÃO DE DATA -->
   <div class="card">
     <div class="nav-row">
       <button class="nav-btn" onclick="navDay(-1)">◀ Anterior</button>
@@ -97,6 +115,7 @@ hr{border:none;border-top:1px solid #1f2937;margin:12px 0}
     <div id="dayTitle">Hoje</div>
   </div>
 
+  <!-- RESUMO DO DIA -->
   <div class="card">
     <div style="font-size:13px;font-weight:600;margin-bottom:8px">📊 Resumo do dia</div>
     <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px">
@@ -109,6 +128,7 @@ hr{border:none;border-top:1px solid #1f2937;margin:12px 0}
     <div class="bar"><div class="bar-fill" id="protBar" style="width:0%;background:linear-gradient(90deg,#4ade80,#22c55e)"></div></div>
   </div>
 
+  <!-- ÁGUA -->
   <div class="card">
     <div style="font-size:13px;font-weight:600;margin-bottom:4px">💧 Água</div>
     <div class="water-row">
@@ -119,6 +139,7 @@ hr{border:none;border-top:1px solid #1f2937;margin:12px 0}
     <div class="water-cups" id="waterCups"></div>
   </div>
 
+  <!-- ADICIONAR ALIMENTO -->
   <div class="card" id="addCard">
     <div style="font-size:13px;font-weight:600;margin-bottom:8px">➕ Adicionar alimento</div>
     <div class="meal-tabs">
@@ -129,11 +150,11 @@ hr{border:none;border-top:1px solid #1f2937;margin:12px 0}
     </div>
     <label>Buscar alimento</label>
     <input type="text" id="foodSearch" placeholder="Digite para buscar..." oninput="filterFoods()">
-    <select id="foodSel" onchange="onFoodSel()">
+    <select id="foodSel" onchange="onFoodSel()" size="1">
       <option value="">— selecione —</option>
     </select>
     <div id="hint"></div>
-    <label>Nome</label>
+    <label>Nome (ou edite)</label>
     <input type="text" id="foodName" placeholder="Nome do alimento">
     <label>Calorias (kcal)</label>
     <input type="number" id="foodCal" placeholder="0">
@@ -149,6 +170,7 @@ hr{border:none;border-top:1px solid #1f2937;margin:12px 0}
     <button class="btn" onclick="addFood()">➕ Adicionar</button>
   </div>
 
+  <!-- SELEÇÃO RÁPIDA -->
   <div class="card">
     <div class="bank-header" onclick="toggleQuick()">
       <span style="font-size:13px;font-weight:600">⚡ Seleção rápida</span>
@@ -160,28 +182,37 @@ hr{border:none;border-top:1px solid #1f2937;margin:12px 0}
     </div>
   </div>
 
+  <!-- MEU BANCO -->
   <div class="card">
     <div class="bank-header" onclick="toggleBank()">
       <span style="font-size:13px;font-weight:600">⭐ Meu Banco de Alimentos <span id="bankCount"></span></span>
       <span id="bankArrow">▼</span>
     </div>
-    <div id="bankSection" class="hidden"></div>
+    <div id="bankSection" class="hidden" id="bankList"></div>
   </div>
 
+  <!-- LISTA DO DIA -->
   <div class="card">
     <div style="font-size:13px;font-weight:600;margin-bottom:8px">🍽 Alimentos do dia</div>
     <div id="foodList"></div>
     <button class="btn-red" onclick="clearDay()">🗑 Limpar dia</button>
   </div>
 
+  <!-- RESUMO 7 DIAS -->
   <div class="card">
     <div style="font-size:13px;font-weight:600;margin-bottom:8px">📅 Últimos 7 dias</div>
     <div id="weekSummary"></div>
   </div>
 
-</div>
+</div><!-- fim .app -->
 
 <script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js').catch(console.error);
+  });
+}
+
 const DB = [
   {n:'Ovo cozido',cal:70,prot:6},{n:'Pão francês',cal:140,prot:5},
   {n:'Banana',cal:105,prot:1.3},{n:'Aveia (2 col)',cal:80,prot:3},
@@ -198,152 +229,363 @@ const DB = [
 ];
 
 const M = ['Café da manhã','Almoço','Lanche','Jantar'];
-let meal='Café da manhã',goals={cal:2000,prot:120,water:8},foods=[],myFoods=[],qty=1,water=0;
-let pesoMetaData={pesoAtual:null,pesoMeta:null,fatorProt:2},viewDate=new Date();
+let meal = 'Café da manhã';
+let goals = {cal:2000, prot:120, water:8};
+let foods = [];
+let myFoods = [];
+let qty = 1;
+let water = 0;
+let pesoMetaData = {pesoAtual:null, pesoMeta:null, fatorProt:2};
+let viewDate = new Date();
 
-function dateKey(d){const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),dy=String(d.getDate()).padStart(2,'0');return`${y}-${m}-${dy}`;}
-function isToday(d){return dateKey(d)===dateKey(new Date());}
-function fmtLabel(d){if(isToday(d))return'📅 Hoje';return d.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit'});}
+function dateKey(d){
+  const y=d.getFullYear(), m=String(d.getMonth()+1).padStart(2,'0'), dy=String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${dy}`;
+}
+function isToday(d){ return dateKey(d)===dateKey(new Date()); }
+function fmtLabel(d){
+  if(isToday(d)) return '📅 Hoje';
+  return d.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit'});
+}
 
 function init(){
-  const g=localStorage.getItem('nt_g');if(g)goals=JSON.parse(g);
-  goalCal.value=goals.cal;goalProt.value=goals.prot;goalWater.value=goals.water||8;
-  const mf=localStorage.getItem('nt_myfoods');myFoods=mf?JSON.parse(mf):[];
-  const pw=localStorage.getItem('nt_peso');if(pw)pesoMetaData=JSON.parse(pw);
-  if(pesoMetaData.pesoAtual)pesoAtual.value=pesoMetaData.pesoAtual;
-  if(pesoMetaData.pesoMeta)pesoMeta.value=pesoMetaData.pesoMeta;
-  if(pesoMetaData.fatorProt)fatorProt.value=pesoMetaData.fatorProt;
-  buildSelect();buildQuickList();
-  document.querySelectorAll('.meal-tab').forEach(btn=>{
-    btn.onclick=()=>{document.querySelectorAll('.meal-tab').forEach(x=>x.classList.remove('on'));btn.classList.add('on');meal=btn.dataset.meal;foodSel.value='';};
+  const g = localStorage.getItem('nt_g');
+  if(g) goals = JSON.parse(g);
+  document.getElementById('goalCal').value = goals.cal;
+  document.getElementById('goalProt').value = goals.prot;
+  document.getElementById('goalWater').value = goals.water || 8;
+
+  const mf = localStorage.getItem('nt_myfoods');
+  myFoods = mf ? JSON.parse(mf) : [];
+
+  const pw = localStorage.getItem('nt_peso');
+  if(pw) pesoMetaData = JSON.parse(pw);
+  if(pesoMetaData.pesoAtual) document.getElementById('pesoAtual').value = pesoMetaData.pesoAtual;
+  if(pesoMetaData.pesoMeta)  document.getElementById('pesoMeta').value  = pesoMetaData.pesoMeta;
+  if(pesoMetaData.fatorProt) document.getElementById('fatorProt').value = pesoMetaData.fatorProt;
+
+  function buildSelect(){
+  const all=[...DB,...myFoods];
+  const sel=document.getElementById('foodSel');
+  sel.innerHTML='<option value="">— selecione —</option>';
+  all.forEach((f,i)=>{
+    const o=document.createElement('option');
+    o.value=i;
+    o.textContent=`${f.n} (${f.cal}kcal / ${f.prot}g prot)`;
+    sel.appendChild(o);
   });
-  updateBankCount();loadViewDay();renderWeekSummary();
+}
+
+  updateBankCount();
+  loadViewDay();
+  renderWeekSummary();
 }
 
 function loadViewDay(){
-  const key=dateKey(viewDate),f=localStorage.getItem('nt_'+key);foods=f?JSON.parse(f):[];
-  const w=localStorage.getItem('nt_w_'+key);water=w?parseInt(w):0;
-  navLabel.textContent=fmtLabel(viewDate);
-  dayTitle.textContent=isToday(viewDate)?'Hoje':viewDate.toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'2-digit'});
-  histNote.textContent=isToday(viewDate)?'':'👁 Histórico — somente leitura';
-  addCard.style.opacity=isToday(viewDate)?'1':'0.4';
-  addCard.style.pointerEvents=isToday(viewDate)?'auto':'none';
-  render();renderWater();upd();
+  const key = dateKey(viewDate);
+  const f = localStorage.getItem('nt_'+key);
+  foods = f ? JSON.parse(f) : [];
+  const w = localStorage.getItem('nt_w_'+key);
+  water = w ? parseInt(w) : 0;
+
+  document.getElementById('navLabel').textContent = fmtLabel(viewDate);
+  document.getElementById('dayTitle').textContent = isToday(viewDate) ? 'Hoje' :
+    viewDate.toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'2-digit'});
+  document.getElementById('histNote').textContent = isToday(viewDate) ? '' : '👁 Histórico — somente leitura';
+
+  const addCard = document.getElementById('addCard');
+  addCard.style.opacity = isToday(viewDate) ? '1' : '0.4';
+  addCard.style.pointerEvents = isToday(viewDate) ? 'auto' : 'none';
+
+  render();
+  renderWater();
+  upd();
 }
-function saveDay(){const key=dateKey(viewDate);localStorage.setItem('nt_'+key,JSON.stringify(foods));localStorage.setItem('nt_w_'+key,water);}
-function navDay(d){const x=new Date(viewDate);x.setDate(x.getDate()+d);if(x>new Date())return;viewDate=x;loadViewDay();}
+
+function saveDay(){
+  const key = dateKey(viewDate);
+  localStorage.setItem('nt_'+key, JSON.stringify(foods));
+  localStorage.setItem('nt_w_'+key, water);
+}
+
+function navDay(delta){
+  const d = new Date(viewDate);
+  d.setDate(d.getDate()+delta);
+  if(d > new Date()) return;
+  viewDate = d;
+  loadViewDay();
+}
 
 function calcProtFromPeso(){
-  const pa=parseFloat(pesoAtual.value),pm=parseFloat(pesoMeta.value),fp=parseFloat(fatorProt.value)||2;
-  if(!pa)return alert('Informe o peso atual.');
-  const base=pm&&pm<pa?pm:pa,meta=Math.round(base*fp);
-  goalProt.value=meta;pesoMetaData={pesoAtual:pa,pesoMeta:pm||null,fatorProt:fp};
-  localStorage.setItem('nt_peso',JSON.stringify(pesoMetaData));
-  alert('Meta de proteína: '+meta+'g');
+  const pa = parseFloat(document.getElementById('pesoAtual').value);
+  const pm = parseFloat(document.getElementById('pesoMeta').value);
+  const fp = parseFloat(document.getElementById('fatorProt').value) || 2;
+  if(!pa) return alert('Informe o peso atual.');
+  const base = pm && pm < pa ? pm : pa;
+  const meta = Math.round(base * fp);
+  document.getElementById('goalProt').value = meta;
+  pesoMetaData = {pesoAtual:pa, pesoMeta:pm||null, fatorProt:fp};
+  localStorage.setItem('nt_peso', JSON.stringify(pesoMetaData));
+  alert('Meta de proteína: ' + meta + 'g');
 }
+
 function saveGoals(){
-  goals={cal:parseInt(goalCal.value)||2000,prot:parseInt(goalProt.value)||120,water:parseInt(goalWater.value)||8};
-  localStorage.setItem('nt_g',JSON.stringify(goals));upd();alert('Metas salvas!');
+  goals = {
+    cal:  parseInt(document.getElementById('goalCal').value)  || 2000,
+    prot: parseInt(document.getElementById('goalProt').value) || 120,
+    water:parseInt(document.getElementById('goalWater').value)|| 8
+  };
+  localStorage.setItem('nt_g', JSON.stringify(goals));
+  upd();
+  alert('Metas salvas!');
 }
 
 function buildSelect(){
-  const all=[...DB,...myFoods];foodSel.innerHTML='<option value="">— selecione —</option>';
-  all.forEach((f,i)=>{const o=document.createElement('option');o.value=i;o.textContent=`${f.n} (${f.cal}kcal / ${f.prot}g)`;foodSel.appendChild(o);});
+  const all = [...DB, ...myFoods];
+  const sel = document.getElementById('foodSel');
+  sel.innerHTML = '<option value="">— selecione —</option>';
+  all.forEach((f,i) => {
+    const o = document.createElement('option');
+    o.value = i;
+    o.textContent = f.n + ' (' + f.cal + 'kcal / ' + f.prot + 'g prot)';
+    sel.appendChild(o);
+  });
 }
+
 function filterFoods(){
-  const q=foodSearch.value.toLowerCase(),all=[...DB,...myFoods];foodSel.innerHTML='<option value="">— selecione —</option>';
-  all.forEach((f,i)=>{if(!q||f.n.toLowerCase().includes(q)){const o=document.createElement('option');o.value=i;o.textContent=`${f.n} (${f.cal}kcal / ${f.prot}g)`;foodSel.appendChild(o);}});
+  const q=document.getElementById('foodSearch').value.toLowerCase().trim();
+  const all=[...DB,...myFoods];
+  const sel=document.getElementById('foodSel');
+  const hint=document.getElementById('hint');
+
+  sel.innerHTML='<option value="">— selecione —</option>';
+  let encontrados=0;
+
+  all.forEach((f,i)=>{
+    if(!q || f.n.toLowerCase().includes(q)){
+      const o=document.createElement('option');
+      o.value=i;
+      o.textContent=`${f.n} (${f.cal}kcal / ${f.prot}g prot)`;
+      sel.appendChild(o);
+      encontrados++;
+    }
+  });
+
+  if(!q){
+    hint.textContent='Digite algo para filtrar (ex: frango, arroz, ovo…)';
+  }else if(!encontrados){
+    hint.textContent='Nenhum alimento encontrado para "'+q+'".';
+  }else{
+    hint.textContent='Foram encontrados '+encontrados+' alimentos.';
+  }
 }
 function onFoodSel(){
-  const idx=parseInt(foodSel.value);if(isNaN(idx))return;const all=[...DB,...myFoods],f=all[idx];
-  foodName.value=f.n;foodCal.value=f.cal;foodProt.value=f.prot;hint.textContent='';
-  btnSaveFood.style.display=idx<DB.length?'block':'none';
+  const sel = document.getElementById('foodSel');
+  const idx = parseInt(sel.value);
+  if(isNaN(idx)) return;
+  const all = [...DB, ...myFoods];
+  const f = all[idx];
+  document.getElementById('foodName').value = f.n;
+  document.getElementById('foodCal').value  = f.cal;
+  document.getElementById('foodProt').value = f.prot;
+  document.getElementById('hint').textContent = '';
+  document.getElementById('btnSaveFood').style.display = idx < DB.length ? 'block' : 'none';
 }
-function chQty(d){qty=Math.max(1,qty+d);qtyVal.textContent=qty+'x';}
+
+function chQty(d){
+  qty = Math.max(1, qty + d);
+  document.getElementById('qtyVal').textContent = qty + 'x';
+}
 
 function addFood(){
-  const name=foodName.value.trim(),cal=parseFloat(foodCal.value)||0,prot=parseFloat(foodProt.value)||0;
-  if(!name)return alert('Informe o nome do alimento.');
-  for(let i=0;i<qty;i++)foods.push({n:name,cal,prot,m:meal});
-  saveDay();render();upd();
-  foodName.value='';foodCal.value='';foodProt.value='';foodSearch.value='';foodSel.value='';hint.textContent='';btnSaveFood.style.display='none';qty=1;qtyVal.textContent='1x';
+  const name = document.getElementById('foodName').value.trim();
+  const cal  = parseFloat(document.getElementById('foodCal').value)  || 0;
+  const prot = parseFloat(document.getElementById('foodProt').value) || 0;
+  if(!name) return alert('Informe o nome do alimento.');
+  for(let i=0; i<qty; i++){
+    foods.push({n:name, cal:cal, prot:prot, m:meal});
+  }
+  saveDay();
+  render();
+  upd();
+  document.getElementById('foodName').value = '';
+  document.getElementById('foodCal').value  = '';
+  document.getElementById('foodProt').value = '';
+  document.getElementById('foodSearch').value = '';
+  document.getElementById('foodSel').value = '';
+  document.getElementById('hint').textContent = '';
+  document.getElementById('btnSaveFood').style.display = 'none';
+  qty = 1;
+  document.getElementById('qtyVal').textContent = '1x';
 }
-function removeFood(i){foods.splice(i,1);saveDay();render();upd();}
+
+function removeFood(i){
+  foods.splice(i,1);
+  saveDay();
+  render();
+  upd();
+}
 
 function render(){
-  if(!foods.length){foodList.innerHTML='<p style="color:#6b7280;font-size:12px;text-align:center">Nenhum alimento adicionado</p>';return;}
-  foodList.innerHTML='';M.forEach(m=>{
-    const mf=foods.filter(f=>f.m===m);if(!mf.length)return;
-    const h=document.createElement('div');h.style.cssText='font-size:11px;color:#9ca3af;margin:8px 0 4px;font-weight:600;text-transform:uppercase';h.textContent=m;foodList.appendChild(h);
-    mf.forEach(f=>{const idx=foods.indexOf(f),div=document.createElement('div');div.className='food-item';
-      div.innerHTML=`<div><div style="font-size:13px;font-weight:500">${f.n}</div><div style="font-size:11px;color:#9ca3af">${f.cal} kcal · ${f.prot}g prot</div></div><button onclick="removeFood(${idx})">✕</button>`;
-      foodList.appendChild(div);
+  const list = document.getElementById('foodList');
+  if(!foods.length){ list.innerHTML = '<p style="color:#6b7280;font-size:12px;text-align:center">Nenhum alimento adicionado</p>'; return; }
+  list.innerHTML = '';
+  M.forEach(m => {
+    const mf = foods.filter(f => f.m === m);
+    if(!mf.length) return;
+    const h = document.createElement('div');
+    h.style.cssText = 'font-size:11px;color:#9ca3af;margin:8px 0 4px;font-weight:600;text-transform:uppercase';
+    h.textContent = m;
+    list.appendChild(h);
+    mf.forEach((f,_) => {
+      const realIdx = foods.indexOf(f);
+      const div = document.createElement('div');
+      div.className = 'food-item';
+      div.innerHTML = `<div><div style="font-size:13px;font-weight:500">${f.n}</div><div style="font-size:11px;color:#9ca3af">${f.cal} kcal · ${f.prot}g prot</div></div><button onclick="removeFood(${realIdx})">✕</button>`;
+      list.appendChild(div);
     });
   });
 }
 
 function upd(){
-  const totCal=foods.reduce((s,f)=>s+f.cal,0),totProt=foods.reduce((s,f)=>s+f.prot,0);
-  calVal.textContent=`${totCal} / ${goals.cal} kcal`;protVal.textContent=`${totProt.toFixed(1)} / ${goals.prot} g`;
-  calBar.style.width=Math.min(100,totCal/goals.cal*100)+'%';protBar.style.width=Math.min(100,totProt/goals.prot*100)+'%';
+  const totCal  = foods.reduce((s,f) => s+f.cal,  0);
+  const totProt = foods.reduce((s,f) => s+f.prot, 0);
+  document.getElementById('calVal').textContent  = totCal  + ' / ' + goals.cal  + ' kcal';
+  document.getElementById('protVal').textContent = totProt.toFixed(1) + ' / ' + goals.prot + ' g';
+  document.getElementById('calBar').style.width  = Math.min(100, totCal/goals.cal*100)   + '%';
+  document.getElementById('protBar').style.width = Math.min(100, totProt/goals.prot*100) + '%';
 }
 
-function chWater(d){water=Math.max(0,Math.min(20,water+d));saveDay();renderWater();}
+function chWater(d){
+  water = Math.max(0, Math.min(20, water + d));
+  saveDay();
+  renderWater();
+}
+
 function renderWater(){
-  const g=goals.water||8;waterVal.textContent=`${water} / ${g}`;waterCups.innerHTML='';
-  for(let i=0;i<g;i++){const s=document.createElement('span');s.className='water-cup'+(i<water?' full':'');s.textContent='🥤';waterCups.appendChild(s);}
-}
-
-function saveToMyFoods(){
-  const name=foodName.value.trim(),cal=parseFloat(foodCal.value)||0,prot=parseFloat(foodProt.value)||0;
-  if(!name)return alert('Informe o nome.');
-  if(myFoods.find(f=>f.n.toLowerCase()===name.toLowerCase()))return alert('Já está no banco.');
-  myFoods.push({n:name,cal,prot});localStorage.setItem('nt_myfoods',JSON.stringify(myFoods));
-  buildSelect();buildQuickList();updateBankCount();renderBank();alert('Salvo no banco!');
-}
-function updateBankCount(){bankCount.textContent=myFoods.length?`(${myFoods.length})`:'';}
-function toggleBank(){
-  bankSection.classList.toggle('hidden');bankArrow.textContent=bankSection.classList.contains('hidden')?'▼':'▲';
-  if(!bankSection.classList.contains('hidden'))renderBank();
-}
-function renderBank(){
-  if(!myFoods.length){bankSection.innerHTML='<p style="color:#6b7280;font-size:12px;text-align:center;padding:8px">Banco vazio</p>';return;}
-  bankSection.innerHTML='';myFoods.forEach((f,i)=>{const div=document.createElement('div');div.className='my-food-row';
-    div.innerHTML=`<div><strong>${f.n}</strong><br><span>${f.cal} kcal · ${f.prot}g prot</span></div><button onclick="removeMyFood(${i})">🗑</button>`;
-    bankSection.appendChild(div);
-  });
-}
-function removeMyFood(i){myFoods.splice(i,1);localStorage.setItem('nt_myfoods',JSON.stringify(myFoods));buildSelect();buildQuickList();updateBankCount();renderBank();}
-
-function buildQuickList(){
-  const all=[...DB,...myFoods];quickList.innerHTML='';
-  all.forEach((f,i)=>{const div=document.createElement('div');div.className='quick-item';
-    div.innerHTML=`<input type="checkbox" id="qk${i}" value="${i}"><label for="qk${i}">${f.n} (${f.cal}kcal / ${f.prot}g)</label>`;quickList.appendChild(div);
-  });
-}
-function toggleQuick(){quickSection.classList.toggle('hidden');quickArrow.textContent=quickSection.classList.contains('hidden')?'▼':'▲';}
-function addQuickSelected(){
-  const all=[...DB,...myFoods],chk=document.querySelectorAll('#quickList input:checked');
-  if(!chk.length)return alert('Selecione ao menos um alimento.');
-  chk.forEach(cb=>{const f=all[parseInt(cb.value)];foods.push({n:f.n,cal:f.cal,prot:f.prot,m:meal});cb.checked=false;});
-  saveDay();render();upd();
-}
-function clearDay(){if(!confirm('Limpar todos os alimentos do dia?'))return;foods=[];saveDay();render();upd();}
-
-function renderWeekSummary(){
-  weekSummary.innerHTML='';
-  for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const key=dateKey(d),f=localStorage.getItem('nt_'+key);
-    const arr=f?JSON.parse(f):[],totCal=arr.reduce((s,x)=>s+x.cal,0),totProt=arr.reduce((s,x)=>s+x.prot,0);
-    const label=i===0?'Hoje':d.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit'});
-    const tagC=totCal===0?'':totCal<=goals.cal?'<span class="tag-ok">✓</span>':'<span class="tag-high">↑</span>';
-    const tagP=totProt===0?'':totProt>=goals.prot?'<span class="tag-ok">✓</span>':'<span class="tag-low">↓</span>';
-    const row=document.createElement('div');row.className='week-row';
-    row.innerHTML=`<span>${label}</span><span class="week-val">${totCal}kcal ${tagC}</span><span class="week-val">${totProt.toFixed(0)}g prot ${tagP}</span>`;
-    weekSummary.appendChild(row);
+  const g = goals.water || 8;
+  document.getElementById('waterVal').textContent = water + ' / ' + g;
+  const cups = document.getElementById('waterCups');
+  cups.innerHTML = '';
+  for(let i=0; i<g; i++){
+    const s = document.createElement('span');
+    s.className = 'water-cup' + (i < water ? ' full' : '');
+    s.textContent = '🥤';
+    cups.appendChild(s);
   }
 }
 
-window.onload=init;
+function saveToMyFoods(){
+  const name = document.getElementById('foodName').value.trim();
+  const cal  = parseFloat(document.getElementById('foodCal').value)  || 0;
+  const prot = parseFloat(document.getElementById('foodProt').value) || 0;
+  if(!name) return alert('Informe o nome.');
+  if(myFoods.find(f => f.n.toLowerCase()===name.toLowerCase())) return alert('Já está no banco.');
+  myFoods.push({n:name, cal:cal, prot:prot});
+  localStorage.setItem('nt_myfoods', JSON.stringify(myFoods));
+  buildSelect();
+  buildQuickList();
+  updateBankCount();
+  renderBank();
+  alert('Salvo no banco!');
+}
+
+function updateBankCount(){
+  document.getElementById('bankCount').textContent = myFoods.length ? '('+myFoods.length+')' : '';
+}
+
+function toggleBank(){
+  const s = document.getElementById('bankSection');
+  const a = document.getElementById('bankArrow');
+  s.classList.toggle('hidden');
+  a.textContent = s.classList.contains('hidden') ? '▼' : '▲';
+  if(!s.classList.contains('hidden')) renderBank();
+}
+
+function renderBank(){
+  const s = document.getElementById('bankSection');
+  if(!myFoods.length){ s.innerHTML = '<p style="color:#6b7280;font-size:12px;text-align:center;padding:8px">Banco vazio</p>'; return; }
+  s.innerHTML = '';
+  myFoods.forEach((f,i) => {
+    const div = document.createElement('div');
+    div.className = 'my-food-row';
+    div.innerHTML = `<div><strong>${f.n}</strong><br><span>${f.cal} kcal · ${f.prot}g prot</span></div><button onclick="removeMyFood(${i})">🗑</button>`;
+    s.appendChild(div);
+  });
+}
+
+function removeMyFood(i){
+  myFoods.splice(i,1);
+  localStorage.setItem('nt_myfoods', JSON.stringify(myFoods));
+  buildSelect();
+  buildQuickList();
+  updateBankCount();
+  renderBank();
+}
+
+function buildQuickList(){
+  const all = [...DB, ...myFoods];
+  const ql = document.getElementById('quickList');
+  ql.innerHTML = '';
+  all.forEach((f,i) => {
+    const div = document.createElement('div');
+    div.className = 'quick-item';
+    div.innerHTML = `<input type="checkbox" id="qk${i}" value="${i}"><label for="qk${i}">${f.n} (${f.cal}kcal / ${f.prot}g)</label>`;
+    ql.appendChild(div);
+  });
+}
+
+function toggleQuick(){
+  const s = document.getElementById('quickSection');
+  const a = document.getElementById('quickArrow');
+  s.classList.toggle('hidden');
+  a.textContent = s.classList.contains('hidden') ? '▼' : '▲';
+}
+
+function addQuickSelected(){
+  const all = [...DB, ...myFoods];
+  const checked = document.querySelectorAll('#quickList input:checked');
+  if(!checked.length) return alert('Selecione ao menos um alimento.');
+  checked.forEach(cb => {
+    const f = all[parseInt(cb.value)];
+    foods.push({n:f.n, cal:f.cal, prot:f.prot, m:meal});
+    cb.checked = false;
+  });
+  saveDay();
+  render();
+  upd();
+}
+
+function clearDay(){
+  if(!confirm('Limpar todos os alimentos do dia?')) return;
+  foods = [];
+  saveDay();
+  render();
+  upd();
+}
+
+function renderWeekSummary(){
+  const div = document.getElementById('weekSummary');
+  div.innerHTML = '';
+  for(let i=6; i>=0; i--){
+    const d = new Date();
+    d.setDate(d.getDate()-i);
+    const key = dateKey(d);
+    const f = localStorage.getItem('nt_'+key);
+    const arr = f ? JSON.parse(f) : [];
+    const totCal  = arr.reduce((s,x) => s+x.cal,  0);
+    const totProt = arr.reduce((s,x) => s+x.prot, 0);
+    const label = i===0 ? 'Hoje' : d.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit'});
+    const tagC = totCal===0 ? '' : totCal<=goals.cal ? '<span class="tag-ok">✓</span>' : '<span class="tag-high">↑</span>';
+    const tagP = totProt===0 ? '' : totProt>=goals.prot ? '<span class="tag-ok">✓</span>' : '<span class="tag-low">↓</span>';
+    const row = document.createElement('div');
+    row.className = 'week-row';
+    row.innerHTML = `<span>${label}</span><span class="week-val">${totCal}kcal ${tagC}</span><span class="week-val">${totProt.toFixed(0)}g prot ${tagP}</span>`;
+    div.appendChild(row);
+  }
+}
+
+window.onload = init;
 </script>
 </body>
 </html>
