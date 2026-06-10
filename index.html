@@ -1,664 +1,480 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GogãoFitness</title>
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:sans-serif;background:#0f0f0f;color:#e0e0e0;padding:16px}
-        .app{max-width:400px;margin:0 auto}
-        h1{text-align:center;color:#4ade80;margin-bottom:16px}
-        .card{background:#1a1a1a;border-radius:12px;padding:14px;margin-bottom:12px}
-        .row{display:flex;gap:8px;margin-bottom:8px}
-        .col{flex:1}
-        label{font-size:11px;color:#a0a0a0;display:block;margin-bottom:3px}
-        input,select{width:100%;padding:10px;background:#0f0f0f;border:1px solid #2a2a2a;color:#fff;border-radius:8px;font-size:14px}
-        .small-input{padding:8px;font-size:13px}
-        .meal-tabs{display:flex;gap:4px;margin-bottom:10px}
-        .meal-tab{flex:1;padding:10px 4px;background:#0f0f0f;border:1px solid #2a2a2a;color:#a0a0a0;border-radius:8px;text-align:center;font-size:11px;cursor:pointer}
-        .meal-tab.on{background:#4ade80;color:#000;font-weight:bold}
-        .qty-box{display:flex;align-items:center;gap:10px;background:#0f0f0f;border-radius:8px;padding:6px 12px;margin-bottom:6px}
-        .qty-btn{width:36px;height:36px;border-radius:50%;border:2px solid #4ade80;background:none;color:#4ade80;font-size:20px;font-weight:bold;cursor:pointer}
-        .qty-num{font-size:18px;font-weight:bold;min-width:36px;text-align:center}
-        .hint{font-size:11px;color:#4ade80;text-align:right;margin-bottom:6px}
-        .btn{width:100%;padding:12px;background:#4ade80;color:#000;border:none;border-radius:8px;font-weight:bold;font-size:15px;cursor:pointer}
-        .btn-sm{padding:8px 10px;font-size:11px}
-        .btn-save-food{width:100%;padding:10px;background:none;border:1px solid #facc15;color:#facc15;border-radius:8px;font-size:13px;font-weight:bold;cursor:pointer;margin-bottom:8px;display:none}
-        .btn-online{width:100%;padding:10px;background:none;border:1px solid #38bdf8;color:#38bdf8;border-radius:8px;font-size:13px;font-weight:bold;cursor:pointer;margin-bottom:6px}
-        .online-status{font-size:11px;color:#38bdf8;text-align:left;min-height:16px;margin-bottom:4px}
-        .food-item{display:flex;justify-content:space-between;padding:10px;background:#0f0f0f;border-radius:8px;margin-bottom:4px;font-size:13px}
-        .food-item button{background:none;border:none;color:#f87171;font-size:16px;cursor:pointer}
-        .bar{height:8px;background:#2a2a2a;border-radius:4px;margin:6px 0;overflow:hidden}
-        .bar-fill{height:100%;border-radius:4px;transition:width .3s}
-        .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#4ade80;color:#000;padding:10px 20px;border-radius:20px;font-weight:bold;font-size:13px;opacity:0;transition:opacity .3s;z-index:99}
-        .toast.show{opacity:1}
-        .water-row{display:flex;align-items:center;gap:12px}
-        .water-cups{display:flex;gap:2px;flex-wrap:wrap;flex:1;justify-content:center}
-        .water-cup{font-size:20px;opacity:0.2;transition:opacity .2s}
-        .water-cup.full{opacity:1}
-        .water-btn{width:40px;height:40px;border-radius:50%;border:2px solid #38bdf8;background:none;color:#38bdf8;font-size:22px;font-weight:bold;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-        .water-btn:active{background:#38bdf8;color:#000}
-        .water-big{font-size:28px;font-weight:bold;color:#38bdf8}
-        .my-food-row{display:flex;justify-content:space-between;align-items:center;background:#0f0f0f;border-radius:8px;padding:8px 10px;margin-bottom:4px;font-size:12px}
-        .my-food-row span{color:#a0a0a0;font-size:11px}
-        .my-food-row button{background:none;border:none;color:#f87171;font-size:14px;cursor:pointer}
-        .week-row{display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px;color:#a0a0a0}
-        .week-val{color:#e0e0e0;font-weight:bold}
-        .tag-ok{color:#4ade80;font-weight:bold;font-size:10px;margin-left:4px}
-        .tag-low{color:#facc15;font-weight:bold;font-size:10px;margin-left:4px}
-        .tag-high{color:#f97373;font-weight:bold;font-size:10px;margin-left:4px}
-        .btn-clear{margin-top:10px;background:none;border:1px solid #f87171;color:#f87171;padding:8px;border-radius:8px;width:100%;font-size:12px;cursor:pointer}
-        .hidden{display:none!important}
-        .nav-row{display:flex;justify-content:space-between;align-items:center}
-        .nav-btn{background:none;border:1px solid #4ade80;color:#4ade80;border-radius:6px;padding:6px 12px;font-size:13px;cursor:pointer}
-        .nav-date{font-size:13px;font-weight:bold;color:#e0e0e0;text-align:center;cursor:pointer;text-decoration:underline dotted #4ade80}
-        .bank-header{display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
-        .bank-search{width:100%;padding:8px;background:#0f0f0f;border:1px solid #2a2a2a;color:#fff;border-radius:8px;font-size:13px;margin:8px 0 4px}
-        .bank-list{max-height:280px;overflow-y:auto}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GogãoFitness</title>
+<style>
+  :root{
+    --bg:#eaf4ff;
+    --bg2:#dcecff;
+    --card:rgba(255,255,255,.95);
+    --border:rgba(60,120,200,.12);
+    --text:#17324d;
+    --muted:#6f859d;
+    --primary:#2f7de1;
+    --accent:#6c63ff;
+    --shadow:0 10px 30px rgba(30,72,120,.10);
+    --radius:20px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);
+    color:var(--text);
+    min-height:100vh;
+    padding:12px 10px 24px;
+    overflow-x:hidden;
+  }
+  .app{max-width:430px;width:100%;margin:0 auto}
+  .topbar,.card{
+    width:100%;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:14px;
+    margin-bottom:12px;
+  }
+  .topbar{
+    background:linear-gradient(135deg,rgba(47,125,225,.12),rgba(108,99,255,.10));
+  }
+  .brand h1{font-size:26px;letter-spacing:-.03em;margin-bottom:6px}
+  .brand p{font-size:13px;color:var(--muted);line-height:1.4}
+  .pill{
+    display:inline-block;margin-top:12px;padding:8px 12px;border-radius:999px;
+    background:rgba(255,255,255,.78);color:var(--primary);font-size:12px;font-weight:700
+  }
+  .card-title{
+    display:flex;justify-content:space-between;align-items:center;margin-bottom:12px
+  }
+  .card-title h2{font-size:15px}
+  .card-title span{font-size:12px;color:var(--muted)}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .field{display:flex;flex-direction:column;gap:6px}
+  label{
+    font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:700
+  }
+  input{
+    width:100%;border:1px solid rgba(47,125,225,.14);background:#fff;color:var(--text);
+    border-radius:14px;padding:13px 14px;font-size:14px;outline:none
+  }
+  input:focus{border-color:rgba(47,125,225,.35);box-shadow:0 0 0 4px rgba(47,125,225,.10)}
+  .btn{
+    width:100%;border:none;border-radius:16px;padding:14px 16px;font-size:14px;font-weight:800;cursor:pointer;
+    background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;box-shadow:0 10px 20px rgba(47,125,225,.18)
+  }
+  .btn-secondary{
+    width:100%;border:1px solid rgba(47,125,225,.14);border-radius:16px;padding:13px 16px;
+    background:#fff;color:var(--primary);font-size:14px;font-weight:800
+  }
+  .soft-line{height:1px;background:rgba(47,125,225,.10);margin:12px 0}
+  .stat-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .stat{
+    background:linear-gradient(180deg,#fff,#f8fbff);border:1px solid rgba(47,125,225,.10);
+    border-radius:18px;padding:14px
+  }
+  .num{font-size:26px;font-weight:800;letter-spacing:-.03em}
+  .lbl{font-size:12px;color:var(--muted);margin-top:4px}
+  .bar{height:8px;background:rgba(47,125,225,.10);border-radius:999px;overflow:hidden;margin-top:10px}
+  .bar>div{height:100%;border-radius:999px;width:0%;background:linear-gradient(90deg,var(--primary),#5ea1ff)}
+  .tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;margin-bottom:12px}
+  .tab{
+    flex:0 0 auto;padding:10px 14px;border-radius:999px;border:1px solid rgba(47,125,225,.12);
+    background:rgba(255,255,255,.88);color:var(--muted);font-size:12px;font-weight:700;cursor:pointer
+  }
+  .tab.on{background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;border-color:transparent}
+  .mini-row{
+    display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(47,125,225,.08);font-size:13px
+  }
+  .mini-row:last-child{border-bottom:none}
+  .mini-row b{color:var(--text)}
+  .mini-row span{color:var(--muted)}
+  .hidden{display:none!important}
+  .subtle{color:var(--muted);font-size:12px;line-height:1.45}
+  .hint{font-size:12px;color:#3aa76d;margin-top:8px;min-height:16px}
+  .water-wrap{
+    display:flex;align-items:center;justify-content:space-between;gap:10px
+  }
+  .water-num{font-size:28px;font-weight:800;color:var(--primary);line-height:1}
+  .water-sub{font-size:12px;color:var(--muted);margin-top:4px}
+  .water-controls{display:flex;align-items:center;gap:10px}
+  .water-btn{
+    width:44px;height:44px;border-radius:999px;border:1px solid rgba(47,125,225,.16);
+    background:#fff;color:var(--primary);font-size:22px;font-weight:800;cursor:pointer;
+    box-shadow:0 6px 14px rgba(47,125,225,.10)
+  }
+  @media (max-width:420px){
+    body{padding:10px 8px 20px}
+    .card,.topbar{padding:13px;border-radius:18px}
+    .brand h1{font-size:24px}
+    .grid-2,.stat-row{grid-template-columns:1fr}
+    .water-wrap{flex-direction:column;align-items:stretch}
+    .water-controls{justify-content:space-between}
+    input,.btn,.btn-secondary{font-size:15px}
+  }
+</style>
 </head>
 <body>
-<div class="app">
-    <h1>💪 GogãoFitness</h1>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand">
+        <h1>GogãoFitness</h1>
+        <p>Seu app de dieta em versão leve, simples e pronta para celular.</p>
+      </div>
+      <div class="pill">Base mínima funcional</div>
+    </div>
 
-    <!-- Navegação de data -->
     <div class="card">
-        <div class="nav-row">
-            <button class="nav-btn" onclick="navDay(-1)">◀</button>
-            <span class="nav-date" id="navLabel" onclick="togglePicker()">Hoje</span>
-            <button class="nav-btn" onclick="navDay(1)">▶</button>
+      <div class="card-title">
+        <h2>⚖️ Peso & Metas</h2>
+        <span>Resumo rápido</span>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>Peso atual</label>
+          <input type="number" id="pesoAtual" placeholder="Ex.: 80">
         </div>
-        <input type="date" id="datePicker" class="hidden" style="margin-top:8px" onchange="pickDate()">
-        <div id="histNote" style="font-size:11px;color:#facc15;text-align:center;min-height:14px;margin-top:4px"></div>
+        <div class="field">
+          <label>Peso objetivo</label>
+          <input type="number" id="pesoMeta" placeholder="Ex.: 75">
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:10px">
+        <div class="field">
+          <label>Meta kcal</label>
+          <input type="number" id="goalCal" value="2000">
+        </div>
+        <div class="field">
+          <label>Meta proteína</label>
+          <input type="number" id="goalProt" value="120">
+        </div>
+      </div>
+
+      <div class="soft-line"></div>
+      <button class="btn" onclick="saveGoals()">Salvar metas</button>
     </div>
 
-    <!-- Peso e metas -->
     <div class="card">
-        <h3 style="font-size:14px;margin-bottom:8px">⚖️ Peso & Metas</h3>
-        <div class="row">
-            <div class="col"><label>Peso atual (kg)</label><input type="number" id="pesoAtual" class="small-input" placeholder="Ex: 80" step="0.1" min="20"></div>
-            <div class="col"><label>Peso objetivo (kg)</label><input type="number" id="pesoMeta" class="small-input" placeholder="Opcional" step="0.1" min="20"></div>
+      <div class="card-title">
+        <h2>📊 Resumo do dia</h2>
+        <span>Hoje</span>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat">
+          <div class="num" id="calVal">0</div>
+          <div class="lbl">kcal consumidas</div>
+          <div class="bar"><div id="calBar"></div></div>
         </div>
-        <div class="row" style="margin-bottom:4px">
-            <div class="col"><label>Fator proteína (g/kg)</label><input type="number" id="fatorProt" class="small-input" value="2" step="0.1" min="0.5" max="4"></div>
-            <div class="col" style="display:flex;align-items:flex-end;justify-content:flex-end">
-                <button class="btn btn-sm" style="width:auto" onclick="calcProtFromPeso()">Calcular meta prot</button>
-            </div>
+        <div class="stat">
+          <div class="num" id="protVal">0</div>
+          <div class="lbl">proteína (g)</div>
+          <div class="bar"><div id="protBar"></div></div>
         </div>
-        <div style="font-size:11px;color:#a0a0a0">Sugestão: 1.6–2.2g/kg para ganho de massa / definição.</div>
+      </div>
     </div>
 
-    <!-- Totais -->
     <div class="card">
-        <div class="row">
-            <div class="col" style="text-align:center">
-                <div style="font-size:24px;font-weight:bold" id="calVal">0</div>
-                <div style="font-size:11px;color:#a0a0a0">kcal</div>
-                <div class="bar"><div class="bar-fill" id="calBar" style="width:0%;background:#60a5fa"></div></div>
-                <div style="font-size:10px;color:#a0a0a0" id="calMeta">Meta: 2000</div>
-            </div>
-            <div class="col" style="text-align:center">
-                <div style="font-size:24px;font-weight:bold" id="protVal">0</div>
-                <div style="font-size:11px;color:#a0a0a0">g prot</div>
-                <div class="bar"><div class="bar-fill" id="protBar" style="width:0%;background:#4ade80"></div></div>
-                <div style="font-size:10px;color:#a0a0a0" id="protMeta">Meta: 120g</div>
-            </div>
+      <div class="card-title">
+        <h2>💧 Água</h2>
+        <span>Hidratação diária</span>
+      </div>
+
+      <div class="water-wrap">
+        <div>
+          <div class="water-num"><span id="waterCount">0</span> / <span id="waterGoal">8</span></div>
+          <div class="water-sub">copos consumidos</div>
         </div>
-        <div class="row" style="margin-top:8px">
-            <div class="col"><label>Meta kcal</label><input type="number" id="goalCal" value="2000" min="100" step="50"></div>
-            <div class="col"><label>Meta prot</label><input type="number" id="goalProt" value="120" min="10" step="5"></div>
-            <button class="btn btn-sm" style="width:auto;align-self:flex-end" onclick="saveGoals()">Salvar</button>
+
+        <div class="water-controls">
+          <button class="water-btn" onclick="changeWater(-1)">−</button>
+          <button class="water-btn" onclick="changeWater(1)">+</button>
         </div>
+      </div>
+
+      <div class="bar" style="margin-top:12px">
+        <div id="waterBar" style="background:linear-gradient(90deg,#36c2ff,#5ea1ff)"></div>
+      </div>
+
+      <div style="margin-top:12px" class="grid-2">
+        <div class="field">
+          <label>Meta água (copos)</label>
+          <input type="number" id="goalWater" value="8">
+        </div>
+        <div style="display:flex;align-items:flex-end">
+          <button class="btn-secondary" onclick="saveGoals()">Salvar água</button>
+        </div>
+      </div>
     </div>
 
-    <!-- Água -->
     <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-            <span style="font-weight:bold;font-size:14px">💧 Água</span>
-            <span class="water-big" id="waterCount">0</span>
-            <span style="font-size:11px;color:#a0a0a0">/ <span id="waterGoalLabel">8</span> copos</span>
+      <div class="card-title">
+        <h2>➕ Adicionar alimento</h2>
+        <span>Manual</span>
+      </div>
+
+      <div class="tabs" id="mealTabs">
+        <div class="tab on" data-meal="Café da manhã">Café</div>
+        <div class="tab" data-meal="Almoço">Almoço</div>
+        <div class="tab" data-meal="Lanche">Lanche</div>
+        <div class="tab" data-meal="Jantar">Jantar</div>
+      </div>
+
+      <div class="field" style="margin-bottom:10px">
+        <label>Nome do alimento</label>
+        <input type="text" id="foodName" placeholder="Ex.: Frango grelhado" oninput="upd()">
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>Calorias</label>
+          <input type="number" id="foodCal" placeholder="0" oninput="upd()">
         </div>
-        <div class="water-row">
-            <button class="water-btn" onclick="chWater(-1)">−</button>
-            <div class="water-cups" id="waterCups"></div>
-            <button class="water-btn" onclick="chWater(1)">+</button>
+        <div class="field">
+          <label>Proteína</label>
+          <input type="number" id="foodProt" placeholder="0" oninput="upd()">
         </div>
-        <div class="bar" style="margin-top:8px"><div class="bar-fill" id="waterBar" style="width:0%;background:#38bdf8"></div></div>
-        <div style="text-align:center;font-size:11px;color:#a0a0a0;margin-top:4px" id="waterLabel">0 / 8 copos</div>
-        <div class="row" style="margin-top:8px">
-            <div class="col"><label>Meta água (copos)</label><input type="number" id="goalWater" value="8" min="1" max="20" step="1"></div>
-            <button class="btn btn-sm" style="width:auto;align-self:flex-end" onclick="saveGoals()">Salvar</button>
-        </div>
+      </div>
+
+      <div class="hint" id="hint"></div>
+
+      <button class="btn-secondary hidden" id="btnSaveFood" style="margin-top:10px" onclick="saveToMyFoods()">⭐ Salvar no meu banco</button>
+      <button class="btn" style="margin-top:10px" onclick="addFood()">➕ Adicionar ao dia</button>
     </div>
 
-    <!-- Resumo semanal -->
     <div class="card">
-        <h3 style="font-size:14px;margin-bottom:6px">📈 Resumo (últimos 7 dias)</h3>
-        <div id="weekSummary"><div style="font-size:11px;color:#a0a0a0">Carregando...</div></div>
+      <div class="card-title">
+        <h2>⭐ Meu Banco de Alimentos</h2>
+        <span id="bankCount">0 itens</span>
+      </div>
+      <div id="bankList"></div>
     </div>
 
-    <!-- Adicionar alimento -->
-    <div class="card" id="addCard">
-        <div class="meal-tabs" id="mealTabs">
-            <div class="meal-tab on" data-meal="Café da manhã">🌅 Café</div>
-            <div class="meal-tab" data-meal="Almoço">☀️ Almoço</div>
-            <div class="meal-tab" data-meal="Lanche">🍪 Lanche</div>
-            <div class="meal-tab" data-meal="Jantar">🌙 Jantar</div>
-        </div>
-        <select id="foodSel" onchange="pickFood()"><option value="">🔍 Buscar alimento...</option></select>
-        <div class="row" style="margin-top:8px">
-            <div class="col">
-                <label>Alimento</label>
-                <input id="foodName" placeholder="Ex: Frango" oninput="upd()">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col"><label>Calorias (p/unid)</label><input type="number" id="foodCal" placeholder="0" step="1" oninput="upd()"></div>
-            <div class="col"><label>Proteínas (g p/unid)</label><input type="number" id="foodProt" placeholder="0" step="0.1" oninput="upd()"></div>
-        </div>
-        <button class="btn-online" onclick="fetchNutrition()">🔎 Buscar valor nutricional online</button>
-        <div class="online-status" id="onlineStatus"></div>
-        <button class="btn-save-food" id="btnSaveFood" onclick="saveToMyFoods()">⭐ Salvar no meu banco</button>
-        <div class="qty-box">
-            <span style="font-size:12px;color:#a0a0a0">📦 Qtd:</span>
-            <button class="qty-btn" onclick="chQty(-0.5)">−</button>
-            <span class="qty-num" id="qtyNum">1</span>
-            <button class="qty-btn" onclick="chQty(0.5)">+</button>
-        </div>
-        <div class="hint" id="hint"></div>
-        <button class="btn" onclick="add()">➕ Adicionar</button>
-    </div>
-
-    <!-- Banco de alimentos -->
     <div class="card">
-        <div class="bank-header" onclick="toggleBank()">
-            <h3 style="font-size:14px;margin:0">⭐ Meu Banco de Alimentos <span id="bankCount" style="font-size:11px;color:#a0a0a0;font-weight:normal"></span></h3>
-            <span id="bankArrow" style="font-size:18px;color:#a0a0a0">▼</span>
-        </div>
-        <div id="bankBody" class="hidden">
-            <input type="text" id="bankSearch" class="bank-search" placeholder="🔍 Filtrar..." oninput="renderBank()">
-            <div class="bank-list" id="bankList"></div>
-        </div>
+      <div class="card-title">
+        <h2>📋 Alimentos de hoje</h2>
+        <span id="todayCount">0 itens</span>
+      </div>
+      <div id="dayList"></div>
     </div>
-
-    <!-- Histórico do dia -->
-    <div class="card">
-        <h3 style="font-size:14px;margin-bottom:8px">📋 <span id="dayTitle">Hoje</span></h3>
-        <div id="list"></div>
-        <button class="btn-clear hidden" id="btnClear" onclick="clearDay()">🗑️ Limpar dia</button>
-    </div>
-</div>
-
-<div class="toast" id="toast"></div>
+  </div>
 
 <script>
-// Remove service worker antigo se existir
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(regs => {
-        regs.forEach(reg => reg.unregister());
+  let goals = { cal: 2000, prot: 120, water: 8 };
+  let myFoods = [];
+  let dayFoods = [];
+  let water = 0;
+  let meal = 'Café da manhã';
+
+  const pesoAtual = document.getElementById('pesoAtual');
+  const pesoMeta = document.getElementById('pesoMeta');
+  const goalCal = document.getElementById('goalCal');
+  const goalProt = document.getElementById('goalProt');
+  const goalWater = document.getElementById('goalWater');
+  const foodName = document.getElementById('foodName');
+  const foodCal = document.getElementById('foodCal');
+  const foodProt = document.getElementById('foodProt');
+  const hint = document.getElementById('hint');
+  const btnSaveFood = document.getElementById('btnSaveFood');
+  const bankList = document.getElementById('bankList');
+  const dayList = document.getElementById('dayList');
+  const bankCount = document.getElementById('bankCount');
+  const todayCount = document.getElementById('todayCount');
+  const calVal = document.getElementById('calVal');
+  const protVal = document.getElementById('protVal');
+  const calBar = document.getElementById('calBar');
+  const protBar = document.getElementById('protBar');
+  const waterCount = document.getElementById('waterCount');
+  const waterBar = document.getElementById('waterBar');
+  const waterGoalLabel = document.getElementById('waterGoal');
+
+  const savedGoals = localStorage.getItem('gfg_goals');
+  if(savedGoals) goals = JSON.parse(savedGoals);
+
+  const savedFoods = localStorage.getItem('gfg_myFoods');
+  if(savedFoods) myFoods = JSON.parse(savedFoods);
+
+  const savedDay = localStorage.getItem('gfg_dayFoods');
+  if(savedDay) dayFoods = JSON.parse(savedDay);
+
+  const savedWater = localStorage.getItem('gfg_water');
+  if(savedWater) water = JSON.parse(savedWater);
+
+  goalCal.value = goals.cal;
+  goalProt.value = goals.prot;
+  goalWater.value = goals.water;
+  waterGoalLabel.textContent = goals.water;
+
+  document.querySelectorAll('#mealTabs .tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('#mealTabs .tab').forEach(t => t.classList.remove('on'));
+      tab.classList.add('on');
+      meal = tab.dataset.meal;
     });
-}
+  });
 
-const DB = [
-    {n:'Ovo cozido',cal:70,prot:6,m:'Café da manhã'},
-    {n:'Pão francês',cal:140,prot:5,m:'Café da manhã'},
-    {n:'Pão integral',cal:70,prot:3,m:'Café da manhã'},
-    {n:'Banana',cal:105,prot:1.3,m:'Café da manhã'},
-    {n:'Aveia (2 col)',cal:80,prot:3,m:'Café da manhã'},
-    {n:'Iogurte nat (200ml)',cal:120,prot:8,m:'Café da manhã'},
-    {n:'Leite integral',cal:120,prot:6,m:'Café da manhã'},
-    {n:'Queijo mussarela',cal:80,prot:6,m:'Café da manhã'},
-    {n:'Tapioca',cal:130,prot:1,m:'Café da manhã'},
-    {n:'Arroz branco (100g)',cal:130,prot:2.5,m:'Almoço'},
-    {n:'Feijão (100g)',cal:70,prot:4.5,m:'Almoço'},
-    {n:'Frango grelhado (100g)',cal:165,prot:31,m:'Almoço'},
-    {n:'Peito de frango (150g)',cal:250,prot:46,m:'Almoço'},
-    {n:'Carne bovina (100g)',cal:250,prot:26,m:'Almoço'},
-    {n:'Salmão (100g)',cal:208,prot:20,m:'Almoço'},
-    {n:'Batata doce (100g)',cal:86,prot:1.6,m:'Almoço'},
-    {n:'Salada verde',cal:30,prot:2,m:'Almoço'},
-    {n:'Macarrão (100g)',cal:130,prot:4,m:'Almoço'},
-    {n:'Omelete (2 ovos)',cal:180,prot:13,m:'Almoço'},
-    {n:'Whey Protein',cal:120,prot:24,m:'Lanche'},
-    {n:'Barra proteína',cal:180,prot:15,m:'Lanche'},
-    {n:'Castanhas (30g)',cal:180,prot:5,m:'Lanche'},
-    {n:'Maçã',cal:95,prot:0.5,m:'Lanche'},
-    {n:'Pão de queijo',cal:100,prot:2,m:'Lanche'},
-    {n:'Sanduíche natural',cal:250,prot:12,m:'Lanche'},
-    {n:'Açaí (200ml)',cal:200,prot:2,m:'Lanche'}
-];
+  function saveGoals(){
+    const cal = +goalCal.value || 0;
+    const prot = +goalProt.value || 0;
+    const waterGoal = +goalWater.value || 8;
 
-const M = ['Café da manhã','Almoço','Lanche','Jantar'];
-let meal    = 'Café da manhã';
-let goals   = {cal:2000, prot:120, water:8};
-let foods   = [];
-let myFoods = [];
-let qty     = 1;
-let water   = 0;
-let pesoMetaData = {pesoAtual:null, pesoMeta:null, fatorProt:2};
-let viewDate = new Date();
-let bankOpen = false;
+    if(cal < 100 || prot < 10 || waterGoal < 1) return;
 
-/* ── Utilitários de data ── */
-function dateKey(d){
-    const y  = d.getFullYear();
-    const mo = String(d.getMonth()+1).padStart(2,'0');
-    const dy = String(d.getDate()).padStart(2,'0');
-    return `${y}-${mo}-${dy}`;
-}
-function isToday(d){ return dateKey(d) === dateKey(new Date()); }
-function fmtLabel(d){
-    if(isToday(d)) return '📅 Hoje';
-    return d.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit',year:'2-digit'});
-}
-
-/* ── Init ── */
-function init(){
-    const g = localStorage.getItem('nt_g');
-    if(g) goals = JSON.parse(g);
-    goalCal.value   = goals.cal;
-    goalProt.value  = goals.prot;
-    goalWater.value = goals.water || 8;
-
-    const mf = localStorage.getItem('nt_myfoods');
-    myFoods = mf ? JSON.parse(mf) : [];
-    myFoods.sort((a,b)=>a.n.localeCompare(b.n,'pt'));
-
-    const pw = localStorage.getItem('nt_peso');
-    if(pw) pesoMetaData = JSON.parse(pw);
-    if(pesoMetaData.pesoAtual) pesoAtual.value = pesoMetaData.pesoAtual;
-    if(pesoMetaData.pesoMeta)  pesoMeta.value  = pesoMetaData.pesoMeta;
-    if(pesoMetaData.fatorProt) fatorProt.value = pesoMetaData.fatorProt;
-
-    buildSelect();
-    document.querySelectorAll('.meal-tab').forEach(btn=>{
-        btn.onclick = ()=>{
-            document.querySelectorAll('.meal-tab').forEach(x=>x.classList.remove('on'));
-            btn.classList.add('on');
-            meal = btn.dataset.meal;
-            foodSel.value = '';
-        };
-    });
-
-    updateBankCount();
-    loadViewDay();
-    upd();
-    renderWeekSummary();
-}
-
-/* ── Carregar dia ── */
-function loadViewDay(){
-    const key = dateKey(viewDate);
-    const f   = localStorage.getItem('nt_' + key);
-    foods = f ? JSON.parse(f) : [];
-    const w = localStorage.getItem('nt_w_' + key);
-    water = w ? parseInt(w) : 0;
-
-    document.getElementById('navLabel').textContent = fmtLabel(viewDate);
-    document.getElementById('dayTitle').textContent  = isToday(viewDate) ? 'Hoje' :
-        viewDate.toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'2-digit'});
-    document.getElementById('histNote').textContent  = isToday(viewDate)
-        ? '' : '👁 Histórico — somente leitura';
-
-    document.getElementById('addCard').style.opacity       = isToday(viewDate) ? '1' : '0.4';
-    document.getElementById('addCard').style.pointerEvents = isToday(viewDate) ? 'auto' : 'none';
-
+    goals = { cal, prot, water: waterGoal };
+    localStorage.setItem('gfg_goals', JSON.stringify(goals));
+    localStorage.setItem('gfg_water', JSON.stringify(water));
+    waterGoalLabel.textContent = goals.water;
     render();
-    renderWater();
-}
+  }
 
-/* ── Salvar dia ── */
-function saveDay(){
-    const key = dateKey(viewDate);
-    localStorage.setItem('nt_' + key, JSON.stringify(foods));
-    localStorage.setItem('nt_w_' + key, water);
-}
+  function changeWater(delta){
+    water = Math.max(0, Math.min(goals.water * 2, water + delta));
+    localStorage.setItem('gfg_water', JSON.stringify(water));
+    renderSummary();
+  }
 
-/* ── Navegação ── */
-function navDay(delta){
-    const d = new Date(viewDate);
-    d.setDate(d.getDate() + delta);
-    if(d > new Date()) return;
-    viewDate = d;
-    loadViewDay();
-}
+  function upd(){
+    const n = foodName.value.trim();
+    const c = +foodCal.value || 0;
+    const p = +foodProt.value || 0;
 
-function togglePicker(){
-    const p = document.getElementById('datePicker');
-    p.classList.toggle('hidden');
-    if(!p.classList.contains('hidden')){
-        p.max   = dateKey(new Date());
-        p.value = dateKey(viewDate);
-    }
-}
+    hint.textContent = (n || c || p)
+      ? `Total: ${Math.round(c)}kcal | ${Math.round(p * 10) / 10}g prot`
+      : '';
 
-function pickDate(){
-    const p = document.getElementById('datePicker');
-    if(!p.value) return;
-    const parts = p.value.split('-');
-    viewDate = new Date(+parts[0], +parts[1]-1, +parts[2]);
-    p.classList.add('hidden');
-    loadViewDay();
-}
+    const exists = myFoods.some(x => x.n.toLowerCase() === n.toLowerCase());
+    btnSaveFood.classList.toggle('hidden', !(n && !exists));
 
-/* ── Select de alimentos ── */
-function buildSelect(){
-    const s  = document.getElementById('foodSel');
-    const gr = {};
-    DB.forEach(x=>{ if(!gr[x.m]) gr[x.m]=[]; gr[x.m].push(x); });
-    let h = '<option value="">🔍 Buscar alimento...</option>';
-    if(myFoods.length){
-        h += '<optgroup label="── ⭐ Meus Alimentos ──">';
-        myFoods.forEach(x=>{
-            h += `<option value="${x.n}" data-c="${x.cal}" data-p="${x.prot}">${x.n} (${x.cal}kcal|${x.prot}g)</option>`;
-        });
-        h += '</optgroup>';
-    }
-    M.forEach(m=>{
-        if(gr[m]){
-            h += `<optgroup label="── ${m} ──">`;
-            gr[m].forEach(x=>{
-                h += `<option value="${x.n}" data-c="${x.cal}" data-p="${x.prot}">${x.n} (${x.cal}kcal|${x.prot}g)</option>`;
-            });
-            h += '</optgroup>';
-        }
-    });
-    s.innerHTML = h;
-}
+    renderSummary();
+  }
 
-/* ── Salvar global ── */
-function saveGlobal(){
-    localStorage.setItem('nt_g',       JSON.stringify(goals));
-    localStorage.setItem('nt_myfoods', JSON.stringify(myFoods));
-    localStorage.setItem('nt_peso',    JSON.stringify(pesoMetaData));
-}
+  function saveToMyFoods(){
+    const n = foodName.value.trim();
+    const c = +foodCal.value || 0;
+    const p = +foodProt.value || 0;
 
-/* ── Metas ── */
-function saveGoals(){
-    const c=+goalCal.value, p=+goalProt.value, w=+goalWater.value;
-    if(isNaN(c)||isNaN(p)||isNaN(w)||c<100||p<10||w<1) return toast('⚠️ Inválido');
-    goals = {cal:c, prot:p, water:w};
-    pesoMetaData.pesoAtual = pesoAtual.value ? +pesoAtual.value : null;
-    pesoMetaData.pesoMeta  = pesoMeta.value  ? +pesoMeta.value  : null;
-    pesoMetaData.fatorProt = fatorProt.value ? +fatorProt.value : 2;
-    saveGlobal();
-    renderWater(); render(); renderWeekSummary(); toast('🎯 Metas salvas!');
-}
+    if(!n) return;
+    if(myFoods.some(x => x.n.toLowerCase() === n.toLowerCase())) return;
 
-function calcProtFromPeso(){
-    const p = parseFloat(pesoAtual.value);
-    const f = parseFloat(fatorProt.value);
-    if(isNaN(p)||p<=0||isNaN(f)||f<=0) return toast('⚠️ Preencha peso e fator');
-    const mp = Math.round(p*f);
-    goalProt.value = mp;
-    pesoMetaData.pesoAtual = p;
-    pesoMetaData.fatorProt = f;
-    goals.prot = mp;
-    saveGlobal();
-    render(); renderWeekSummary(); toast(`💪 Meta proteína: ${mp}g`);
-}
-
-/* ── Quantidade ── */
-function chQty(d){
-    qty = parseFloat((qty + d).toFixed(1));
-    if(qty < 0.5) qty = 0.5;
-    if(qty > 99)  qty = 99;
+    myFoods.push({ n, cal: c, prot: p });
+    myFoods.sort((a,b) => a.n.localeCompare(b.n, 'pt'));
+    localStorage.setItem('gfg_myFoods', JSON.stringify(myFoods));
+    foodName.value = '';
+    foodCal.value = '';
+    foodProt.value = '';
     upd();
-}
+    renderBank();
+  }
 
-/* ── Update display (inclui lógica do botão salvar) ── */
-function upd(){
-    qtyNum.textContent = Number.isInteger(qty) ? String(qty) : qty.toFixed(1);
+  function addFood(){
     const n = foodName.value.trim();
-    const c = +foodCal.value  || 0;
+    const c = +foodCal.value || 0;
     const p = +foodProt.value || 0;
-    hint.textContent = (c||p)
-        ? `Total: ${Math.round(c*qty)}kcal | ${Math.round(p*qty*10)/10}g prot` : '';
 
-    // Botão salvar: aparece se tem nome + calorias + ainda não existe no banco
-    const jaExiste = myFoods.some(x=>x.n.toLowerCase()===n.toLowerCase());
-    document.getElementById('btnSaveFood').style.display = (n && c>0 && !jaExiste) ? 'block' : 'none';
+    if(!n) return;
 
-    // Atualizar totais do dia
-    const t  = tot();
-    const cp = goals.cal  ? Math.min(t.cal /goals.cal *100,100) : 0;
-    const pp = goals.prot ? Math.min(t.prot/goals.prot*100,100) : 0;
-    calVal.textContent  = Math.round(t.cal);
-    protVal.textContent = Math.round(t.prot*10)/10;
-    calBar.style.width  = cp+'%';
-    protBar.style.width = pp+'%';
-    calBar.style.background  = t.cal >goals.cal  ? '#f87171':'#60a5fa';
-    protBar.style.background = t.prot>goals.prot ? '#f87171':'#4ade80';
-    calMeta.textContent  = `Meta: ${goals.cal}${t.cal>=goals.cal?' ✅':' Faltam '+Math.round(goals.cal-t.cal)}`;
-    protMeta.textContent = `Meta: ${goals.prot}g${t.prot>=goals.prot?' ✅':' Faltam '+Math.round((goals.prot-t.prot)*10)/10+'g'}`;
-}
-
-function pickFood(){
-    const o = foodSel.options[foodSel.selectedIndex];
-    if(o && o.value){
-        foodName.value = o.value;
-        foodCal.value  = o.dataset.c || '';
-        foodProt.value = o.dataset.p || '';
-        qty = 1; upd();
-    }
-}
-
-/* ── Banco de alimentos ── */
-function toggleBank(){
-    bankOpen = !bankOpen;
-    document.getElementById('bankBody').classList.toggle('hidden', !bankOpen);
-    document.getElementById('bankArrow').textContent = bankOpen ? '▲' : '▼';
-    if(bankOpen) renderBank();
-}
-
-function updateBankCount(){
-    document.getElementById('bankCount').textContent =
-        myFoods.length ? `(${myFoods.length})` : '';
-}
-
-function renderBank(){
-    const term = (document.getElementById('bankSearch').value||'').toLowerCase();
-    const list = document.getElementById('bankList');
-    const arr  = myFoods.filter(x=> !term || x.n.toLowerCase().includes(term));
-    if(!arr.length){
-        list.innerHTML = '<div style="text-align:center;color:#a0a0a0;font-size:12px;padding:12px">' +
-            (term ? 'Nenhum resultado' : 'Banco vazio — salve alimentos acima') + '</div>';
-        return;
-    }
-    list.innerHTML = arr.map(x=>
-        `<div class="my-food-row">
-            <div><b style="font-size:13px">${x.n}</b><br>
-            <span>${x.cal}kcal | ${x.prot}g prot</span></div>
-            <button onclick="delMyFood('${x.n.replace(/'/g,"\\'")}')">🗑️</button>
-        </div>`
-    ).join('');
-}
-
-function saveToMyFoods(){
-    const n = foodName.value.trim();
-    const c = +foodCal.value;
-    const p = +foodProt.value || 0;
-    if(!n || c<=0) return toast('⚠️ Preencha nome e calorias');
-    if(myFoods.some(x=>x.n.toLowerCase()===n.toLowerCase())) return toast('⚠️ Já existe no banco');
-    myFoods.push({n, cal:c, prot:p});
-    myFoods.sort((a,b)=>a.n.localeCompare(b.n,'pt'));
-    saveGlobal(); buildSelect(); updateBankCount();
-    if(bankOpen) renderBank();
-    upd(); toast('⭐ Salvo no banco!');
-}
-
-function delMyFood(name){
-    myFoods = myFoods.filter(x=>x.n!==name);
-    saveGlobal(); buildSelect(); updateBankCount();
-    if(bankOpen) renderBank();
-    upd(); toast('🗑️ Removido do banco');
-}
-
-/* ── Adicionar ao dia ── */
-function add(){
-    if(!isToday(viewDate)) return toast('⚠️ Só é possível adicionar no dia de hoje');
-    const n = foodName.value.trim();
-    const c = +foodCal.value;
-    const p = +foodProt.value || 0;
-    if(!n) return toast('⚠️ Digite o nome');
-    if(isNaN(c)||c<0) return toast('⚠️ Preencha as calorias');
-    foods.push({id:Date.now(), n, c, p, qty, meal,
-        t: new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})});
-    saveDay();
-    foodName.value=''; foodCal.value=''; foodProt.value=''; foodSel.value=''; qty=1;
-    upd(); render(); renderWeekSummary(); toast('✅ Adicionado!');
-}
-
-function del(id){
-    if(!isToday(viewDate)) return;
-    foods = foods.filter(x=>x.id!==id);
-    saveDay(); render(); renderWeekSummary(); toast('🗑️ Removido');
-}
-
-/* ── Água ── */
-function chWater(d){
-    if(!isToday(viewDate)) return;
-    water = Math.max(0, Math.min(goals.water*2, water+d));
-    saveDay(); renderWater(); renderWeekSummary();
-}
-
-function renderWater(){
-    const gw = goals.water||8;
-    document.getElementById('waterGoalLabel').textContent = gw;
-    document.getElementById('waterCount').textContent     = water;
-    document.getElementById('waterLabel').textContent     = `${water} / ${gw} copos`;
-    document.getElementById('waterBar').style.width       = (gw ? Math.min(water/gw*100,100) : 0)+'%';
-    let cups='';
-    for(let i=0;i<gw;i++) cups+=`<span class="water-cup${i<water?' full':''}">🥛</span>`;
-    document.getElementById('waterCups').innerHTML = cups||'<span style="font-size:11px;color:#a0a0a0">defina a meta</span>';
-}
-
-/* ── Limpar dia ── */
-function clearDay(){
-    if(!isToday(viewDate)) return;
-    foods=[]; water=0;
-    saveDay(); renderWater(); render(); renderWeekSummary(); toast('🗑️ Dia limpo!');
-}
-
-/* ── Render lista ── */
-function totForFoods(list){
-    return list.reduce((a,x)=>{ a.cal+=x.c*x.qty; a.prot+=x.p*x.qty; return a; },{cal:0,prot:0});
-}
-function tot(){ return totForFoods(foods); }
-function fmtQty(q){ return Number.isInteger(q) ? String(q) : q.toFixed(1); }
-
-function render(){
-    const l = document.getElementById('list');
-    const b = document.getElementById('btnClear');
-    if(!foods.length){
-        l.innerHTML='<div style="text-align:center;color:#a0a0a0;padding:20px">Nenhum alimento registrado.<br>Adicione uma refeição! 🍽️</div>';
-        b.classList.add('hidden');
-        return;
-    }
-    b.classList.toggle('hidden', !isToday(viewDate));
-    let h='';
-    M.forEach(m=>{
-        const ff = foods.filter(x=>x.meal===m);
-        if(!ff.length) return;
-        const mt = totForFoods(ff);
-        h+=`<div style="margin-bottom:10px">
-            <div style="display:flex;justify-content:space-between;padding:4px 0;
-                border-bottom:1px solid #2a2a2a;margin-bottom:4px;
-                font-weight:bold;font-size:12px;color:#4ade80">
-                <span>${m}</span>
-                <span style="font-weight:normal;color:#a0a0a0">${Math.round(mt.cal)}kcal | ${Math.round(mt.prot*10)/10}g</span>
-            </div>`;
-        ff.forEach(x=>{
-            const ql = (x.qty===1) ? '' : fmtQty(x.qty)+'x ';
-            h+=`<div class="food-item">
-                <div><b>${ql}${x.n}</b><br>
-                <span style="font-size:10px;color:#a0a0a0">${x.t} • ${Math.round(x.c*x.qty)}kcal • ${Math.round(x.p*x.qty*10)/10}g</span></div>
-                <button onclick="del(${x.id})">✕</button>
-            </div>`;
-        });
-        h+='</div>';
+    dayFoods.push({
+      id: Date.now(),
+      n,
+      c,
+      p,
+      meal,
+      t: new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'})
     });
-    l.innerHTML=h;
-}
 
-/* ── Resumo semanal ── */
-function getDateStr(offset){
-    const d=new Date(); d.setDate(d.getDate()+offset);
-    return dateKey(d);
-}
+    localStorage.setItem('gfg_dayFoods', JSON.stringify(dayFoods));
+    foodName.value = '';
+    foodCal.value = '';
+    foodProt.value = '';
+    upd();
+    renderDay();
+    renderSummary();
+  }
 
-function renderWeekSummary(){
-    const el=document.getElementById('weekSummary');
-    const dias=[];
-    for(let i=0;i<7;i++){
-        const fs=localStorage.getItem('nt_'+getDateStr(-i));
-        const ws=localStorage.getItem('nt_w_'+getDateStr(-i));
-        const t=totForFoods(fs?JSON.parse(fs):[]);
-        dias.push({cal:t.cal, prot:t.prot, water:ws?parseInt(ws):0});
+  function delBank(name){
+    myFoods = myFoods.filter(x => x.n !== name);
+    localStorage.setItem('gfg_myFoods', JSON.stringify(myFoods));
+    renderBank();
+    upd();
+  }
+
+  function delDay(id){
+    dayFoods = dayFoods.filter(x => x.id !== id);
+    localStorage.setItem('gfg_dayFoods', JSON.stringify(dayFoods));
+    renderDay();
+    renderSummary();
+  }
+
+  function totals(list){
+    return list.reduce((acc, x) => {
+      acc.cal += (x.c || 0);
+      acc.prot += (x.p || 0);
+      return acc;
+    }, { cal: 0, prot: 0 });
+  }
+
+  function renderSummary(){
+    const t = totals(dayFoods);
+    calVal.textContent = Math.round(t.cal);
+    protVal.textContent = Math.round(t.prot * 10) / 10;
+    waterCount.textContent = water;
+    waterGoalLabel.textContent = goals.water;
+
+    const calPct = goals.cal ? Math.min((t.cal / goals.cal) * 100, 100) : 0;
+    const protPct = goals.prot ? Math.min((t.prot / goals.prot) * 100, 100) : 0;
+    const waterPct = goals.water ? Math.min((water / goals.water) * 100, 100) : 0;
+
+    calBar.style.width = calPct + '%';
+    protBar.style.width = protPct + '%';
+    waterBar.style.width = waterPct + '%';
+  }
+
+  function renderBank(){
+    bankCount.textContent = myFoods.length + ' itens';
+
+    if(!myFoods.length){
+      bankList.innerHTML = '<div class="subtle">Seu banco ainda está vazio.</div>';
+      return;
     }
-    const valid=dias.filter(d=>d.cal>0||d.prot>0||d.water>0);
-    if(!valid.length){
-        el.innerHTML='<div style="font-size:11px;color:#a0a0a0">Use o app alguns dias para ver o resumo. 🙂</div>';
-        return;
+
+    bankList.innerHTML = myFoods.map(x => `
+      <div class="mini-row">
+        <div><b>${x.n}</b><br><span>${Math.round(x.cal)} kcal • ${Math.round(x.prot * 10) / 10}g prot</span></div>
+        <button class="btn-secondary" style="width:auto;padding:8px 10px;border-radius:12px" onclick="delBank('${x.n.replace(/'/g,"\\'")}')">✕</button>
+      </div>
+    `).join('');
+  }
+
+  function renderDay(){
+    todayCount.textContent = dayFoods.length + ' itens';
+
+    if(!dayFoods.length){
+      dayList.innerHTML = '<div class="subtle">Nenhum alimento adicionado hoje.</div>';
+      return;
     }
-    const avgCal  =Math.round(valid.reduce((a,d)=>a+d.cal,0)  /valid.length);
-    const avgProt =Math.round(valid.reduce((a,d)=>a+d.prot,0) /valid.length*10)/10;
-    const avgWater=Math.round(valid.reduce((a,d)=>a+d.water,0)/valid.length*10)/10;
-    const tag=r=>r<0.9?'<span class="tag-low">abaixo</span>':r<=1.1?'<span class="tag-ok">ok</span>':'<span class="tag-high">acima</span>';
-    let h='';
-    h+=`<div class="week-row"><span>Média kcal/dia</span><span class="week-val">${avgCal}</span></div>`;
-    h+=`<div class="week-row"><span>Média prot/dia</span><span class="week-val">${avgProt}g</span></div>`;
-    h+=`<div class="week-row"><span>Média água/dia</span><span class="week-val">${avgWater} copos</span></div>`;
-    if(goals.cal)   h+=`<div class="week-row"><span>Calorias vs meta</span><span>${Math.round(avgCal/goals.cal*100)}% ${tag(avgCal/goals.cal)}</span></div>`;
-    if(goals.prot)  h+=`<div class="week-row"><span>Proteína vs meta</span><span>${Math.round(avgProt/goals.prot*100)}% ${tag(avgProt/goals.prot)}</span></div>`;
-    if(goals.water) h+=`<div class="week-row"><span>Água vs meta</span><span>${Math.round(avgWater/goals.water*100)}% ${tag(avgWater/goals.water)}</span></div>`;
-    el.innerHTML=h;
-}
 
-/* ── Toast ── */
-function toast(msg){
-    const t=document.getElementById('toast');
-    t.textContent=msg; t.classList.add('show');
-    clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),1800);
-}
+    dayList.innerHTML = dayFoods.map(x => `
+      <div class="mini-row">
+        <div>
+          <b>${x.n}</b><br>
+          <span>${x.meal} • ${x.t} • ${Math.round(x.c)} kcal • ${Math.round(x.p * 10) / 10}g prot</span>
+        </div>
+        <button class="btn-secondary" style="width:auto;padding:8px 10px;border-radius:12px" onclick="delDay(${x.id})">✕</button>
+      </div>
+    `).join('');
+  }
 
-/* ── Busca online Open Food Facts ── */
-async function fetchNutrition(){
-    const st=document.getElementById('onlineStatus');
-    const name=foodName.value.trim();
-    if(!name){ st.textContent='Digite o nome do alimento.'; st.style.color='#f97373'; return; }
-    st.textContent='Buscando...'; st.style.color='#38bdf8';
-    try{
-        const info=await fetchNutritionFromAPI(name);
-        if(!info){ st.textContent='Não encontrado na base online.'; st.style.color='#f97373'; return; }
-        if(info.calories!=null) foodCal.value=info.calories;
-        if(info.protein !=null) foodProt.value=info.protein;
-        upd();
-        st.textContent='Valores da Open Food Facts. Confira antes de salvar.'; st.style.color='#4ade80';
-    }catch(e){
-        st.textContent='Erro ao buscar. Verifique sua conexão.'; st.style.color='#f97373';
-    }
-}
+  function render(){
+    renderSummary();
+    renderBank();
+    renderDay();
+    upd();
+  }
 
-async function fetchNutritionFromAPI(name){
-    const url='https://world.openfoodfacts.org/cgi/search.pl?'+
-        new URLSearchParams({search_terms:name,search_simple:1,action:'process',json:1,page_size:1});
-    const res=await fetch(url);
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    const data=await res.json();
-    if(!data.products||!data.products.length) return null;
-    const nutr=data.products[0].nutriments||{};
-    let calories=null;
-    if(typeof nutr['energy-kcal_100g']==='number') calories=Math.round(nutr['energy-kcal_100g']);
-    else if(typeof nutr['energy_100g']==='number')  calories=Math.round(nutr['energy_100g']);
-    let protein=null;
-    if(typeof nutr['proteins_100g']==='number') protein=Math.round(nutr['proteins_100g']*10)/10;
-    if(calories==null&&protein==null) return null;
-    return {calories,protein};
-}
-
-init();
+  render();
 </script>
 </body>
 </html>
