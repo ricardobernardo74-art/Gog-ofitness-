@@ -421,8 +421,7 @@ function upd(){
 
     // Botão salvar: aparece só com nome preenchido e se ainda não existir no banco
     const jaExiste = myFoods.some(x => x.n.toLowerCase() === n.toLowerCase());
-    document.getElementById('btnSaveFood').style.display = (n && !jaExiste) ? 'block' : 'none';
-
+    document.getElementById('btnSaveFood').style.display = 'block';
     // Atualizar totais do dia
     const t  = tot();
     const cp = goals.cal  ? Math.min(t.cal / goals.cal * 100, 100) : 0;
