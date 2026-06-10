@@ -9,19 +9,18 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:radial-gradient(circle at top,#0f172a 0,#020617 55%,#000 100%);color:#e5e7eb;min-height:100vh;width:100%;overflow-x:hidden}
-.app{width:100%;max-width:430px;margin:0 auto;padding:24px 12px 40px 12px;display:block}
+.app{width:100%;max-width:430px;margin:0 auto;padding:24px 12px 40px 12px}
 h1{text-align:center;color:#4ade80;margin-top:12px;margin-bottom:6px;font-size:26px;letter-spacing:2px;font-weight:800}
-.card{background:rgba(15,23,42,0.96);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 12px 35px rgba(0,0,0,0.55);border:1px solid rgba(148,163,184,0.15);width:100%;display:block}
+.card{background:rgba(15,23,42,0.96);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 12px 35px rgba(0,0,0,0.55);border:1px solid rgba(148,163,184,0.15);width:100%}
 label{font-size:11px;color:#94a3b8;display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:.03em}
 input,select{width:100%;padding:9px 11px;background:rgba(15,23,42,0.95);border:1px solid #1e293b;color:#e5e7eb;border-radius:10px;font-size:13px;display:block;margin-bottom:6px}
-#foodSel{height:120px}
-.btn{width:100%;padding:13px;background:linear-gradient(135deg,#4ade80,#22c55e);color:#020617;border:none;border-radius:999px;font-weight:600;font-size:14px;cursor:pointer;box-shadow:0 8px 18px rgba(34,197,94,0.35);display:block;margin-top:8px}
+#foodSel{height:110px}
+.btn{width:100%;padding:13px;background:linear-gradient(135deg,#4ade80,#22c55e);color:#020617;border:none;border-radius:999px;font-weight:600;font-size:14px;cursor:pointer;display:block;margin-top:8px}
 .btn:active{opacity:.85}
-.btn-sec{width:100%;padding:10px;background:rgba(15,23,42,0.9);border:1px solid #38bdf8;color:#e0f2fe;border-radius:999px;font-size:12px;font-weight:500;cursor:pointer;margin-bottom:6px;display:block;margin-top:6px}
-.btn-yellow{width:100%;padding:9px;background:rgba(24,24,27,0.9);border:1px dashed #facc15;color:#facc15;border-radius:999px;font-size:12px;font-weight:500;cursor:pointer;margin-bottom:8px;display:none}
+.btn-sec{width:100%;padding:10px;background:rgba(15,23,42,0.9);border:1px solid #38bdf8;color:#e0f2fe;border-radius:999px;font-size:12px;font-weight:500;cursor:pointer;margin-top:6px;display:block}
+.btn-yellow{width:100%;padding:10px;background:rgba(24,24,27,0.9);border:1px dashed #facc15;color:#facc15;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer;margin-top:6px;display:block}
 .btn-red{margin-top:10px;background:rgba(24,24,27,0.95);border:1px solid #f97373;color:#fecaca;padding:9px;border-radius:12px;width:100%;font-size:12px;cursor:pointer;display:block}
-.btn-orange{width:100%;padding:9px;background:rgba(24,24,27,0.9);border:1px solid #fb923c;color:#fed7aa;border-radius:999px;font-size:12px;font-weight:500;cursor:pointer;margin-top:6px;display:block}
-.bar{height:7px;background:rgba(15,23,42,0.95);border-radius:999px;margin:6px 0;overflow:hidden;border:1px solid #1f2937;width:100%}
+.bar{height:7px;background:rgba(15,23,42,0.95);border-radius:999px;margin:6px 0;overflow:hidden;border:1px solid #1f2937}
 .bar-fill{height:100%;border-radius:999px;transition:width .35s ease}
 .meal-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
 .meal-tab{flex:1;min-width:70px;padding:7px 4px;background:#0f172a;border:1px solid #1f2937;color:#9ca3af;border-radius:10px;font-size:11px;font-weight:600;cursor:pointer;text-align:center}
@@ -29,9 +28,9 @@ input,select{width:100%;padding:9px 11px;background:rgba(15,23,42,0.95);border:1
 .food-item{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#0f172a;border-radius:10px;margin-bottom:6px;border:1px solid #1f2937}
 .food-item button{background:none;border:none;color:#f87171;font-size:16px;cursor:pointer;flex-shrink:0;margin-left:8px}
 .qty-row{display:flex;align-items:center;gap:10px;margin:8px 0}
-.qty-btn{width:36px;height:36px;border-radius:50%;border:2px solid #4ade80;background:rgba(15,23,42,0.9);color:#bbf7d0;font-size:20px;font-weight:bold;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qty-btn{width:36px;height:36px;border-radius:50%;border:2px solid #4ade80;background:rgba(15,23,42,0.9);color:#bbf7d0;font-size:20px;font-weight:bold;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .water-row{display:flex;align-items:center;justify-content:center;gap:16px;margin:10px 0}
-.water-btn{width:42px;height:42px;border-radius:50%;border:2px solid #38bdf8;background:rgba(15,23,42,0.95);color:#e0f2fe;font-size:22px;font-weight:bold;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.water-btn{width:42px;height:42px;border-radius:50%;border:2px solid #38bdf8;background:rgba(15,23,42,0.95);color:#e0f2fe;font-size:22px;font-weight:bold;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .water-cups{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0;justify-content:center}
 .water-cup{opacity:.2;font-size:20px}
 .water-cup.full{opacity:1}
@@ -46,249 +45,241 @@ input,select{width:100%;padding:9px 11px;background:rgba(15,23,42,0.95);border:1
 .quick-item label{text-transform:none;font-size:12px;color:#e5e7eb;cursor:pointer;margin:0}
 .week-row{display:flex;justify-content:space-between;font-size:11px;padding:4px 0;border-bottom:1px solid #1f2937}
 .week-val{color:#e5e7eb}
-.tag-ok{color:#4ade80}
-.tag-low{color:#facc15}
-.tag-high{color:#f87171}
-.hidden{display:none!important}
-#hint{font-size:11px;color:#4ade80;margin:4px 0}
-#histNote{font-size:11px;color:#facc15;text-align:center;min-height:16px;margin-bottom:4px}
-#navLabel{font-size:13px;color:#e5e7eb;font-weight:600;text-align:center}
-#dayTitle{font-size:15px;font-weight:700;color:#4ade80;margin-bottom:8px}
-#saldoText{font-size:13px;font-weight:600;margin-top:8px;padding:8px 12px;border-radius:10px;background:rgba(0,0,0,0.3);border:1px solid #1f2937;text-align:center}
 .atv-item{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:#0f172a;border-radius:10px;margin-bottom:6px;border:1px solid #1f2937;font-size:12px}
 .atv-item button{background:none;border:none;color:#f87171;font-size:14px;cursor:pointer;margin-left:8px}
 .intensidade-row{display:flex;gap:6px;margin-bottom:8px}
 .int-btn{flex:1;padding:7px 4px;background:#0f172a;border:1px solid #1f2937;color:#9ca3af;border-radius:10px;font-size:11px;font-weight:600;cursor:pointer;text-align:center}
 .int-btn.on{background:#fb923c;color:#020617;border-color:#fb923c}
+.tag-ok{color:#4ade80}
+.tag-low{color:#facc15}
+.tag-high{color:#f87171}
+.hidden{display:none!important}
+#hint{font-size:11px;color:#4ade80;margin:4px 0;min-height:16px}
+#histNote{font-size:11px;color:#facc15;text-align:center;min-height:16px;margin-bottom:4px}
+#navLabel{font-size:13px;color:#e5e7eb;font-weight:600;text-align:center}
+#dayTitle{font-size:15px;font-weight:700;color:#4ade80;margin-bottom:8px}
+#saldoText{font-size:13px;font-weight:600;margin-top:8px;padding:8px 12px;border-radius:10px;background:rgba(0,0,0,0.3);border:1px solid #1f2937;text-align:center}
 hr{border:none;border-top:1px solid #1f2937;margin:12px 0}
 </style>
 </head>
 <body>
 <div class="app">
 
-  <h1>💪 GogãoFitness</h1>
-  <p style="text-align:center;font-size:11px;color:#9ca3af;margin-bottom:16px">
-    <span style="background:#020617;border-radius:999px;padding:4px 10px;border:1px solid #1f2937;">
-      Seu diário de calorias, proteína e treino
-    </span>
-  </p>
+<h1>💪 GogãoFitness</h1>
+<p style="text-align:center;font-size:11px;color:#9ca3af;margin-bottom:16px">
+  <span style="background:#020617;border-radius:999px;padding:4px 10px;border:1px solid #1f2937">
+    Diário de calorias, proteína e treino
+  </span>
+</p>
 
-  <!-- PESO & METAS -->
-  <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-      <span style="font-size:13px;font-weight:600">⚖️ Peso & Metas</span>
-      <span style="font-size:10px;color:#9ca3af;border-radius:999px;border:1px solid #1f2937;padding:2px 8px">Base do dia</span>
-    </div>
-    <label>Peso atual (kg)</label>
-    <input type="number" id="pesoAtual" placeholder="ex: 90">
-    <label>Peso objetivo (kg)</label>
-    <input type="number" id="pesoMeta" placeholder="ex: 80">
-    <label>Fator proteína (g/kg)</label>
-    <input type="number" id="fatorProt" value="2" step="0.1">
-    <button class="btn" onclick="calcProtFromPeso()">🧮 Calcular meta prot</button>
-    <hr>
-    <label>Meta kcal</label>
-    <input type="number" id="goalCal" value="2000">
-    <label>Meta proteína (g)</label>
-    <input type="number" id="goalProt" value="120">
-    <label>Meta água (copos)</label>
-    <input type="number" id="goalWater" value="8">
-    <button class="btn" onclick="saveGoals()">💾 Salvar</button>
+<!-- PESO & METAS -->
+<div class="card">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+    <span style="font-size:13px;font-weight:600">⚖️ Peso & Metas</span>
   </div>
-
-  <!-- NAVEGAÇÃO DE DATA -->
-  <div class="card">
-    <div class="nav-row">
-      <button class="nav-btn" onclick="navDay(-1)">◀ Anterior</button>
-      <span id="navLabel">Hoje</span>
-      <button class="nav-btn" onclick="navDay(1)">Próximo ▶</button>
-    </div>
-    <div id="histNote"></div>
-    <div id="dayTitle">Hoje</div>
-  </div>
-
-  <!-- RESUMO DO DIA -->
-  <div class="card">
-    <div style="font-size:13px;font-weight:600;margin-bottom:8px">📊 Resumo do dia</div>
-    <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px">
-      <span>🔥 Calorias consumidas</span><span id="calVal">0 / 2000 kcal</span>
-    </div>
-    <div class="bar"><div class="bar-fill" id="calBar" style="width:0%;background:linear-gradient(90deg,#60a5fa,#38bdf8)"></div></div>
-    <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px;margin-top:6px">
-      <span>💪 Proteína</span><span id="protVal">0 / 120 g</span>
-    </div>
-    <div class="bar"><div class="bar-fill" id="protBar" style="width:0%;background:linear-gradient(90deg,#4ade80,#22c55e)"></div></div>
-    <hr>
-    <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px;margin-top:6px">
-      <span>🏃 Kcal queimadas</span><span id="burnVal">0 kcal</span>
-    </div>
-    <div class="bar"><div class="bar-fill" id="burnBar" style="width:0%;background:linear-gradient(90deg,#f97316,#ef4444)"></div></div>
-    <div id="saldoText">Saldo: 0 kcal</div>
-  </div>
-
-  <!-- ATIVIDADES DO DIA -->
-  <div class="card" id="atvCard">
-    <div style="font-size:13px;font-weight:600;margin-bottom:10px">🏋️ Atividades do dia</div>
-
-    <!-- Atividades predefinidas -->
-    <label>Atividade</label>
-    <select id="atividade">
-      <option value="">— selecione —</option>
-      <optgroup label="🥊 Luta & Alta intensidade">
-        <option value="boxe_leve">Boxe — treino leve (MET 7.0)</option>
-        <option value="boxe_moderado">Boxe — treino moderado (MET 9.0)</option>
-        <option value="boxe_intenso">Boxe — sparring / pesado (MET 12.0)</option>
-      </optgroup>
-      <optgroup label="🚶 Caminhada">
-        <option value="caminhada_leve">Caminhada leve — 4 km/h (MET 3.2)</option>
-        <option value="caminhada_moderada">Caminhada moderada — 5 km/h (MET 3.8)</option>
-        <option value="caminhada_rapida">Caminhada rápida — 6 km/h (MET 4.3)</option>
-      </optgroup>
-      <optgroup label="🏃 Corrida">
-        <option value="corrida_leve">Corrida leve — 8 km/h (MET 7.0)</option>
-        <option value="corrida_moderada">Corrida moderada — 10 km/h (MET 9.0)</option>
-        <option value="corrida_forte">Corrida forte — 12+ km/h (MET 11.0)</option>
-      </optgroup>
-      <optgroup label="🪜 Escadas">
-        <option value="escadas_subir">Subir escadas — moderado (MET 8.0)</option>
-        <option value="escadas_intenso">Subir e descer — intenso (MET 9.5)</option>
-      </optgroup>
-      <optgroup label="🧘 Pilates & Yoga">
-        <option value="pilates_iniciante">Pilates — iniciante/leve (MET 2.8)</option>
-        <option value="pilates_intermediario">Pilates — intermediário (MET 3.5)</option>
-        <option value="pilates_avancado">Pilates — avançado (MET 4.5)</option>
-      </optgroup>
-      <optgroup label="🚴 Bike">
-        <option value="bike_leve">Bike — leve (MET 4.0)</option>
-        <option value="bike_moderada">Bike — moderada (MET 6.8)</option>
-        <option value="bike_intensa">Bike — intensa (MET 10.0)</option>
-      </optgroup>
-      <optgroup label="💪 Musculação">
-        <option value="musculacao_leve">Musculação — leve (MET 3.5)</option>
-        <option value="musculacao_moderada">Musculação — moderada (MET 5.0)</option>
-        <option value="musculacao_intensa">Musculação — intensa (MET 7.0)</option>
-      </optgroup>
-      <optgroup label="🏊 Natação & outros">
-        <option value="natacao_leve">Natação — leve (MET 5.0)</option>
-        <option value="natacao_intensa">Natação — intensa (MET 8.0)</option>
-        <option value="futebol">Futebol (MET 7.0)</option>
-        <option value="danca">Dança / Zumba (MET 5.0)</option>
-        <option value="yoga">Yoga (MET 2.5)</option>
-        <option value="alongamento">Alongamento / Mobilidade (MET 2.0)</option>
-      </optgroup>
-      <optgroup label="🚗 Atividades leves do dia">
-        <option value="dirigir">Dirigir carro (MET 2.0)</option>
-        <option value="pilotar_aviao">Pilotar avião (MET 2.5)</option>
-        <option value="trabalho_pe">Trabalho em pé (MET 2.3)</option>
-        <option value="trabalho_pesado">Trabalho manual pesado (MET 5.0)</option>
-        <option value="limpeza_casa">Limpeza da casa (MET 3.3)</option>
-        <option value="jardinagem">Jardinagem (MET 3.8)</option>
-      </optgroup>
-      <option value="custom">✏️ Atividade personalizada</option>
-    </select>
-
-    <!-- Campo personalizado (aparece só quando custom) -->
-    <div id="customBlock" class="hidden">
-      <label>Nome da atividade</label>
-      <input type="text" id="customNome" placeholder="ex: Surfe, Trilha, Jiu-jitsu...">
-      <label>Intensidade estimada</label>
-      <div class="intensidade-row">
-        <button class="int-btn on" id="intLeve" onclick="setInt('leve')">🟢 Leve</button>
-        <button class="int-btn" id="intMod"  onclick="setInt('moderada')">🟡 Moderada</button>
-        <button class="int-btn" id="intFort" onclick="setInt('intensa')">🔴 Intensa</button>
-      </div>
-      <p style="font-size:10px;color:#6b7280;margin-bottom:6px">
-        Leve = 3 MET · Moderada = 5 MET · Intensa = 8 MET
-      </p>
-    </div>
-
-    <label>Duração (minutos)</label>
-    <input type="number" id="tempoAtv" placeholder="ex: 60">
-
-    <button class="btn-sec" onclick="addAtividade()">➕ Adicionar atividade</button>
-
-    <!-- Lista de atividades do dia -->
-    <div id="atvList" style="margin-top:8px"></div>
-  </div>
-
-  <!-- ÁGUA -->
-  <div class="card">
-    <div style="font-size:13px;font-weight:600;margin-bottom:4px">💧 Água</div>
-    <div class="water-row">
-      <button class="water-btn" onclick="chWater(-1)">−</button>
-      <span id="waterVal" style="font-size:16px;font-weight:700;color:#38bdf8">0 / 8</span>
-      <button class="water-btn" onclick="chWater(1)">+</button>
-    </div>
-    <div class="water-cups" id="waterCups"></div>
-  </div>
-
-  <!-- ADICIONAR ALIMENTO -->
-  <div class="card" id="addCard">
-    <div style="font-size:13px;font-weight:600;margin-bottom:8px">➕ Adicionar alimento</div>
-    <div class="meal-tabs">
-      <button class="meal-tab on" data-meal="Café da manhã">☕ Café</button>
-      <button class="meal-tab" data-meal="Almoço">🍽 Almoço</button>
-      <button class="meal-tab" data-meal="Lanche">🥪 Lanche</button>
-      <button class="meal-tab" data-meal="Jantar">🌙 Jantar</button>
-    </div>
-    <label>Buscar alimento</label>
-    <input type="text" id="foodSearch" placeholder="Digite para buscar..." oninput="filterFoods()">
-    <select id="foodSel" onchange="onFoodSel()">
-      <option value="">— selecione —</option>
-    </select>
-    <div id="hint"></div>
-    <label>Nome</label>
-    <input type="text" id="foodName" placeholder="Nome do alimento">
-    <label>Calorias (kcal)</label>
-    <input type="number" id="foodCal" placeholder="0">
-    <label>Proteína (g)</label>
-    <input type="number" id="foodProt" placeholder="0">
-    <div class="qty-row">
-      <button class="qty-btn" onclick="chQty(-1)">−</button>
-      <span id="qtyVal" style="font-size:15px;font-weight:700;color:#4ade80">1x</span>
-      <button class="qty-btn" onclick="chQty(1)">+</button>
-      <span style="font-size:12px;color:#9ca3af">porções</span>
-    </div>
-    <button class="btn-yellow" id="btnSaveFood" onclick="saveToMyFoods()">⭐ Salvar no meu banco</button>
-    <button class="btn" onclick="addFood()">➕ Adicionar</button>
-  </div>
-
-  <!-- SELEÇÃO RÁPIDA -->
-  <div class="card">
-    <div class="bank-header" onclick="toggleQuick()">
-      <span style="font-size:13px;font-weight:600">⚡ Seleção rápida</span>
-      <span id="quickArrow">▼</span>
-    </div>
-    <div id="quickSection" class="hidden">
-      <div class="quick-list" id="quickList"></div>
-      <button class="btn" onclick="addQuickSelected()">➕ Adicionar selecionados</button>
-    </div>
-  </div>
-
-  <!-- MEU BANCO -->
-  <div class="card">
-    <div class="bank-header" onclick="toggleBank()">
-      <span style="font-size:13px;font-weight:600">⭐ Meu Banco de Alimentos <span id="bankCount"></span></span>
-      <span id="bankArrow">▼</span>
-    </div>
-    <div id="bankSection" class="hidden"></div>
-  </div>
-
-  <!-- LISTA DE ALIMENTOS DO DIA -->
-  <div class="card">
-    <div style="font-size:13px;font-weight:600;margin-bottom:8px">🍽 Alimentos do dia</div>
-    <div id="foodList"></div>
-    <button class="btn-red" onclick="clearDay()">🗑 Limpar dia</button>
-  </div>
-
-  <!-- ÚLTIMOS 7 DIAS -->
-  <div class="card">
-    <div style="font-size:13px;font-weight:600;margin-bottom:8px">📅 Últimos 7 dias</div>
-    <div id="weekSummary"></div>
-  </div>
-
+  <label>Peso atual (kg)</label>
+  <input type="number" id="pesoAtual" placeholder="ex: 90">
+  <label>Peso objetivo (kg)</label>
+  <input type="number" id="pesoMeta" placeholder="ex: 80">
+  <label>Fator proteína (g/kg)</label>
+  <input type="number" id="fatorProt" value="2" step="0.1">
+  <button class="btn" onclick="calcProtFromPeso()">🧮 Calcular meta prot</button>
+  <hr>
+  <label>Meta kcal</label>
+  <input type="number" id="goalCal" value="2000">
+  <label>Meta proteína (g)</label>
+  <input type="number" id="goalProt" value="120">
+  <label>Meta água (copos)</label>
+  <input type="number" id="goalWater" value="8">
+  <button class="btn" onclick="saveGoals()">💾 Salvar metas</button>
 </div>
 
+<!-- NAVEGAÇÃO -->
+<div class="card">
+  <div class="nav-row">
+    <button class="nav-btn" onclick="navDay(-1)">◀ Anterior</button>
+    <span id="navLabel">Hoje</span>
+    <button class="nav-btn" onclick="navDay(1)">Próximo ▶</button>
+  </div>
+  <div id="histNote"></div>
+  <div id="dayTitle">Hoje</div>
+</div>
+
+<!-- RESUMO -->
+<div class="card">
+  <div style="font-size:13px;font-weight:600;margin-bottom:8px">📊 Resumo do dia</div>
+  <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px">
+    <span>🔥 Calorias consumidas</span><span id="calVal">0 / 2000 kcal</span>
+  </div>
+  <div class="bar"><div class="bar-fill" id="calBar" style="width:0%;background:linear-gradient(90deg,#60a5fa,#38bdf8)"></div></div>
+  <div style="display:flex;justify-content:space-between;font-size:12px;margin-top:6px;margin-bottom:2px">
+    <span>💪 Proteína</span><span id="protVal">0 / 120 g</span>
+  </div>
+  <div class="bar"><div class="bar-fill" id="protBar" style="width:0%;background:linear-gradient(90deg,#4ade80,#22c55e)"></div></div>
+  <hr>
+  <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px">
+    <span>🏃 Kcal queimadas</span><span id="burnVal">0 kcal</span>
+  </div>
+  <div class="bar"><div class="bar-fill" id="burnBar" style="width:0%;background:linear-gradient(90deg,#f97316,#ef4444)"></div></div>
+  <div id="saldoText">Saldo: 0 kcal</div>
+</div>
+
+<!-- ATIVIDADES -->
+<div class="card" id="atvCard">
+  <div style="font-size:13px;font-weight:600;margin-bottom:10px">🏋️ Atividades do dia</div>
+  <label>Atividade</label>
+  <select id="atividade">
+    <option value="">— selecione —</option>
+    <optgroup label="🥊 Boxe">
+      <option value="boxe_leve">Boxe — treino leve (MET 7.0)</option>
+      <option value="boxe_moderado">Boxe — treino moderado (MET 9.0)</option>
+      <option value="boxe_intenso">Boxe — sparring / pesado (MET 12.0)</option>
+    </optgroup>
+    <optgroup label="🚶 Caminhada">
+      <option value="caminhada_leve">Caminhada leve 4km/h (MET 3.2)</option>
+      <option value="caminhada_moderada">Caminhada moderada 5km/h (MET 3.8)</option>
+      <option value="caminhada_rapida">Caminhada rápida 6km/h (MET 4.3)</option>
+    </optgroup>
+    <optgroup label="🏃 Corrida">
+      <option value="corrida_leve">Corrida leve 8km/h (MET 7.0)</option>
+      <option value="corrida_moderada">Corrida moderada 10km/h (MET 9.0)</option>
+      <option value="corrida_forte">Corrida forte 12+km/h (MET 11.0)</option>
+    </optgroup>
+    <optgroup label="🪜 Escadas">
+      <option value="escadas_subir">Subir escadas (MET 8.0)</option>
+      <option value="escadas_intenso">Subir e descer intenso (MET 9.5)</option>
+    </optgroup>
+    <optgroup label="🧘 Pilates">
+      <option value="pilates_iniciante">Pilates leve (MET 2.8)</option>
+      <option value="pilates_intermediario">Pilates intermediário (MET 3.5)</option>
+      <option value="pilates_avancado">Pilates avançado (MET 4.5)</option>
+    </optgroup>
+    <optgroup label="🚴 Bike">
+      <option value="bike_leve">Bike leve (MET 4.0)</option>
+      <option value="bike_moderada">Bike moderada (MET 6.8)</option>
+      <option value="bike_intensa">Bike intensa (MET 10.0)</option>
+    </optgroup>
+    <optgroup label="💪 Musculação">
+      <option value="musculacao_leve">Musculação leve (MET 3.5)</option>
+      <option value="musculacao_moderada">Musculação moderada (MET 5.0)</option>
+      <option value="musculacao_intensa">Musculação intensa (MET 7.0)</option>
+    </optgroup>
+    <optgroup label="🏊 Outros esportes">
+      <option value="natacao_leve">Natação leve (MET 5.0)</option>
+      <option value="natacao_intensa">Natação intensa (MET 8.0)</option>
+      <option value="futebol">Futebol (MET 7.0)</option>
+      <option value="danca">Dança / Zumba (MET 5.0)</option>
+      <option value="yoga">Yoga (MET 2.5)</option>
+      <option value="alongamento">Alongamento (MET 2.0)</option>
+    </optgroup>
+    <optgroup label="🚗 Atividades do dia">
+      <option value="dirigir">Dirigir carro (MET 2.0)</option>
+      <option value="pilotar_aviao">Pilotar avião ✈️ (MET 2.5)</option>
+      <option value="trabalho_pe">Trabalho em pé (MET 2.3)</option>
+      <option value="trabalho_pesado">Trabalho manual pesado (MET 5.0)</option>
+      <option value="limpeza_casa">Limpeza da casa (MET 3.3)</option>
+      <option value="jardinagem">Jardinagem (MET 3.8)</option>
+    </optgroup>
+    <option value="custom">✏️ Atividade personalizada</option>
+  </select>
+
+  <div id="customBlock" class="hidden">
+    <label>Nome da atividade</label>
+    <input type="text" id="customNome" placeholder="ex: Surfe, Trilha, Jiu-jitsu...">
+    <label>Intensidade</label>
+    <div class="intensidade-row">
+      <button class="int-btn on" id="intLeve" onclick="setInt('leve')">🟢 Leve</button>
+      <button class="int-btn" id="intMod" onclick="setInt('moderada')">🟡 Moderada</button>
+      <button class="int-btn" id="intFort" onclick="setInt('intensa')">🔴 Intensa</button>
+    </div>
+  </div>
+
+  <label>Duração (minutos)</label>
+  <input type="number" id="tempoAtv" placeholder="ex: 60">
+  <button class="btn-sec" onclick="addAtividade()">➕ Adicionar atividade</button>
+  <div id="atvList" style="margin-top:8px"></div>
+</div>
+
+<!-- ÁGUA -->
+<div class="card">
+  <div style="font-size:13px;font-weight:600;margin-bottom:4px">💧 Água</div>
+  <div class="water-row">
+    <button class="water-btn" onclick="chWater(-1)">−</button>
+    <span id="waterVal" style="font-size:16px;font-weight:700;color:#38bdf8">0 / 8</span>
+    <button class="water-btn" onclick="chWater(1)">+</button>
+  </div>
+  <div class="water-cups" id="waterCups"></div>
+</div>
+
+<!-- ADICIONAR ALIMENTO -->
+<div class="card" id="addCard">
+  <div style="font-size:13px;font-weight:600;margin-bottom:8px">➕ Adicionar alimento</div>
+  <div class="meal-tabs">
+    <button class="meal-tab on" data-meal="Café da manhã">☕ Café</button>
+    <button class="meal-tab" data-meal="Almoço">🍽 Almoço</button>
+    <button class="meal-tab" data-meal="Lanche">🥪 Lanche</button>
+    <button class="meal-tab" data-meal="Jantar">🌙 Jantar</button>
+  </div>
+  <label>Buscar alimento</label>
+  <input type="text" id="foodSearch" placeholder="Digite para buscar..." oninput="filterFoods()">
+  <select id="foodSel" onchange="onFoodSel()">
+    <option value="">— selecione —</option>
+  </select>
+  <div id="hint"></div>
+  <label>Nome</label>
+  <input type="text" id="foodName" placeholder="Nome do alimento" oninput="showSaveBtn()">
+  <label>Calorias (kcal)</label>
+  <input type="number" id="foodCal" placeholder="0">
+  <label>Proteína (g)</label>
+  <input type="number" id="foodProt" placeholder="0">
+  <div class="qty-row">
+    <button class="qty-btn" onclick="chQty(-1)">−</button>
+    <span id="qtyVal" style="font-size:15px;font-weight:700;color:#4ade80">1x</span>
+    <button class="qty-btn" onclick="chQty(1)">+</button>
+    <span style="font-size:12px;color:#9ca3af">porções</span>
+  </div>
+  <!-- BOTÃO SALVAR NO BANCO — sempre visível quando há nome preenchido -->
+  <button class="btn-yellow" id="btnSaveFood" onclick="saveToMyFoods()" style="display:none">
+    ⭐ Salvar no meu banco
+  </button>
+  <button class="btn" onclick="addFood()">➕ Adicionar ao dia</button>
+</div>
+
+<!-- SELEÇÃO RÁPIDA -->
+<div class="card">
+  <div class="bank-header" onclick="toggleQuick()">
+    <span style="font-size:13px;font-weight:600">⚡ Seleção rápida</span>
+    <span id="quickArrow">▼</span>
+  </div>
+  <div id="quickSection" class="hidden">
+    <div class="quick-list" id="quickList"></div>
+    <button class="btn" onclick="addQuickSelected()">➕ Adicionar selecionados</button>
+  </div>
+</div>
+
+<!-- MEU BANCO -->
+<div class="card">
+  <div class="bank-header" onclick="toggleBank()">
+    <span style="font-size:13px;font-weight:600">⭐ Meu Banco de Alimentos <span id="bankCount"></span></span>
+    <span id="bankArrow">▼</span>
+  </div>
+  <div id="bankSection" class="hidden"></div>
+</div>
+
+<!-- LISTA DO DIA -->
+<div class="card">
+  <div style="font-size:13px;font-weight:600;margin-bottom:8px">🍽 Alimentos do dia</div>
+  <div id="foodList"></div>
+  <button class="btn-red" onclick="clearDay()">🗑 Limpar dia</button>
+</div>
+
+<!-- ÚLTIMOS 7 DIAS -->
+<div class="card">
+  <div style="font-size:13px;font-weight:600;margin-bottom:8px">📅 Últimos 7 dias</div>
+  <div id="weekSummary"></div>
+</div>
+
+</div>
 <script>
 const DB=[
   {n:'Ovo cozido',cal:70,prot:6},{n:'Pão francês',cal:140,prot:5},
@@ -306,101 +297,63 @@ const DB=[
 ];
 
 const MET_TABLE={
-  boxe_leve:7.0, boxe_moderado:9.0, boxe_intenso:12.0,
-  caminhada_leve:3.2, caminhada_moderada:3.8, caminhada_rapida:4.3,
-  corrida_leve:7.0, corrida_moderada:9.0, corrida_forte:11.0,
-  escadas_subir:8.0, escadas_intenso:9.5,
-  pilates_iniciante:2.8, pilates_intermediario:3.5, pilates_avancado:4.5,
-  bike_leve:4.0, bike_moderada:6.8, bike_intensa:10.0,
-  musculacao_leve:3.5, musculacao_moderada:5.0, musculacao_intensa:7.0,
-  natacao_leve:5.0, natacao_intensa:8.0,
-  futebol:7.0, danca:5.0, yoga:2.5, alongamento:2.0,
-  dirigir:2.0, pilotar_aviao:2.5,
-  trabalho_pe:2.3, trabalho_pesado:5.0, limpeza_casa:3.3, jardinagem:3.8
+  boxe_leve:7,boxe_moderado:9,boxe_intenso:12,
+  caminhada_leve:3.2,caminhada_moderada:3.8,caminhada_rapida:4.3,
+  corrida_leve:7,corrida_moderada:9,corrida_forte:11,
+  escadas_subir:8,escadas_intenso:9.5,
+  pilates_iniciante:2.8,pilates_intermediario:3.5,pilates_avancado:4.5,
+  bike_leve:4,bike_moderada:6.8,bike_intensa:10,
+  musculacao_leve:3.5,musculacao_moderada:5,musculacao_intensa:7,
+  natacao_leve:5,natacao_intensa:8,futebol:7,danca:5,yoga:2.5,alongamento:2,
+  dirigir:2,pilotar_aviao:2.5,trabalho_pe:2.3,trabalho_pesado:5,limpeza_casa:3.3,jardinagem:3.8
 };
-
-const MET_CUSTOM={leve:3.0, moderada:5.0, intensa:8.0};
-
+const MET_CUSTOM={leve:3,moderada:5,intensa:8};
 const M=['Café da manhã','Almoço','Lanche','Jantar'];
+
 let meal='Café da manhã',goals={cal:2000,prot:120,water:8};
 let foods=[],myFoods=[],qty=1,water=0;
 let pesoMetaData={pesoAtual:null,pesoMeta:null,fatorProt:2};
-let viewDate=new Date();
-let burnByDay={};
-let atvByDay={};
-let customInt='leve';
+let viewDate=new Date(),burnByDay={},atvByDay={},customInt='leve';
 
-/* ─── Utilidades de data ─── */
-function dateKey(d){
-  const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),dy=String(d.getDate()).padStart(2,'0');
-  return`${y}-${m}-${dy}`;
-}
+function dateKey(d){const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),dy=String(d.getDate()).padStart(2,'0');return`${y}-${m}-${dy}`;}
 function isToday(d){return dateKey(d)===dateKey(new Date());}
-function fmtLabel(d){
-  if(isToday(d))return'📅 Hoje';
-  return d.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit'});
-}
+function fmtLabel(d){if(isToday(d))return'📅 Hoje';return d.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit'});}
 
-/* ─── Init ─── */
 function init(){
   const g=localStorage.getItem('nt_g');if(g)goals=JSON.parse(g);
   document.getElementById('goalCal').value=goals.cal;
   document.getElementById('goalProt').value=goals.prot;
   document.getElementById('goalWater').value=goals.water||8;
-
   const mf=localStorage.getItem('nt_myfoods');myFoods=mf?JSON.parse(mf):[];
   const pw=localStorage.getItem('nt_peso');if(pw)pesoMetaData=JSON.parse(pw);
   if(pesoMetaData.pesoAtual)document.getElementById('pesoAtual').value=pesoMetaData.pesoAtual;
-  if(pesoMetaData.pesoMeta) document.getElementById('pesoMeta').value=pesoMetaData.pesoMeta;
+  if(pesoMetaData.pesoMeta)document.getElementById('pesoMeta').value=pesoMetaData.pesoMeta;
   if(pesoMetaData.fatorProt)document.getElementById('fatorProt').value=pesoMetaData.fatorProt;
-
   const b=localStorage.getItem('nt_burn');burnByDay=b?JSON.parse(b):{};
   const a=localStorage.getItem('nt_atv');atvByDay=a?JSON.parse(a):{};
-
   buildSelect();buildQuickList();
-
   document.querySelectorAll('.meal-tab').forEach(btn=>{
-    btn.onclick=()=>{
-      document.querySelectorAll('.meal-tab').forEach(x=>x.classList.remove('on'));
-      btn.classList.add('on');
-      meal=btn.dataset.meal;
-      document.getElementById('foodSel').value='';
-    };
+    btn.onclick=()=>{document.querySelectorAll('.meal-tab').forEach(x=>x.classList.remove('on'));btn.classList.add('on');meal=btn.dataset.meal;};
   });
-
   document.getElementById('atividade').addEventListener('change',function(){
-    const cb=document.getElementById('customBlock');
-    cb.classList.toggle('hidden',this.value!=='custom');
+    document.getElementById('customBlock').classList.toggle('hidden',this.value!=='custom');
   });
-
-  updateBankCount();
-  loadViewDay();
-  renderWeekSummary();
+  updateBankCount();loadViewDay();renderWeekSummary();
 }
 
-/* ─── Dia ─── */
 function loadViewDay(){
   const key=dateKey(viewDate);
   const f=localStorage.getItem('nt_'+key);foods=f?JSON.parse(f):[];
   const w=localStorage.getItem('nt_w_'+key);water=w?parseInt(w):0;
-
   document.getElementById('navLabel').textContent=fmtLabel(viewDate);
-  document.getElementById('dayTitle').textContent=isToday(viewDate)?'Hoje':
-    viewDate.toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'2-digit'});
+  document.getElementById('dayTitle').textContent=isToday(viewDate)?'Hoje':viewDate.toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'2-digit'});
   document.getElementById('histNote').textContent=isToday(viewDate)?'':'👁 Histórico — somente leitura';
-
-  const addCard=document.getElementById('addCard');
-  const atvCard=document.getElementById('atvCard');
   const ro=!isToday(viewDate);
-  addCard.style.opacity=ro?'0.4':'1';
-  addCard.style.pointerEvents=ro?'none':'auto';
-  atvCard.style.opacity=ro?'0.4':'1';
-  atvCard.style.pointerEvents=ro?'none':'auto';
-
-  render();
-  renderWater();
-  renderAtvList();
-  upd();
+  ['addCard','atvCard'].forEach(id=>{
+    document.getElementById(id).style.opacity=ro?'0.4':'1';
+    document.getElementById(id).style.pointerEvents=ro?'none':'auto';
+  });
+  render();renderWater();renderAtvList();upd();
 }
 
 function saveDay(){
@@ -411,12 +364,8 @@ function saveDay(){
   localStorage.setItem('nt_atv',JSON.stringify(atvByDay));
 }
 
-function navDay(d){
-  const x=new Date(viewDate);x.setDate(x.getDate()+d);
-  if(x>new Date())return;viewDate=x;loadViewDay();
-}
+function navDay(d){const x=new Date(viewDate);x.setDate(x.getDate()+d);if(x>new Date())return;viewDate=x;loadViewDay();}
 
-/* ─── Peso & Metas ─── */
 function calcProtFromPeso(){
   const pa=parseFloat(document.getElementById('pesoAtual').value);
   const pm=parseFloat(document.getElementById('pesoMeta').value);
@@ -436,49 +385,32 @@ function saveGoals(){
     water:parseInt(document.getElementById('goalWater').value)||8
   };
   localStorage.setItem('nt_g',JSON.stringify(goals));
-  upd();alert('Metas salvas!');
+  upd();renderWater();alert('Metas salvas!');
 }
 
-/* ─── Atividades ─── */
-function getPeso(){
-  const p=parseFloat(document.getElementById('pesoAtual').value);
-  return(!isNaN(p)&&p>0)?p:80;
-}
-
-function setInt(nivel){
-  customInt=nivel;
-  document.getElementById('intLeve').classList.toggle('on',nivel==='leve');
-  document.getElementById('intMod').classList.toggle('on',nivel==='moderada');
-  document.getElementById('intFort').classList.toggle('on',nivel==='intensa');
-}
+/* ── Atividades ── */
+function getPeso(){const p=parseFloat(document.getElementById('pesoAtual').value);return(!isNaN(p)&&p>0)?p:80;}
+function setInt(n){customInt=n;['Leve','Mod','Fort'].forEach(x=>document.getElementById('int'+x).classList.remove('on'));document.getElementById('int'+(n==='leve'?'Leve':n==='moderada'?'Mod':'Fort')).classList.add('on');}
 
 function addAtividade(){
   const tipo=document.getElementById('atividade').value;
-  const minutos=parseInt(document.getElementById('tempoAtv').value)||0;
+  const min=parseInt(document.getElementById('tempoAtv').value)||0;
   if(!tipo)return alert('Selecione uma atividade.');
-  if(!minutos)return alert('Informe a duração em minutos.');
-
+  if(!min)return alert('Informe a duração em minutos.');
   const key=dateKey(viewDate);
   if(!atvByDay[key])atvByDay[key]=[];
-
   let met,nome;
   if(tipo==='custom'){
-    const n=document.getElementById('customNome').value.trim();
-    nome=n||'Atividade personalizada';
+    nome=document.getElementById('customNome').value.trim()||'Atividade personalizada';
     met=MET_CUSTOM[customInt];
   }else{
-    met=MET_TABLE[tipo]||3.0;
+    met=MET_TABLE[tipo]||3;
     const sel=document.getElementById('atividade');
     nome=sel.options[sel.selectedIndex].text.split('(')[0].trim();
   }
-
-  const kcal=Math.round(met*getPeso()*(minutos/60));
-  atvByDay[key].push({nome,minutos,met,kcal});
-  recalcBurn(key);
-  saveDay();
-  renderAtvList();
-  upd();
-
+  const kcal=Math.round(met*getPeso()*(min/60));
+  atvByDay[key].push({nome,minutos:min,met,kcal});
+  recalcBurn(key);saveDay();renderAtvList();upd();
   document.getElementById('atividade').value='';
   document.getElementById('tempoAtv').value='';
   document.getElementById('customBlock').classList.add('hidden');
@@ -487,75 +419,55 @@ function addAtividade(){
 
 function removeAtv(i){
   const key=dateKey(viewDate);
-  if(!atvByDay[key])return;
   atvByDay[key].splice(i,1);
-  recalcBurn(key);
-  saveDay();
-  renderAtvList();
-  upd();
+  recalcBurn(key);saveDay();renderAtvList();upd();
 }
 
-function recalcBurn(key){
-  const lista=atvByDay[key]||[];
-  burnByDay[key]=lista.reduce((s,a)=>s+a.kcal,0);
-}
+function recalcBurn(key){burnByDay[key]=(atvByDay[key]||[]).reduce((s,a)=>s+a.kcal,0);}
 
 function renderAtvList(){
-  const key=dateKey(viewDate);
-  const lista=atvByDay[key]||[];
-  const div=document.getElementById('atvList');
+  const key=dateKey(viewDate),lista=atvByDay[key]||[],div=document.getElementById('atvList');
   if(!lista.length){div.innerHTML='<p style="color:#6b7280;font-size:12px;text-align:center">Nenhuma atividade registrada</p>';return;}
   div.innerHTML='';
   lista.forEach((a,i)=>{
-    const el=document.createElement('div');
-    el.className='atv-item';
-    el.innerHTML=`<div><div style="font-weight:500">${a.nome}</div><div style="color:#9ca3af;font-size:11px">${a.minutos} min · MET ${a.met} · ${a.kcal} kcal</div></div><button onclick="removeAtv(${i})">✕</button>`;
+    const el=document.createElement('div');el.className='atv-item';
+    el.innerHTML=`<div><div style="font-weight:500">${a.nome}</div><div style="color:#9ca3af;font-size:11px">${a.minutos}min · MET ${a.met} · ${a.kcal} kcal</div></div><button onclick="removeAtv(${i})">✕</button>`;
     div.appendChild(el);
   });
 }
 
-/* ─── upd (resumo) ─── */
+/* ── Resumo ── */
 function upd(){
-  const key = dateKey(viewDate);
-
-  const totCal  = foods.reduce((s,f) => s + f.cal  * (f.q || 1), 0);
-  const totProt = foods.reduce((s,f) => s + f.prot * (f.q || 1), 0);
-  const burn    = burnByDay[key] || 0;
-  const saldo   = totCal - burn;
-
-  document.getElementById('calVal').textContent  = `${totCal.toFixed(0)} / ${goals.cal} kcal`;
-  document.getElementById('protVal').textContent = `${totProt.toFixed(1)} / ${goals.prot} g`;
-  document.getElementById('calBar').style.width  = Math.min(100, totCal/goals.cal*100)   + '%';
-  document.getElementById('protBar').style.width = Math.min(100, totProt/goals.prot*100) + '%';
-
-  document.getElementById('burnVal').textContent = `${burn} kcal`;
-  document.getElementById('burnBar').style.width = Math.min(100, (burn/Math.max(goals.cal,1))*100) + '%';
-
-  const st = document.getElementById('saldoText');
-  if(saldo > 200){
-    st.textContent = `Saldo: +${saldo.toFixed(0)} kcal — superávit 🔺`;
-    st.style.color = '#f97316';
-    st.style.borderColor = '#7c2d12';
-  }else if(saldo < -200){
-    st.textContent = `Saldo: ${saldo.toFixed(0)} kcal — déficit 🔻`;
-    st.style.color = '#4ade80';
-    st.style.borderColor = '#14532d';
-  }else{
-    st.textContent = `Saldo: ${saldo.toFixed(0)} kcal — equilíbrio ⚖️`;
-    st.style.color = '#38bdf8';
-    st.style.borderColor = '#0c4a6e';
-  }
+  const key=dateKey(viewDate);
+  const totCal=foods.reduce((s,f)=>s+f.cal*(f.q||1),0);
+  const totProt=foods.reduce((s,f)=>s+f.prot*(f.q||1),0);
+  const burn=burnByDay[key]||0,saldo=totCal-burn;
+  document.getElementById('calVal').textContent=`${totCal.toFixed(0)} / ${goals.cal} kcal`;
+  document.getElementById('protVal').textContent=`${totProt.toFixed(1)} / ${goals.prot} g`;
+  document.getElementById('calBar').style.width=Math.min(100,totCal/goals.cal*100)+'%';
+  document.getElementById('protBar').style.width=Math.min(100,totProt/goals.prot*100)+'%';
+  document.getElementById('burnVal').textContent=`${burn} kcal`;
+  document.getElementById('burnBar').style.width=Math.min(100,(burn/Math.max(goals.cal,1))*100)+'%';
+  const st=document.getElementById('saldoText');
+  if(saldo>200){st.textContent=`Saldo: +${saldo.toFixed(0)} kcal — superávit 🔺`;st.style.color='#f97316';st.style.borderColor='#7c2d12';}
+  else if(saldo<-200){st.textContent=`Saldo: ${saldo.toFixed(0)} kcal — déficit 🔻`;st.style.color='#4ade80';st.style.borderColor='#14532d';}
+  else{st.textContent=`Saldo: ${saldo.toFixed(0)} kcal — equilíbrio ⚖️`;st.style.color='#38bdf8';st.style.borderColor='#0c4a6e';}
 }
-/* ─── Água ─── */
+
+/* ── Água ── */
 function chWater(d){water=Math.max(0,Math.min(20,water+d));saveDay();renderWater();}
 function renderWater(){
-  const g=goals.water||8;
-  document.getElementById('waterVal').textContent=`${water} / ${g}`;
+  const g=goals.water||8;document.getElementById('waterVal').textContent=`${water} / ${g}`;
   const cups=document.getElementById('waterCups');cups.innerHTML='';
   for(let i=0;i<g;i++){const s=document.createElement('span');s.className='water-cup'+(i<water?' full':'');s.textContent='🥤';cups.appendChild(s);}
 }
 
-/* ─── Alimentos ─── */
+/* ── Alimentos ── */
+function showSaveBtn(){
+  const name=document.getElementById('foodName').value.trim();
+  document.getElementById('btnSaveFood').style.display=name?'block':'none';
+}
+
 function buildSelect(){
   const all=[...DB,...myFoods],sel=document.getElementById('foodSel');
   sel.innerHTML='<option value="">— selecione —</option>';
@@ -572,126 +484,74 @@ function filterFoods(){
       const o=document.createElement('option');o.value=i;o.textContent=`${f.n} (${f.cal}kcal / ${f.prot}g prot)`;sel.appendChild(o);n++;
     }
   });
-  hint.textContent=!q?'Digite algo para filtrar':n?`${n} alimento(s) encontrado(s)`:`Nenhum resultado para "${q}"`;
+  hint.textContent=!q?'Digite algo para filtrar':n?`${n} encontrado(s)`:`Nenhum resultado para "${q}"`;
 }
 
-function onFoodSel() {
-  const sel = document.getElementById('foodSel');
-  const idx = parseInt(sel.value);
-  const hint = document.getElementById('hint');
-  const btnSave = document.getElementById('btnSaveFood');
-  if (isNaN(idx)) {
-    btnSave.style.display = 'none';
-    return;
-  }
-
-  const all = [...DB, ...myFoods];
-  const f = all[idx];
-
-  document.getElementById('foodName').value = f.n;
-  document.getElementById('foodCal').value  = f.cal;
-  document.getElementById('foodProt').value = f.prot;
-  hint.textContent = '';
-
-  // Se for alimento padrão (DB), mostra botão para salvar no banco
-  if (idx < DB.length) {
-    btnSave.style.display = 'block';
-  } else {
-    // já é do banco do usuário
-    btnSave.style.display = 'none';
-  }
+function onFoodSel(){
+  const idx=parseInt(document.getElementById('foodSel').value);
+  if(isNaN(idx))return;
+  const f=[...DB,...myFoods][idx];
+  document.getElementById('foodName').value=f.n;
+  document.getElementById('foodCal').value=f.cal;
+  document.getElementById('foodProt').value=f.prot;
+  document.getElementById('hint').textContent='';
+  // mostra o botão salvar: se for do DB padrão ou digitado, sempre mostra
+  document.getElementById('btnSaveFood').style.display=idx<DB.length?'block':'none';
 }
 
 function chQty(d){
-  // d continua sendo +1 ou -1 vindo dos botões
-  // mas vamos trabalhar em passos de 0.5
-  const step = 0.5;
-
-  qty = qty + d * step;
-
-  // não deixar menor que 0.25
-  if(qty < 0.25) qty = 0.25;
-
-  // arredonda para 2 casas pra evitar números feios tipo 1.499999
-  qty = Math.round(qty * 100) / 100;
-
-  // exibição amigável: 1 → "1x", 1.5 → "1,5x", 0.75 → "0,75x"
-  let txt = qty.toString().replace('.', ',');
-  document.getElementById('qtyVal').textContent = txt + 'x';
+  qty=Math.round(Math.max(0.25,qty+d*0.5)*100)/100;
+  document.getElementById('qtyVal').textContent=qty.toString().replace('.',',')+' x';
 }
 
-function addFood() {
-  const name = document.getElementById('foodName').value.trim();
-  const cal  = parseFloat(document.getElementById('foodCal').value)  || 0;
-  const prot = parseFloat(document.getElementById('foodProt').value) || 0;
-  if (!name) return alert('Informe o nome do alimento.');
-
-  // ... resto da lógica de adicionar no dia ...
-
-  // depois de adicionar, esconde o botão
-  document.getElementById('btnSaveFood').style.display = 'none';
+function addFood(){
+  const name=document.getElementById('foodName').value.trim();
+  const cal=parseFloat(document.getElementById('foodCal').value)||0;
+  const prot=parseFloat(document.getElementById('foodProt').value)||0;
+  if(!name)return alert('Informe o nome do alimento.');
+  foods.push({n:name,cal,prot,m:meal,q:qty});
+  saveDay();render();upd();
+  document.getElementById('foodName').value='';
+  document.getElementById('foodCal').value='';
+  document.getElementById('foodProt').value='';
+  document.getElementById('foodSearch').value='';
+  document.getElementById('foodSel').value='';
+  document.getElementById('hint').textContent='';
+  document.getElementById('btnSaveFood').style.display='none';
+  qty=1;document.getElementById('qtyVal').textContent='1x';
 }
 
 function removeFood(i){foods.splice(i,1);saveDay();render();upd();}
 
 function render(){
-  const list = document.getElementById('foodList');
-  if(!foods.length){
-    list.innerHTML = '<p style="color:#6b7280;font-size:12px;text-align:center">Nenhum alimento adicionado</p>';
-    return;
-  }
-  list.innerHTML = '';
-
-  M.forEach(m => {
-    const mf = foods.filter(f => f.m === m);
-    if(!mf.length) return;
-
-    const h = document.createElement('div');
-    h.style.cssText = 'font-size:11px;color:#9ca3af;margin:8px 0 4px;font-weight:600;text-transform:uppercase';
-    h.textContent = m;
-    list.appendChild(h);
-
-    mf.forEach(f => {
-      const idx = foods.indexOf(f);
-      const q   = f.q || 1;
-      const qText = q === 1 ? '' : ` · ${q.toString().replace('.', ',')}x`;
-      const calTot  = f.cal  * q;
-      const protTot = f.prot * q;
-
-      const div = document.createElement('div');
-      div.className = 'food-item';
-      div.innerHTML = `
-        <div>
-          <div style="font-size:13px;font-weight:500">${f.n}${qText}</div>
-          <div style="font-size:11px;color:#9ca3af">
-            ${calTot.toFixed(0)} kcal · ${protTot.toFixed(1)}g prot
-          </div>
-        </div>
-        <button onclick="removeFood(${idx})">✕</button>
-      `;
+  const list=document.getElementById('foodList');
+  if(!foods.length){list.innerHTML='<p style="color:#6b7280;font-size:12px;text-align:center">Nenhum alimento adicionado</p>';return;}
+  list.innerHTML='';
+  M.forEach(m=>{
+    const mf=foods.filter(f=>f.m===m);if(!mf.length)return;
+    const h=document.createElement('div');h.style.cssText='font-size:11px;color:#9ca3af;margin:8px 0 4px;font-weight:600;text-transform:uppercase';h.textContent=m;list.appendChild(h);
+    mf.forEach(f=>{
+      const idx=foods.indexOf(f),q=f.q||1;
+      const qTxt=q===1?'':` · ${q.toString().replace('.',',')}x`;
+      const div=document.createElement('div');div.className='food-item';
+      div.innerHTML=`<div><div style="font-size:13px;font-weight:500">${f.n}${qTxt}</div><div style="font-size:11px;color:#9ca3af">${(f.cal*q).toFixed(0)} kcal · ${(f.prot*q).toFixed(1)}g prot</div></div><button onclick="removeFood(${idx})">✕</button>`;
       list.appendChild(div);
     });
   });
 }
 
-/* ─── Meu banco ─── */
+/* ── Banco ── */
 function saveToMyFoods(){
-  const name = document.getElementById('foodName').value.trim();
-  const cal  = parseFloat(document.getElementById('foodCal').value)  || 0;
-  const prot = parseFloat(document.getElementById('foodProt').value) || 0;
-  if(!name) return alert('Informe o nome.');
-  if(myFoods.find(f => f.n.toLowerCase() === name.toLowerCase()))
-    return alert('Já está no banco.');
-
-  myFoods.push({n:name, cal:cal, prot:prot});
-  localStorage.setItem('nt_myfoods', JSON.stringify(myFoods));
-  buildSelect();
-  buildQuickList();
-  updateBankCount();
-  renderBank();
-  alert('Salvo no banco!');
-
-  document.getElementById('btnSaveFood').style.display = 'none';
+  const name=document.getElementById('foodName').value.trim();
+  const cal=parseFloat(document.getElementById('foodCal').value)||0;
+  const prot=parseFloat(document.getElementById('foodProt').value)||0;
+  if(!name)return alert('Informe o nome do alimento.');
+  if(myFoods.find(f=>f.n.toLowerCase()===name.toLowerCase()))return alert('Já está no banco!');
+  myFoods.push({n:name,cal,prot});
+  localStorage.setItem('nt_myfoods',JSON.stringify(myFoods));
+  buildSelect();buildQuickList();updateBankCount();
+  document.getElementById('btnSaveFood').style.display='none';
+  alert('✅ Salvo no banco: '+name);
 }
 
 function updateBankCount(){document.getElementById('bankCount').textContent=myFoods.length?`(${myFoods.length})`:''; }
@@ -704,11 +564,13 @@ function toggleBank(){
 
 function renderBank(){
   const s=document.getElementById('bankSection');
-  if(!myFoods.length){s.innerHTML='<p style="color:#6b7280;font-size:12px;text-align:center;padding:8px">Banco vazio</p>';return;}
+  if(!myFoods.length){s.innerHTML='<p style="color:#6b7280;font-size:12px;text-align:center;padding:8px">Banco vazio — adicione alimentos pelo campo acima</p>';return;}
   s.innerHTML='';
-  myFoods.forEach((f,i)=>{const div=document.createElement('div');div.className='my-food-row';
+  myFoods.forEach((f,i)=>{
+    const div=document.createElement('div');div.className='my-food-row';
     div.innerHTML=`<div><strong>${f.n}</strong><br><span>${f.cal} kcal · ${f.prot}g prot</span></div><button onclick="removeMyFood(${i})">🗑</button>`;
-    s.appendChild(div);});
+    s.appendChild(div);
+  });
 }
 
 function removeMyFood(i){
@@ -716,7 +578,7 @@ function removeMyFood(i){
   buildSelect();buildQuickList();updateBankCount();renderBank();
 }
 
-/* ─── Seleção rápida ─── */
+/* ── Seleção rápida ── */
 function buildQuickList(){
   const all=[...DB,...myFoods],ql=document.getElementById('quickList');ql.innerHTML='';
   all.forEach((f,i)=>{const div=document.createElement('div');div.className='quick-item';
@@ -731,28 +593,26 @@ function toggleQuick(){
 function addQuickSelected(){
   const all=[...DB,...myFoods],chk=document.querySelectorAll('#quickList input:checked');
   if(!chk.length)return alert('Selecione ao menos um alimento.');
-  chk.forEach(cb=>{const f=all[parseInt(cb.value)];foods.push({n:f.n,cal:f.cal,prot:f.prot,m:meal});cb.checked=false;});
+  chk.forEach(cb=>{const f=all[parseInt(cb.value)];foods.push({n:f.n,cal:f.cal,prot:f.prot,m:meal,q:1});cb.checked=false;});
   saveDay();render();upd();
 }
 
-function clearDay(){
-  if(!confirm('Limpar todos os alimentos do dia?'))return;foods=[];saveDay();render();upd();
-}
+function clearDay(){if(!confirm('Limpar todos os alimentos do dia?'))return;foods=[];saveDay();render();upd();}
 
-/* ─── Semana ─── */
+/* ── Semana ── */
 function renderWeekSummary(){
   const div=document.getElementById('weekSummary');div.innerHTML='';
   for(let i=6;i>=0;i--){
     const d=new Date();d.setDate(d.getDate()-i);
     const key=dateKey(d),f=localStorage.getItem('nt_'+key);
-    const arr=f?JSON.parse(f):[],totCal=arr.reduce((s,x)=>s+x.cal,0),totProt=arr.reduce((s,x)=>s+x.prot,0);
+    const arr=f?JSON.parse(f):[],totCal=arr.reduce((s,x)=>s+x.cal*(x.q||1),0),totProt=arr.reduce((s,x)=>s+x.prot*(x.q||1),0);
     const burn=burnByDay[key]||0,saldo=totCal-burn;
     const label=i===0?'Hoje':d.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit'});
     const tagC=totCal===0?'':totCal<=goals.cal?'<span class="tag-ok">✓</span>':'<span class="tag-high">↑</span>';
     const tagP=totProt===0?'':totProt>=goals.prot?'<span class="tag-ok">✓</span>':'<span class="tag-low">↓</span>';
-    const saldoStr=burn>0?` · saldo ${saldo>0?'+':''}${saldo}`:'';
+    const saldoStr=burn>0?` · saldo ${saldo>0?'+':''}${saldo.toFixed(0)}`:'';
     const row=document.createElement('div');row.className='week-row';
-    row.innerHTML=`<span>${label}</span><span class="week-val">${totCal}kcal ${tagC}</span><span class="week-val">${totProt.toFixed(0)}g ${tagP}${saldoStr}</span>`;
+    row.innerHTML=`<span>${label}</span><span class="week-val">${totCal.toFixed(0)}kcal ${tagC}</span><span class="week-val">${totProt.toFixed(0)}g ${tagP}${saldoStr}</span>`;
     div.appendChild(row);
   }
 }
