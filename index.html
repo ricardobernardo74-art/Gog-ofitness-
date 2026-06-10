@@ -464,8 +464,13 @@ function renderWater(){
 
 /* ── Alimentos ── */
 function showSaveBtn(){
-  const name=document.getElementById('foodName').value.trim();
-  document.getElementById('btnSaveFood').style.display=name?'block':'none';
+  const name = document.getElementById('foodName').value.trim();
+  const btn  = document.getElementById('btnSaveFood');
+  if (name) {
+    btn.style.display = 'block';
+  } else {
+    btn.style.display = 'none';
+  }
 }
 
 function buildSelect(){
@@ -488,15 +493,17 @@ function filterFoods(){
 }
 
 function onFoodSel(){
-  const idx=parseInt(document.getElementById('foodSel').value);
-  if(isNaN(idx))return;
-  const f=[...DB,...myFoods][idx];
-  document.getElementById('foodName').value=f.n;
-  document.getElementById('foodCal').value=f.cal;
-  document.getElementById('foodProt').value=f.prot;
-  document.getElementById('hint').textContent='';
-  // mostra o botão salvar: se for do DB padrão ou digitado, sempre mostra
-  document.getElementById('btnSaveFood').style.display=idx<DB.length?'block':'none';
+  const idx = parseInt(document.getElementById('foodSel').value);
+  if (isNaN(idx)) return;
+
+  const f = [...DB, ...myFoods][idx];
+  document.getElementById('foodName').value = f.n;
+  document.getElementById('foodCal').value  = f.cal;
+  document.getElementById('foodProt').value = f.prot;
+  document.getElementById('hint').textContent = '';
+
+  // Sempre chama showSaveBtn para aplicar a mesma regra
+  showSaveBtn();
 }
 
 function chQty(d){
