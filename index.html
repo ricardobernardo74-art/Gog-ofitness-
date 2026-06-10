@@ -13,15 +13,14 @@
     --text: #17324d;
     --muted: #6f859d;
     --primary: #2f7de1;
-    --primary-2: #5ea1ff;
     --accent: #6c63ff;
     --success: #3aa76d;
+    --danger: #e15b5b;
     --shadow: 0 10px 30px rgba(30, 72, 120, 0.10);
     --radius: 20px;
   }
 
   *{box-sizing:border-box;margin:0;padding:0}
-
   body{
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background:
@@ -30,7 +29,7 @@
     color: var(--text);
     min-height:100vh;
     padding: 12px 10px 22px;
-    overflow-x: hidden;
+    overflow-x:hidden;
   }
 
   .app{
@@ -50,42 +49,19 @@
     backdrop-filter: blur(8px);
   }
 
-  .brand{
-    display:flex;
-    flex-direction:column;
-    gap: 6px;
-    align-items:flex-start;
-  }
-
+  .brand{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
   .brand h1{
-    font-size: 26px;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-    color: var(--text);
+    font-size:26px;line-height:1.05;letter-spacing:-0.03em;color:var(--text)
   }
-
-  .brand p{
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.4;
-  }
-
+  .brand p{color:var(--muted);font-size:13px;line-height:1.4}
   .pill{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    margin-top: 12px;
-    padding: 8px 12px;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.72);
-    border: 1px solid rgba(47,125,225,0.10);
-    color: var(--primary);
-    font-size: 12px;
-    font-weight: 600;
+    display:inline-flex;align-items:center;gap:8px;margin-top:12px;
+    padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.72);
+    border:1px solid rgba(47,125,225,0.10);color:var(--primary);font-size:12px;font-weight:600
   }
 
   .card{
-    width: 100%;
+    width:100%;
     background: var(--card);
     border: 1px solid var(--card-border);
     border-radius: var(--radius);
@@ -96,234 +72,87 @@
   }
 
   .card-title{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom: 12px;
+    display:flex;justify-content:space-between;align-items:center;margin-bottom:12px
   }
+  .card-title h2{font-size:15px;color:var(--text);letter-spacing:-0.02em}
+  .card-title span{font-size:12px;color:var(--muted)}
 
-  .card-title h2{
-    font-size: 15px;
-    color: var(--text);
-    letter-spacing: -0.02em;
-  }
-
-  .card-title span{
-    font-size: 12px;
-    color: var(--muted);
-  }
-
-  .grid-2{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  .field{
-    display:flex;
-    flex-direction:column;
-    gap: 6px;
-  }
-
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .field{display:flex;flex-direction:column;gap:6px}
   label{
-    font-size: 11px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: .04em;
-    font-weight: 700;
+    font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:700
   }
-
   input, select{
     width:100%;
-    border: 1px solid rgba(47,125,225,0.14);
+    border:1px solid rgba(47,125,225,0.14);
     background: rgba(255,255,255,0.95);
     color: var(--text);
     border-radius: 14px;
     padding: 13px 14px;
     font-size: 14px;
     outline: none;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
   }
-
   input::placeholder{color:#9bb0c6}
-
   input:focus, select:focus{
     border-color: rgba(47,125,225,0.35);
     box-shadow: 0 0 0 4px rgba(47,125,225,0.10);
   }
 
   .tabs{
-    display:flex;
-    gap: 8px;
-    overflow-x:auto;
-    padding-bottom: 2px;
-    margin-bottom: 12px;
-    -webkit-overflow-scrolling: touch;
+    display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;margin-bottom:12px;-webkit-overflow-scrolling:touch
   }
-
   .tab{
-    flex: 0 0 auto;
-    padding: 10px 14px;
-    border-radius: 999px;
-    border: 1px solid rgba(47,125,225,0.12);
-    background: rgba(255,255,255,0.88);
-    color: var(--muted);
-    font-size: 12px;
-    font-weight: 700;
+    flex:0 0 auto;padding:10px 14px;border-radius:999px;border:1px solid rgba(47,125,225,0.12);
+    background:rgba(255,255,255,0.88);color:var(--muted);font-size:12px;font-weight:700;cursor:pointer
   }
-
   .tab.on{
-    background: linear-gradient(135deg, var(--primary), var(--accent));
-    color: white;
-    border-color: transparent;
+    background:linear-gradient(135deg,var(--primary),var(--accent));color:white;border-color:transparent
   }
 
-  .stat-row{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
+  .stat-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .stat{
     background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,251,255,0.95));
-    border: 1px solid rgba(47,125,225,0.10);
-    border-radius: 18px;
-    padding: 14px;
+    border:1px solid rgba(47,125,225,0.10);border-radius:18px;padding:14px
   }
-
-  .stat .num{
-    font-size: 26px;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    color: var(--text);
-  }
-
-  .stat .lbl{
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-
+  .stat .num{font-size:26px;font-weight:800;letter-spacing:-0.03em;color:var(--text)}
+  .stat .lbl{font-size:12px;color:var(--muted);margin-top:4px}
   .bar{
-    height: 8px;
-    background: rgba(47,125,225,0.10);
-    border-radius: 999px;
-    overflow:hidden;
-    margin-top: 10px;
+    height:8px;background:rgba(47,125,225,0.10);border-radius:999px;overflow:hidden;margin-top:10px
   }
-
   .bar > div{
-    height:100%;
-    border-radius: 999px;
-    width: 0%;
-    background: linear-gradient(90deg, var(--primary), var(--primary-2));
+    height:100%;border-radius:999px;width:0%;background:linear-gradient(90deg,var(--primary),#5ea1ff)
   }
 
   .btn{
-    width:100%;
-    border: none;
-    border-radius: 16px;
-    padding: 14px 16px;
-    font-size: 14px;
-    font-weight: 800;
-    cursor: pointer;
-    background: linear-gradient(135deg, var(--primary), var(--accent));
-    color: white;
-    box-shadow: 0 10px 20px rgba(47,125,225,0.18);
+    width:100%;border:none;border-radius:16px;padding:14px 16px;font-size:14px;font-weight:800;cursor:pointer;
+    background:linear-gradient(135deg,var(--primary),var(--accent));color:white;box-shadow:0 10px 20px rgba(47,125,225,0.18)
   }
-
   .btn-secondary{
-    width:100%;
-    border: 1px solid rgba(47,125,225,0.14);
-    border-radius: 16px;
-    padding: 13px 16px;
-    background: rgba(255,255,255,0.88);
-    color: var(--primary);
-    font-size: 14px;
-    font-weight: 800;
-  }
-
-  .subtle{
-    color: var(--muted);
-    font-size: 12px;
-    line-height: 1.45;
-  }
-
-  .section-list{
-    display:flex;
-    flex-direction:column;
-    gap: 10px;
+    width:100%;border:1px solid rgba(47,125,225,0.14);border-radius:16px;padding:13px 16px;
+    background:rgba(255,255,255,0.88);color:var(--primary);font-size:14px;font-weight:800
   }
 
   .mini-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(47,125,225,0.08);
-    font-size: 13px;
+    display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(47,125,225,0.08);font-size:13px
   }
-
   .mini-row:last-child{border-bottom:none}
-
   .mini-row b{color:var(--text)}
   .mini-row span{color:var(--muted)}
+  .soft-line{height:1px;background:rgba(47,125,225,0.10);margin:12px 0}
+  .hint{font-size:12px;color:var(--success);margin-top:8px;min-height:16px}
 
-  .soft-line{
-    height:1px;
-    background: rgba(47,125,225,0.10);
-    margin: 12px 0;
-  }
-
-  .hint{
-    font-size: 12px;
-    color: var(--success);
-    margin-top: 8px;
-    min-height: 16px;
-  }
-
-  .tiny{
-    font-size: 11px;
-    color: var(--muted);
-  }
+  .hidden{display:none!important}
 
   @media (max-width: 420px){
-    body{
-      padding: 10px 8px 20px;
-    }
-
-    .app{
-      max-width: 100%;
-    }
-
-    .card{
-      padding: 13px;
-      border-radius: 18px;
-    }
-
-    .brand h1{
-      font-size: 24px;
-    }
-
-    .grid-2{
-      grid-template-columns: 1fr;
-    }
-
-    .stat-row{
-      grid-template-columns: 1fr;
-    }
-
-    input, select, .btn, .btn-secondary{
-      font-size: 15px;
-    }
-
-    .tabs{
-      gap: 6px;
-    }
-
-    .tab{
-      padding: 9px 12px;
-    }
+    body{padding:10px 8px 20px}
+    .app{max-width:100%}
+    .card{padding:13px;border-radius:18px}
+    .brand h1{font-size:24px}
+    .grid-2{grid-template-columns:1fr}
+    .stat-row{grid-template-columns:1fr}
+    input, select, .btn, .btn-secondary{font-size:15px}
+    .tabs{gap:6px}
+    .tab{padding:9px 12px}
   }
 </style>
 </head>
@@ -332,42 +161,30 @@
     <div class="topbar">
       <div class="brand">
         <h1>GogãoFitness</h1>
-        <p>Seu app de dieta, água e treino com visual clean e sofisticado, feito para uso no celular.</p>
+        <p>Seu app de dieta em versão leve, simples e pronta para celular.</p>
       </div>
-      <div class="pill">Diário de calorias • proteína • hidratação</div>
+      <div class="pill">Base mínima funcional</div>
     </div>
 
     <div class="card">
       <div class="card-title">
-        <h2>⚖️ Peso & Metas</h2>
-        <span>Resumo rápido</span>
+        <h2>⚖️ Metas</h2>
+        <span id="goalStatus">Salvar metas</span>
       </div>
 
       <div class="grid-2">
         <div class="field">
-          <label>Peso atual</label>
-          <input type="number" placeholder="Ex.: 80">
-        </div>
-        <div class="field">
-          <label>Peso objetivo</label>
-          <input type="number" placeholder="Ex.: 75">
-        </div>
-      </div>
-
-      <div class="grid-2" style="margin-top:10px">
-        <div class="field">
           <label>Meta kcal</label>
-          <input type="number" placeholder="Ex.: 2000">
+          <input type="number" id="goalCal" value="2000" min="100" step="50">
         </div>
         <div class="field">
           <label>Meta proteína</label>
-          <input type="number" placeholder="Ex.: 120">
+          <input type="number" id="goalProt" value="120" min="10" step="5">
         </div>
       </div>
 
       <div class="soft-line"></div>
-
-      <button class="btn">Salvar metas</button>
+      <button class="btn" onclick="saveGoals()">Salvar metas</button>
     </div>
 
     <div class="card">
@@ -378,123 +195,256 @@
 
       <div class="stat-row">
         <div class="stat">
-          <div class="num">0</div>
+          <div class="num" id="calVal">0</div>
           <div class="lbl">kcal consumidas</div>
-          <div class="bar"><div></div></div>
+          <div class="bar"><div id="calBar"></div></div>
         </div>
         <div class="stat">
-          <div class="num">0</div>
+          <div class="num" id="protVal">0</div>
           <div class="lbl">proteína (g)</div>
-          <div class="bar"><div></div></div>
+          <div class="bar"><div id="protBar"></div></div>
         </div>
-      </div>
-
-      <div style="margin-top:12px" class="stat">
-        <div class="num" style="font-size:22px">0</div>
-        <div class="lbl">água</div>
-        <div class="bar"><div style="width:0%;background:linear-gradient(90deg,#36c2ff,#5ea1ff)"></div></div>
       </div>
     </div>
 
     <div class="card">
       <div class="card-title">
         <h2>➕ Adicionar alimento</h2>
-        <span>Manual ou banco</span>
+        <span>Manual</span>
       </div>
 
-      <div class="tabs">
-        <div class="tab on">Café</div>
-        <div class="tab">Almoço</div>
-        <div class="tab">Lanche</div>
-        <div class="tab">Jantar</div>
-      </div>
-
-      <div class="field" style="margin-bottom:10px">
-        <label>Buscar alimento</label>
-        <select>
-          <option>Digite ou escolha um alimento</option>
-        </select>
+      <div class="tabs" id="mealTabs">
+        <div class="tab on" data-meal="Café da manhã">Café</div>
+        <div class="tab" data-meal="Almoço">Almoço</div>
+        <div class="tab" data-meal="Lanche">Lanche</div>
+        <div class="tab" data-meal="Jantar">Jantar</div>
       </div>
 
       <div class="field" style="margin-bottom:10px">
         <label>Nome do alimento</label>
-        <input type="text" placeholder="Ex.: Frango grelhado">
+        <input type="text" id="foodName" placeholder="Ex.: Frango grelhado" oninput="upd()">
       </div>
 
       <div class="grid-2">
         <div class="field">
           <label>Calorias</label>
-          <input type="number" placeholder="0">
+          <input type="number" id="foodCal" placeholder="0" oninput="upd()">
         </div>
         <div class="field">
           <label>Proteína</label>
-          <input type="number" placeholder="0">
+          <input type="number" id="foodProt" placeholder="0" oninput="upd()">
         </div>
       </div>
 
-      <div class="hint">Botão de salvar aparece quando houver dados válidos.</div>
+      <div class="hint" id="hint"></div>
 
-      <button class="btn-secondary" style="margin-top:10px">⭐ Salvar no meu banco</button>
-      <button class="btn" style="margin-top:10px">➕ Adicionar ao dia</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        <h2>💧 Água</h2>
-        <span>Hidratação diária</span>
-      </div>
-
-      <div class="mini-row">
-        <div><b>Copos consumidos</b><br><span>0 / 8</span></div>
-        <div class="tiny">Meta</div>
-      </div>
-
-      <div class="stat" style="padding:12px">
-        <div class="bar"><div style="width:0%;background:linear-gradient(90deg,#36c2ff,#5ea1ff)"></div></div>
-      </div>
+      <button class="btn-secondary" id="btnSaveFood" style="margin-top:10px" onclick="saveToMyFoods()">⭐ Salvar no meu banco</button>
+      <button class="btn" style="margin-top:10px" onclick="addFood()">➕ Adicionar ao dia</button>
     </div>
 
     <div class="card">
       <div class="card-title">
         <h2>⭐ Meu Banco de Alimentos</h2>
-        <span>Organizado</span>
+        <span id="bankCount">0 itens</span>
       </div>
 
-      <div class="section-list">
-        <div class="mini-row">
-          <div><b>Ovo cozido</b><br><span>70 kcal • 6g prot</span></div>
-          <span>✕</span>
-        </div>
-        <div class="mini-row">
-          <div><b>Frango grelhado</b><br><span>165 kcal • 31g prot</span></div>
-          <span>✕</span>
-        </div>
-        <div class="mini-row">
-          <div><b>Banana</b><br><span>105 kcal • 1.3g prot</span></div>
-          <span>✕</span>
-        </div>
-      </div>
+      <div id="bankList" class="section-list"></div>
     </div>
 
     <div class="card">
       <div class="card-title">
-        <h2>📅 Últimos 7 dias</h2>
-        <span>Média semanal</span>
+        <h2>📋 Alimentos de hoje</h2>
+        <span id="todayCount">0 itens</span>
       </div>
 
-      <div class="mini-row">
-        <span>Média kcal</span>
-        <b>0</b>
-      </div>
-      <div class="mini-row">
-        <span>Média proteína</span>
-        <b>0g</b>
-      </div>
-      <div class="mini-row">
-        <span>Média água</span>
-        <b>0 copos</b>
-      </div>
+      <div id="dayList" class="section-list"></div>
     </div>
   </div>
+
+<script>
+  let goals = { cal: 2000, prot: 120 };
+  let myFoods = [];
+  let dayFoods = [];
+  let meal = 'Café da manhã';
+
+  const goalCal = document.getElementById('goalCal');
+  const goalProt = document.getElementById('goalProt');
+  const foodName = document.getElementById('foodName');
+  const foodCal = document.getElementById('foodCal');
+  const foodProt = document.getElementById('foodProt');
+  const hint = document.getElementById('hint');
+  const btnSaveFood = document.getElementById('btnSaveFood');
+  const bankList = document.getElementById('bankList');
+  const dayList = document.getElementById('dayList');
+  const bankCount = document.getElementById('bankCount');
+  const todayCount = document.getElementById('todayCount');
+  const calVal = document.getElementById('calVal');
+  const protVal = document.getElementById('protVal');
+  const calBar = document.getElementById('calBar');
+  const protBar = document.getElementById('protBar');
+
+  const savedGoals = localStorage.getItem('gfg_goals');
+  if(savedGoals) goals = JSON.parse(savedGoals);
+
+  const savedFoods = localStorage.getItem('gfg_myFoods');
+  if(savedFoods) myFoods = JSON.parse(savedFoods);
+
+  const savedDay = localStorage.getItem('gfg_dayFoods');
+  if(savedDay) dayFoods = JSON.parse(savedDay);
+
+  goalCal.value = goals.cal;
+  goalProt.value = goals.prot;
+
+  document.querySelectorAll('#mealTabs .tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('#mealTabs .tab').forEach(t => t.classList.remove('on'));
+      tab.classList.add('on');
+      meal = tab.dataset.meal;
+    });
+  });
+
+  function saveGoals(){
+    const cal = +goalCal.value || 0;
+    const prot = +goalProt.value || 0;
+    if(cal < 100 || prot < 10) return;
+    goals = { cal, prot };
+    localStorage.setItem('gfg_goals', JSON.stringify(goals));
+    render();
+  }
+
+  function upd(){
+    const n = foodName.value.trim();
+    const c = +foodCal.value || 0;
+    const p = +foodProt.value || 0;
+
+    hint.textContent = (n || c || p)
+      ? `Total: ${Math.round(c)}kcal | ${Math.round(p * 10) / 10}g prot`
+      : '';
+
+    const exists = myFoods.some(x => x.n.toLowerCase() === n.toLowerCase());
+    btnSaveFood.classList.toggle('hidden', !(n && !exists));
+
+    renderSummary();
+  }
+
+  function saveToMyFoods(){
+    const n = foodName.value.trim();
+    const c = +foodCal.value || 0;
+    const p = +foodProt.value || 0;
+
+    if(!n) return;
+    if(myFoods.some(x => x.n.toLowerCase() === n.toLowerCase())) return;
+
+    myFoods.push({ n, cal: c, prot: p });
+    myFoods.sort((a,b) => a.n.localeCompare(b.n, 'pt'));
+    localStorage.setItem('gfg_myFoods', JSON.stringify(myFoods));
+    foodName.value = '';
+    foodCal.value = '';
+    foodProt.value = '';
+    upd();
+    renderBank();
+  }
+
+  function addFood(){
+    const n = foodName.value.trim();
+    const c = +foodCal.value || 0;
+    const p = +foodProt.value || 0;
+
+    if(!n) return;
+    dayFoods.push({
+      id: Date.now(),
+      n,
+      c,
+      p,
+      meal,
+      t: new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'})
+    });
+
+    localStorage.setItem('gfg_dayFoods', JSON.stringify(dayFoods));
+    foodName.value = '';
+    foodCal.value = '';
+    foodProt.value = '';
+    meal = document.querySelector('#mealTabs .tab.on').dataset.meal;
+    upd();
+    renderDay();
+    renderSummary();
+  }
+
+  function delBank(name){
+    myFoods = myFoods.filter(x => x.n !== name);
+    localStorage.setItem('gfg_myFoods', JSON.stringify(myFoods));
+    renderBank();
+    upd();
+  }
+
+  function delDay(id){
+    dayFoods = dayFoods.filter(x => x.id !== id);
+    localStorage.setItem('gfg_dayFoods', JSON.stringify(dayFoods));
+    renderDay();
+    renderSummary();
+  }
+
+  function totals(list){
+    return list.reduce((acc, x) => {
+      acc.cal += (x.c || 0);
+      acc.prot += (x.p || 0);
+      return acc;
+    }, { cal: 0, prot: 0 });
+  }
+
+  function renderSummary(){
+    const t = totals(dayFoods);
+    calVal.textContent = Math.round(t.cal);
+    protVal.textContent = Math.round(t.prot * 10) / 10;
+
+    const calPct = goals.cal ? Math.min((t.cal / goals.cal) * 100, 100) : 0;
+    const protPct = goals.prot ? Math.min((t.prot / goals.prot) * 100, 100) : 0;
+
+    calBar.style.width = calPct + '%';
+    protBar.style.width = protPct + '%';
+  }
+
+  function renderBank(){
+    bankCount.textContent = myFoods.length + ' itens';
+    if(!myFoods.length){
+      bankList.innerHTML = '<div class="subtle">Seu banco ainda está vazio.</div>';
+      return;
+    }
+
+    bankList.innerHTML = myFoods.map(x => `
+      <div class="mini-row">
+        <div><b>${x.n}</b><br><span>${Math.round(x.cal)} kcal • ${Math.round(x.prot * 10) / 10}g prot</span></div>
+        <button class="btn-secondary" style="width:auto;padding:8px 10px;border-radius:12px" onclick="delBank('${x.n.replace(/'/g,"\\'")}')">✕</button>
+      </div>
+    `).join('');
+  }
+
+  function renderDay(){
+    todayCount.textContent = dayFoods.length + ' itens';
+    if(!dayFoods.length){
+      dayList.innerHTML = '<div class="subtle">Nenhum alimento adicionado hoje.</div>';
+      return;
+    }
+
+    dayList.innerHTML = dayFoods.map(x => `
+      <div class="mini-row">
+        <div>
+          <b>${x.n}</b><br>
+          <span>${x.meal} • ${x.t} • ${Math.round(x.c)} kcal • ${Math.round(x.p * 10) / 10}g prot</span>
+        </div>
+        <button class="btn-secondary" style="width:auto;padding:8px 10px;border-radius:12px" onclick="delDay(${x.id})">✕</button>
+      </div>
+    `).join('');
+  }
+
+  function render(){
+    renderSummary();
+    renderBank();
+    renderDay();
+    upd();
+  }
+
+  render();
+</script>
 </body>
 </html>
