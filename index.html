@@ -227,7 +227,15 @@ hr{border:none;border-top:1px solid #1f2937;margin:12px 0}
   </select>
   <div id="hint"></div>
   <label>Nome</label>
-  <input type="text" id="foodName" placeholder="Nome do alimento" oninput="showSaveBtn()" onkeyup="showSaveBtn()" onchange="showSaveBtn()">
+  <input
+  type="text"
+  id="foodName"
+  placeholder="Nome do alimento"
+  oninput="showSaveBtn()"
+  onkeyup="showSaveBtn()"
+  onchange="showSaveBtn()"
+  onblur="showSaveBtn()"
+/>
   <label>Calorias (kcal)</label>
   <input type="number" id="foodCal" placeholder="0">
   <label>Proteína (g)</label>
@@ -465,17 +473,17 @@ function renderWater(){
 /* ── Alimentos ── */
 function showSaveBtn() {
   try {
-    var name = document.getElementById('foodName').value;
-    var btn  = document.getElementById('btnSaveFood');
-    if (!btn) return;           // se não achar o botão, evita erro
+    const nameInput = document.getElementById('foodName');
+    const btn = document.getElementById('btnSaveFood');
+    if (!nameInput || !btn) return;
 
-    if (name && name.trim() !== '') {
+    const name = (nameInput.value || '').trim();
+    if (name.length > 0) {
       btn.style.display = 'block';
     } else {
       btn.style.display = 'none';
     }
   } catch (e) {
-    // só pra garantir que qualquer erro aqui não quebre o resto do app
     console.error('Erro em showSaveBtn:', e);
   }
 }
@@ -504,14 +512,15 @@ function onFoodSel() {
   const idx = parseInt(sel.value);
   if (isNaN(idx)) return;
 
-  const f = [...DB, ...myFoods][idx];
+  const all = [...DB, ...myFoods];
+  const f = all[idx];
 
   document.getElementById('foodName').value = f.n;
   document.getElementById('foodCal').value  = f.cal;
   document.getElementById('foodProt').value = f.prot;
   document.getElementById('hint').textContent = '';
 
-  // aplica sempre a mesma regra: se tem nome, mostra; se não, esconde
+  // Sempre aplica a mesma regra: se tem texto no Nome, mostra o botão
   showSaveBtn();
 }
 
