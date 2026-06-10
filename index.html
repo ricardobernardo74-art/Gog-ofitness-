@@ -227,7 +227,7 @@ hr{border:none;border-top:1px solid #1f2937;margin:12px 0}
   </select>
   <div id="hint"></div>
   <label>Nome</label>
-  <input type="text" id="foodName" placeholder="Nome do alimento" oninput="showSaveBtn()">
+  <input type="text" id="foodName" placeholder="Nome do alimento" oninput="showSaveBtn()" onkeyup="showSaveBtn()" onchange="showSaveBtn()">
   <label>Calorias (kcal)</label>
   <input type="number" id="foodCal" placeholder="0">
   <label>Proteína (g)</label>
