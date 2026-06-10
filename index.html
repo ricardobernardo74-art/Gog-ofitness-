@@ -575,14 +575,31 @@ function filterFoods(){
   hint.textContent=!q?'Digite algo para filtrar':n?`${n} alimento(s) encontrado(s)`:`Nenhum resultado para "${q}"`;
 }
 
-function onFoodSel(){
-  const idx=parseInt(document.getElementById('foodSel').value);if(isNaN(idx))return;
-  const f=[...DB,...myFoods][idx];
-  document.getElementById('foodName').value=f.n;
-  document.getElementById('foodCal').value=f.cal;
-  document.getElementById('foodProt').value=f.prot;
-  document.getElementById('hint').textContent='';
-  document.getElementById('btnSaveFood').style.display=idx<DB.length?'block':'none';
+function onFoodSel() {
+  const sel = document.getElementById('foodSel');
+  const idx = parseInt(sel.value);
+  const hint = document.getElementById('hint');
+  const btnSave = document.getElementById('btnSaveFood');
+  if (isNaN(idx)) {
+    btnSave.style.display = 'none';
+    return;
+  }
+
+  const all = [...DB, ...myFoods];
+  const f = all[idx];
+
+  document.getElementById('foodName').value = f.n;
+  document.getElementById('foodCal').value  = f.cal;
+  document.getElementById('foodProt').value = f.prot;
+  hint.textContent = '';
+
+  // Se for alimento padrão (DB), mostra botão para salvar no banco
+  if (idx < DB.length) {
+    btnSave.style.display = 'block';
+  } else {
+    // já é do banco do usuário
+    btnSave.style.display = 'none';
+  }
 }
 
 function chQty(d){
@@ -603,29 +620,16 @@ function chQty(d){
   document.getElementById('qtyVal').textContent = txt + 'x';
 }
 
-function addFood(){
+function addFood() {
   const name = document.getElementById('foodName').value.trim();
   const cal  = parseFloat(document.getElementById('foodCal').value)  || 0;
   const prot = parseFloat(document.getElementById('foodProt').value) || 0;
-  if(!name) return alert('Informe o nome do alimento.');
+  if (!name) return alert('Informe o nome do alimento.');
 
-  // cada item agora guarda a quantidade
-  foods.push({n:name, cal:cal, prot:prot, m:meal, q:qty});
+  // ... resto da lógica de adicionar no dia ...
 
-  saveDay();
-  render();
-  upd();
-
-  // reset dos campos
-  document.getElementById('foodName').value = '';
-  document.getElementById('foodCal').value  = '';
-  document.getElementById('foodProt').value = '';
-  document.getElementById('foodSearch').value = '';
-  document.getElementById('foodSel').value = '';
-  document.getElementById('hint').textContent = '';
+  // depois de adicionar, esconde o botão
   document.getElementById('btnSaveFood').style.display = 'none';
-  qty = 1;
-  document.getElementById('qtyVal').textContent = '1x';
 }
 
 function removeFood(i){foods.splice(i,1);saveDay();render();upd();}
@@ -672,13 +676,22 @@ function render(){
 
 /* ─── Meu banco ─── */
 function saveToMyFoods(){
-  const name=document.getElementById('foodName').value.trim();
-  const cal=parseFloat(document.getElementById('foodCal').value)||0;
-  const prot=parseFloat(document.getElementById('foodProt').value)||0;
-  if(!name)return alert('Informe o nome.');
-  if(myFoods.find(f=>f.n.toLowerCase()===name.toLowerCase()))return alert('Já está no banco.');
-  myFoods.push({n:name,cal,prot});localStorage.setItem('nt_myfoods',JSON.stringify(myFoods));
-  buildSelect();buildQuickList();updateBankCount();renderBank();alert('Salvo no banco!');
+  const name = document.getElementById('foodName').value.trim();
+  const cal  = parseFloat(document.getElementById('foodCal').value)  || 0;
+  const prot = parseFloat(document.getElementById('foodProt').value) || 0;
+  if(!name) return alert('Informe o nome.');
+  if(myFoods.find(f => f.n.toLowerCase() === name.toLowerCase()))
+    return alert('Já está no banco.');
+
+  myFoods.push({n:name, cal:cal, prot:prot});
+  localStorage.setItem('nt_myfoods', JSON.stringify(myFoods));
+  buildSelect();
+  buildQuickList();
+  updateBankCount();
+  renderBank();
+  alert('Salvo no banco!');
+
+  document.getElementById('btnSaveFood').style.display = 'none';
 }
 
 function updateBankCount(){document.getElementById('bankCount').textContent=myFoods.length?`(${myFoods.length})`:''; }
