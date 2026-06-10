@@ -516,36 +516,36 @@ function renderAtvList(){
 
 /* ─── upd (resumo) ─── */
 function upd(){
-  const key=dateKey(viewDate);
-  const totCal=foods.reduce((s,f)=>s+f.cal,0);
-  const totProt=foods.reduce((s,f)=>s+f.prot,0);
-  const burn=burnByDay[key]||0;
-  const saldo=totCal-burn;
+  const key = dateKey(viewDate);
 
-  document.getElementById('calVal').textContent=`${totCal} / ${goals.cal} kcal`;
-  document.getElementById('protVal').textContent=`${totProt.toFixed(1)} / ${goals.prot} g`;
-  document.getElementById('calBar').style.width=Math.min(100,totCal/goals.cal*100)+'%';
-  document.getElementById('protBar').style.width=Math.min(100,totProt/goals.prot*100)+'%';
+  const totCal  = foods.reduce((s,f) => s + f.cal  * (f.q || 1), 0);
+  const totProt = foods.reduce((s,f) => s + f.prot * (f.q || 1), 0);
+  const burn    = burnByDay[key] || 0;
+  const saldo   = totCal - burn;
 
-  document.getElementById('burnVal').textContent=`${burn} kcal`;
-  document.getElementById('burnBar').style.width=Math.min(100,(burn/Math.max(goals.cal,1))*100)+'%';
+  document.getElementById('calVal').textContent  = `${totCal.toFixed(0)} / ${goals.cal} kcal`;
+  document.getElementById('protVal').textContent = `${totProt.toFixed(1)} / ${goals.prot} g`;
+  document.getElementById('calBar').style.width  = Math.min(100, totCal/goals.cal*100)   + '%';
+  document.getElementById('protBar').style.width = Math.min(100, totProt/goals.prot*100) + '%';
 
-  const st=document.getElementById('saldoText');
-  if(saldo>200){
-    st.textContent=`Saldo: +${saldo} kcal — superávit 🔺`;
-    st.style.color='#f97316';
-    st.style.borderColor='#7c2d12';
-  }else if(saldo<-200){
-    st.textContent=`Saldo: ${saldo} kcal — déficit 🔻`;
-    st.style.color='#4ade80';
-    st.style.borderColor='#14532d';
+  document.getElementById('burnVal').textContent = `${burn} kcal`;
+  document.getElementById('burnBar').style.width = Math.min(100, (burn/Math.max(goals.cal,1))*100) + '%';
+
+  const st = document.getElementById('saldoText');
+  if(saldo > 200){
+    st.textContent = `Saldo: +${saldo.toFixed(0)} kcal — superávit 🔺`;
+    st.style.color = '#f97316';
+    st.style.borderColor = '#7c2d12';
+  }else if(saldo < -200){
+    st.textContent = `Saldo: ${saldo.toFixed(0)} kcal — déficit 🔻`;
+    st.style.color = '#4ade80';
+    st.style.borderColor = '#14532d';
   }else{
-    st.textContent=`Saldo: ${saldo} kcal — equilíbrio ⚖️`;
-    st.style.color='#38bdf8';
-    st.style.borderColor='#0c4a6e';
+    st.textContent = `Saldo: ${saldo.toFixed(0)} kcal — equilíbrio ⚖️`;
+    st.style.color = '#38bdf8';
+    st.style.borderColor = '#0c4a6e';
   }
 }
-
 /* ─── Água ─── */
 function chWater(d){water=Math.max(0,Math.min(20,water+d));saveDay();renderWater();}
 function renderWater(){
@@ -585,37 +585,88 @@ function onFoodSel(){
   document.getElementById('btnSaveFood').style.display=idx<DB.length?'block':'none';
 }
 
-function chQty(d){qty=Math.max(1,qty+d);document.getElementById('qtyVal').textContent=qty+'x';}
+function chQty(d){
+  // d continua sendo +1 ou -1 vindo dos botões
+  // mas vamos trabalhar em passos de 0.5
+  const step = 0.5;
+
+  qty = qty + d * step;
+
+  // não deixar menor que 0.25
+  if(qty < 0.25) qty = 0.25;
+
+  // arredonda para 2 casas pra evitar números feios tipo 1.499999
+  qty = Math.round(qty * 100) / 100;
+
+  // exibição amigável: 1 → "1x", 1.5 → "1,5x", 0.75 → "0,75x"
+  let txt = qty.toString().replace('.', ',');
+  document.getElementById('qtyVal').textContent = txt + 'x';
+}
 
 function addFood(){
-  const name=document.getElementById('foodName').value.trim();
-  const cal=parseFloat(document.getElementById('foodCal').value)||0;
-  const prot=parseFloat(document.getElementById('foodProt').value)||0;
-  if(!name)return alert('Informe o nome do alimento.');
-  for(let i=0;i<qty;i++)foods.push({n:name,cal,prot,m:meal});
-  saveDay();render();upd();
-  document.getElementById('foodName').value='';
-  document.getElementById('foodCal').value='';
-  document.getElementById('foodProt').value='';
-  document.getElementById('foodSearch').value='';
-  document.getElementById('foodSel').value='';
-  document.getElementById('hint').textContent='';
-  document.getElementById('btnSaveFood').style.display='none';
-  qty=1;document.getElementById('qtyVal').textContent='1x';
+  const name = document.getElementById('foodName').value.trim();
+  const cal  = parseFloat(document.getElementById('foodCal').value)  || 0;
+  const prot = parseFloat(document.getElementById('foodProt').value) || 0;
+  if(!name) return alert('Informe o nome do alimento.');
+
+  // cada item agora guarda a quantidade
+  foods.push({n:name, cal:cal, prot:prot, m:meal, q:qty});
+
+  saveDay();
+  render();
+  upd();
+
+  // reset dos campos
+  document.getElementById('foodName').value = '';
+  document.getElementById('foodCal').value  = '';
+  document.getElementById('foodProt').value = '';
+  document.getElementById('foodSearch').value = '';
+  document.getElementById('foodSel').value = '';
+  document.getElementById('hint').textContent = '';
+  document.getElementById('btnSaveFood').style.display = 'none';
+  qty = 1;
+  document.getElementById('qtyVal').textContent = '1x';
 }
 
 function removeFood(i){foods.splice(i,1);saveDay();render();upd();}
 
 function render(){
-  const list=document.getElementById('foodList');
-  if(!foods.length){list.innerHTML='<p style="color:#6b7280;font-size:12px;text-align:center">Nenhum alimento adicionado</p>';return;}
-  list.innerHTML='';
-  M.forEach(m=>{
-    const mf=foods.filter(f=>f.m===m);if(!mf.length)return;
-    const h=document.createElement('div');h.style.cssText='font-size:11px;color:#9ca3af;margin:8px 0 4px;font-weight:600;text-transform:uppercase';h.textContent=m;list.appendChild(h);
-    mf.forEach(f=>{const idx=foods.indexOf(f),div=document.createElement('div');div.className='food-item';
-      div.innerHTML=`<div><div style="font-size:13px;font-weight:500">${f.n}</div><div style="font-size:11px;color:#9ca3af">${f.cal} kcal · ${f.prot}g prot</div></div><button onclick="removeFood(${idx})">✕</button>`;
-      list.appendChild(div);});
+  const list = document.getElementById('foodList');
+  if(!foods.length){
+    list.innerHTML = '<p style="color:#6b7280;font-size:12px;text-align:center">Nenhum alimento adicionado</p>';
+    return;
+  }
+  list.innerHTML = '';
+
+  M.forEach(m => {
+    const mf = foods.filter(f => f.m === m);
+    if(!mf.length) return;
+
+    const h = document.createElement('div');
+    h.style.cssText = 'font-size:11px;color:#9ca3af;margin:8px 0 4px;font-weight:600;text-transform:uppercase';
+    h.textContent = m;
+    list.appendChild(h);
+
+    mf.forEach(f => {
+      const idx = foods.indexOf(f);
+      const q   = f.q || 1;
+      const qText = q === 1 ? '' : ` · ${q.toString().replace('.', ',')}x`;
+      const calTot  = f.cal  * q;
+      const protTot = f.prot * q;
+
+      const div = document.createElement('div');
+      div.className = 'food-item';
+      div.innerHTML = `
+        <div>
+          <div style="font-size:13px;font-weight:500">${f.n}${qText}</div>
+          <div style="font-size:11px;color:#9ca3af">
+            ${calTot.toFixed(0)} kcal · ${protTot.toFixed(1)}g prot
+          </div>
+        </div>
+        <button onclick="removeFood(${idx})">✕</button>
+      `;
+      list.appendChild(div);
+    });
   });
 }
 
