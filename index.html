@@ -227,15 +227,11 @@ hr{border:none;border-top:1px solid #1f2937;margin:12px 0}
   </select>
   <div id="hint"></div>
   <label>Nome</label>
-  <input
-  type="text"
-  id="foodName"
-  placeholder="Nome do alimento"
-  oninput="showSaveBtn()"
-  onkeyup="showSaveBtn()"
-  onchange="showSaveBtn()"
-  onblur="showSaveBtn()"
-/>
+  <input type="text" id="foodName" placeholder="Nome do alimento"
+    oninput="showSaveBtn()"
+    onkeyup="showSaveBtn()"
+    onchange="showSaveBtn()"
+    onblur="showSaveBtn()">
   <label>Calorias (kcal)</label>
   <input type="number" id="foodCal" placeholder="0">
   <label>Proteína (g)</label>
@@ -246,7 +242,6 @@ hr{border:none;border-top:1px solid #1f2937;margin:12px 0}
     <button class="qty-btn" onclick="chQty(1)">+</button>
     <span style="font-size:12px;color:#9ca3af">porções</span>
   </div>
-  <!-- BOTÃO SALVAR NO BANCO — sempre visível quando há nome preenchido -->
   <button class="btn-yellow" id="btnSaveFood" onclick="saveToMyFoods()" style="display:none">
     ⭐ Salvar no meu banco
   </button>
@@ -289,6 +284,13 @@ hr{border:none;border-top:1px solid #1f2937;margin:12px 0}
 
 </div>
 <script>
+// Remove qualquer service worker antigo que esteja travando o cache
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function(regs) {
+    regs.forEach(function(reg) { reg.unregister(); });
+  });
+}
+
 const DB=[
   {n:'Ovo cozido',cal:70,prot:6},{n:'Pão francês',cal:140,prot:5},
   {n:'Banana',cal:105,prot:1.3},{n:'Aveia (2 col)',cal:80,prot:3},
@@ -396,7 +398,6 @@ function saveGoals(){
   upd();renderWater();alert('Metas salvas!');
 }
 
-/* ── Atividades ── */
 function getPeso(){const p=parseFloat(document.getElementById('pesoAtual').value);return(!isNaN(p)&&p>0)?p:80;}
 function setInt(n){customInt=n;['Leve','Mod','Fort'].forEach(x=>document.getElementById('int'+x).classList.remove('on'));document.getElementById('int'+(n==='leve'?'Leve':n==='moderada'?'Mod':'Fort')).classList.add('on');}
 
@@ -444,7 +445,6 @@ function renderAtvList(){
   });
 }
 
-/* ── Resumo ── */
 function upd(){
   const key=dateKey(viewDate);
   const totCal=foods.reduce((s,f)=>s+f.cal*(f.q||1),0);
@@ -462,7 +462,6 @@ function upd(){
   else{st.textContent=`Saldo: ${saldo.toFixed(0)} kcal — equilíbrio ⚖️`;st.style.color='#38bdf8';st.style.borderColor='#0c4a6e';}
 }
 
-/* ── Água ── */
 function chWater(d){water=Math.max(0,Math.min(20,water+d));saveDay();renderWater();}
 function renderWater(){
   const g=goals.water||8;document.getElementById('waterVal').textContent=`${water} / ${g}`;
@@ -470,22 +469,11 @@ function renderWater(){
   for(let i=0;i<g;i++){const s=document.createElement('span');s.className='water-cup'+(i<water?' full':'');s.textContent='🥤';cups.appendChild(s);}
 }
 
-/* ── Alimentos ── */
-function showSaveBtn() {
-  try {
-    const nameInput = document.getElementById('foodName');
-    const btn = document.getElementById('btnSaveFood');
-    if (!nameInput || !btn) return;
-
-    const name = (nameInput.value || '').trim();
-    if (name.length > 0) {
-      btn.style.display = 'block';
-    } else {
-      btn.style.display = 'none';
-    }
-  } catch (e) {
-    console.error('Erro em showSaveBtn:', e);
-  }
+function showSaveBtn(){
+  const nameInput=document.getElementById('foodName');
+  const btn=document.getElementById('btnSaveFood');
+  if(!nameInput||!btn)return;
+  btn.style.display=(nameInput.value||'').trim().length>0?'block':'none';
 }
 
 function buildSelect(){
@@ -507,20 +495,15 @@ function filterFoods(){
   hint.textContent=!q?'Digite algo para filtrar':n?`${n} encontrado(s)`:`Nenhum resultado para "${q}"`;
 }
 
-function onFoodSel() {
-  const sel = document.getElementById('foodSel');
-  const idx = parseInt(sel.value);
-  if (isNaN(idx)) return;
-
-  const all = [...DB, ...myFoods];
-  const f = all[idx];
-
-  document.getElementById('foodName').value = f.n;
-  document.getElementById('foodCal').value  = f.cal;
-  document.getElementById('foodProt').value = f.prot;
-  document.getElementById('hint').textContent = '';
-
-  // Sempre aplica a mesma regra: se tem texto no Nome, mostra o botão
+function onFoodSel(){
+  const sel=document.getElementById('foodSel');
+  const idx=parseInt(sel.value);
+  if(isNaN(idx))return;
+  const f=[...DB,...myFoods][idx];
+  document.getElementById('foodName').value=f.n;
+  document.getElementById('foodCal').value=f.cal;
+  document.getElementById('foodProt').value=f.prot;
+  document.getElementById('hint').textContent='';
   showSaveBtn();
 }
 
@@ -565,7 +548,6 @@ function render(){
   });
 }
 
-/* ── Banco ── */
 function saveToMyFoods(){
   const name=document.getElementById('foodName').value.trim();
   const cal=parseFloat(document.getElementById('foodCal').value)||0;
@@ -579,7 +561,7 @@ function saveToMyFoods(){
   alert('✅ Salvo no banco: '+name);
 }
 
-function updateBankCount(){document.getElementById('bankCount').textContent=myFoods.length?`(${myFoods.length})`:''; }
+function updateBankCount(){document.getElementById('bankCount').textContent=myFoods.length?`(${myFoods.length})`'';}
 
 function toggleBank(){
   const s=document.getElementById('bankSection'),a=document.getElementById('bankArrow');
@@ -603,7 +585,6 @@ function removeMyFood(i){
   buildSelect();buildQuickList();updateBankCount();renderBank();
 }
 
-/* ── Seleção rápida ── */
 function buildQuickList(){
   const all=[...DB,...myFoods],ql=document.getElementById('quickList');ql.innerHTML='';
   all.forEach((f,i)=>{const div=document.createElement('div');div.className='quick-item';
@@ -624,7 +605,6 @@ function addQuickSelected(){
 
 function clearDay(){if(!confirm('Limpar todos os alimentos do dia?'))return;foods=[];saveDay();render();upd();}
 
-/* ── Semana ── */
 function renderWeekSummary(){
   const div=document.getElementById('weekSummary');div.innerHTML='';
   for(let i=6;i>=0;i--){
