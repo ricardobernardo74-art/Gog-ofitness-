@@ -463,13 +463,20 @@ function renderWater(){
 }
 
 /* ── Alimentos ── */
-function showSaveBtn(){
-  const name = document.getElementById('foodName').value.trim();
-  const btn  = document.getElementById('btnSaveFood');
-  if (name) {
-    btn.style.display = 'block';
-  } else {
-    btn.style.display = 'none';
+function showSaveBtn() {
+  try {
+    var name = document.getElementById('foodName').value;
+    var btn  = document.getElementById('btnSaveFood');
+    if (!btn) return;           // se não achar o botão, evita erro
+
+    if (name && name.trim() !== '') {
+      btn.style.display = 'block';
+    } else {
+      btn.style.display = 'none';
+    }
+  } catch (e) {
+    // só pra garantir que qualquer erro aqui não quebre o resto do app
+    console.error('Erro em showSaveBtn:', e);
   }
 }
 
@@ -492,17 +499,19 @@ function filterFoods(){
   hint.textContent=!q?'Digite algo para filtrar':n?`${n} encontrado(s)`:`Nenhum resultado para "${q}"`;
 }
 
-function onFoodSel(){
-  const idx = parseInt(document.getElementById('foodSel').value);
+function onFoodSel() {
+  const sel = document.getElementById('foodSel');
+  const idx = parseInt(sel.value);
   if (isNaN(idx)) return;
 
   const f = [...DB, ...myFoods][idx];
+
   document.getElementById('foodName').value = f.n;
   document.getElementById('foodCal').value  = f.cal;
   document.getElementById('foodProt').value = f.prot;
   document.getElementById('hint').textContent = '';
 
-  // Sempre chama showSaveBtn para aplicar a mesma regra
+  // aplica sempre a mesma regra: se tem nome, mostra; se não, esconde
   showSaveBtn();
 }
 
