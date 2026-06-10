@@ -32,12 +32,7 @@
     overflow-x:hidden;
   }
 
-  .app{
-    max-width: 430px;
-    width: 100%;
-    margin: 0 auto;
-  }
-
+  .app{max-width: 430px;width: 100%;margin: 0 auto;}
   .topbar{
     width: 100%;
     background: linear-gradient(135deg, rgba(47,125,225,0.12), rgba(108,99,255,0.10));
@@ -48,11 +43,8 @@
     box-shadow: var(--shadow);
     backdrop-filter: blur(8px);
   }
-
   .brand{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
-  .brand h1{
-    font-size:26px;line-height:1.05;letter-spacing:-0.03em;color:var(--text)
-  }
+  .brand h1{font-size:26px;line-height:1.05;letter-spacing:-0.03em;color:var(--text)}
   .brand p{color:var(--muted);font-size:13px;line-height:1.4}
   .pill{
     display:inline-flex;align-items:center;gap:8px;margin-top:12px;
@@ -70,7 +62,6 @@
     margin-bottom: 12px;
     backdrop-filter: blur(10px);
   }
-
   .card-title{
     display:flex;justify-content:space-between;align-items:center;margin-bottom:12px
   }
@@ -140,8 +131,17 @@
   .mini-row span{color:var(--muted)}
   .soft-line{height:1px;background:rgba(47,125,225,0.10);margin:12px 0}
   .hint{font-size:12px;color:var(--success);margin-top:8px;min-height:16px}
-
   .hidden{display:none!important}
+
+  .water-wrap{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .water-num{font-size:28px;font-weight:800;color:var(--primary);line-height:1}
+  .water-sub{font-size:12px;color:var(--muted);margin-top:4px}
+  .water-controls{display:flex;align-items:center;gap:10px}
+  .water-btn{
+    width:44px;height:44px;border-radius:999px;border:1px solid rgba(47,125,225,0.16);
+    background:rgba(255,255,255,0.9);color:var(--primary);font-size:22px;font-weight:800;cursor:pointer;
+    box-shadow:0 6px 14px rgba(47,125,225,0.10)
+  }
 
   @media (max-width: 420px){
     body{padding:10px 8px 20px}
@@ -153,6 +153,8 @@
     input, select, .btn, .btn-secondary{font-size:15px}
     .tabs{gap:6px}
     .tab{padding:9px 12px}
+    .water-wrap{flex-direction:column;align-items:stretch}
+    .water-controls{justify-content:space-between}
   }
 </style>
 </head>
@@ -169,7 +171,7 @@
     <div class="card">
       <div class="card-title">
         <h2>⚖️ Metas</h2>
-        <span id="goalStatus">Salvar metas</span>
+        <span>Salvar metas</span>
       </div>
 
       <div class="grid-2">
@@ -209,6 +211,39 @@
 
     <div class="card">
       <div class="card-title">
+        <h2>💧 Água</h2>
+        <span>Hidratação diária</span>
+      </div>
+
+      <div class="water-wrap">
+        <div>
+          <div class="water-num"><span id="waterCount">0</span> / <span id="waterGoal">8</span></div>
+          <div class="water-sub">copos consumidos</div>
+        </div>
+
+        <div class="water-controls">
+          <button class="water-btn" onclick="changeWater(-1)">−</button>
+          <button class="water-btn" onclick="changeWater(1)">+</button>
+        </div>
+      </div>
+
+      <div class="bar" style="margin-top:12px">
+        <div id="waterBar" style="background:linear-gradient(90deg,#36c2ff,#5ea1ff)"></div>
+      </div>
+
+      <div style="margin-top:12px" class="grid-2">
+        <div class="field">
+          <label>Meta água (copos)</label>
+          <input type="number" id="goalWater" value="8" min="1" max="20">
+        </div>
+        <div style="display:flex;align-items:flex-end">
+          <button class="btn-secondary" onclick="saveGoals()">Salvar água</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
         <h2>➕ Adicionar alimento</h2>
         <span>Manual</span>
       </div>
@@ -238,7 +273,7 @@
 
       <div class="hint" id="hint"></div>
 
-      <button class="btn-secondary" id="btnSaveFood" style="margin-top:10px" onclick="saveToMyFoods()">⭐ Salvar no meu banco</button>
+      <button class="btn-secondary hidden" id="btnSaveFood" style="margin-top:10px" onclick="saveToMyFoods()">⭐ Salvar no meu banco</button>
       <button class="btn" style="margin-top:10px" onclick="addFood()">➕ Adicionar ao dia</button>
     </div>
 
@@ -248,7 +283,7 @@
         <span id="bankCount">0 itens</span>
       </div>
 
-      <div id="bankList" class="section-list"></div>
+      <div id="bankList"></div>
     </div>
 
     <div class="card">
@@ -257,18 +292,20 @@
         <span id="todayCount">0 itens</span>
       </div>
 
-      <div id="dayList" class="section-list"></div>
+      <div id="dayList"></div>
     </div>
   </div>
 
 <script>
-  let goals = { cal: 2000, prot: 120 };
+  let goals = { cal: 2000, prot: 120, water: 8 };
   let myFoods = [];
   let dayFoods = [];
+  let water = 0;
   let meal = 'Café da manhã';
 
   const goalCal = document.getElementById('goalCal');
   const goalProt = document.getElementById('goalProt');
+  const goalWater = document.getElementById('goalWater');
   const foodName = document.getElementById('foodName');
   const foodCal = document.getElementById('foodCal');
   const foodProt = document.getElementById('foodProt');
@@ -282,6 +319,9 @@
   const protVal = document.getElementById('protVal');
   const calBar = document.getElementById('calBar');
   const protBar = document.getElementById('protBar');
+  const waterCount = document.getElementById('waterCount');
+  const waterBar = document.getElementById('waterBar');
+  const waterGoalLabel = document.getElementById('waterGoal');
 
   const savedGoals = localStorage.getItem('gfg_goals');
   if(savedGoals) goals = JSON.parse(savedGoals);
@@ -292,8 +332,13 @@
   const savedDay = localStorage.getItem('gfg_dayFoods');
   if(savedDay) dayFoods = JSON.parse(savedDay);
 
+  const savedWater = localStorage.getItem('gfg_water');
+  if(savedWater) water = JSON.parse(savedWater);
+
   goalCal.value = goals.cal;
   goalProt.value = goals.prot;
+  goalWater.value = goals.water;
+  waterGoalLabel.textContent = goals.water;
 
   document.querySelectorAll('#mealTabs .tab').forEach(tab => {
     tab.addEventListener('click', () => {
@@ -306,10 +351,20 @@
   function saveGoals(){
     const cal = +goalCal.value || 0;
     const prot = +goalProt.value || 0;
-    if(cal < 100 || prot < 10) return;
-    goals = { cal, prot };
+    const waterGoal = +goalWater.value || 8;
+
+    if(cal < 100 || prot < 10 || waterGoal < 1) return;
+
+    goals = { cal, prot, water: waterGoal };
     localStorage.setItem('gfg_goals', JSON.stringify(goals));
+    waterGoalLabel.textContent = goals.water;
     render();
+  }
+
+  function changeWater(delta){
+    water = Math.max(0, Math.min(goals.water * 2, water + delta));
+    localStorage.setItem('gfg_water', JSON.stringify(water));
+    renderSummary();
   }
 
   function upd(){
@@ -351,6 +406,7 @@
     const p = +foodProt.value || 0;
 
     if(!n) return;
+
     dayFoods.push({
       id: Date.now(),
       n,
@@ -364,7 +420,6 @@
     foodName.value = '';
     foodCal.value = '';
     foodProt.value = '';
-    meal = document.querySelector('#mealTabs .tab.on').dataset.meal;
     upd();
     renderDay();
     renderSummary();
@@ -396,16 +451,21 @@
     const t = totals(dayFoods);
     calVal.textContent = Math.round(t.cal);
     protVal.textContent = Math.round(t.prot * 10) / 10;
+    waterCount.textContent = water;
+    waterGoalLabel.textContent = goals.water;
 
     const calPct = goals.cal ? Math.min((t.cal / goals.cal) * 100, 100) : 0;
     const protPct = goals.prot ? Math.min((t.prot / goals.prot) * 100, 100) : 0;
+    const waterPct = goals.water ? Math.min((water / goals.water) * 100, 100) : 0;
 
     calBar.style.width = calPct + '%';
     protBar.style.width = protPct + '%';
+    waterBar.style.width = waterPct + '%';
   }
 
   function renderBank(){
     bankCount.textContent = myFoods.length + ' itens';
+
     if(!myFoods.length){
       bankList.innerHTML = '<div class="subtle">Seu banco ainda está vazio.</div>';
       return;
@@ -421,6 +481,7 @@
 
   function renderDay(){
     todayCount.textContent = dayFoods.length + ' itens';
+
     if(!dayFoods.length){
       dayList.innerHTML = '<div class="subtle">Nenhum alimento adicionado hoje.</div>';
       return;
