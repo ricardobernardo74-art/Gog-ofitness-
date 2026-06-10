@@ -410,30 +410,32 @@ function chQty(d){
 /* ── Update display (inclui lógica do botão salvar) ── */
 function upd(){
     qtyNum.textContent = Number.isInteger(qty) ? String(qty) : qty.toFixed(1);
-    const n = foodName.value.trim();
-    const c = +foodCal.value  || 0;
-    const p = +foodProt.value || 0;
-    hint.textContent = (c||p)
-        ? `Total: ${Math.round(c*qty)}kcal | ${Math.round(p*qty*10)/10}g prot` : '';
 
-    // Botão salvar: aparece se tem nome + calorias + ainda não existe no banco
-    const jaExiste = myFoods.some(x=>x.n.toLowerCase()===n.toLowerCase());
-    document.getElementById('btnSaveFood').style.display = (n && c>0 && !jaExiste) ? 'block' : 'none';
+    const n = foodName.value.trim();
+    const c = +foodCal.value || 0;
+    const p = +foodProt.value || 0;
+
+    hint.textContent = (c || p)
+        ? `Total: ${Math.round(c*qty)}kcal | ${Math.round(p*qty*10)/10}g prot`
+        : '';
+
+    // Botão salvar: aparece só com nome preenchido e se ainda não existir no banco
+    const jaExiste = myFoods.some(x => x.n.toLowerCase() === n.toLowerCase());
+    document.getElementById('btnSaveFood').style.display = (n && !jaExiste) ? 'block' : 'none';
 
     // Atualizar totais do dia
     const t  = tot();
-    const cp = goals.cal  ? Math.min(t.cal /goals.cal *100,100) : 0;
-    const pp = goals.prot ? Math.min(t.prot/goals.prot*100,100) : 0;
+    const cp = goals.cal  ? Math.min(t.cal / goals.cal * 100, 100) : 0;
+    const pp = goals.prot ? Math.min(t.prot / goals.prot * 100, 100) : 0;
     calVal.textContent  = Math.round(t.cal);
-    protVal.textContent = Math.round(t.prot*10)/10;
-    calBar.style.width  = cp+'%';
-    protBar.style.width = pp+'%';
-    calBar.style.background  = t.cal >goals.cal  ? '#f87171':'#60a5fa';
-    protBar.style.background = t.prot>goals.prot ? '#f87171':'#4ade80';
-    calMeta.textContent  = `Meta: ${goals.cal}${t.cal>=goals.cal?' ✅':' Faltam '+Math.round(goals.cal-t.cal)}`;
-    protMeta.textContent = `Meta: ${goals.prot}g${t.prot>=goals.prot?' ✅':' Faltam '+Math.round((goals.prot-t.prot)*10)/10+'g'}`;
+    protVal.textContent = Math.round(t.prot * 10) / 10;
+    calBar.style.width  = cp + '%';
+    protBar.style.width = pp + '%';
+    calBar.style.background  = t.cal > goals.cal ? '#f87171' : '#60a5fa';
+    protBar.style.background = t.prot > goals.prot ? '#f87171' : '#4ade80';
+    calMeta.textContent  = `Meta: ${goals.cal}${t.cal >= goals.cal ? ' ✅' : ' Faltam ' + Math.round(goals.cal - t.cal)}`;
+    protMeta.textContent = `Meta: ${goals.prot}g${t.prot >= goals.prot ? ' ✅' : ' Faltam ' + Math.round((goals.prot - t.prot) * 10) / 10 + 'g'}`;
 }
-
 function pickFood(){
     const o = foodSel.options[foodSel.selectedIndex];
     if(o && o.value){
@@ -477,15 +479,21 @@ function renderBank(){
 
 function saveToMyFoods(){
     const n = foodName.value.trim();
-    const c = +foodCal.value;
+    const c = +foodCal.value || 0;
     const p = +foodProt.value || 0;
-    if(!n || c<=0) return toast('⚠️ Preencha nome e calorias');
-    if(myFoods.some(x=>x.n.toLowerCase()===n.toLowerCase())) return toast('⚠️ Já existe no banco');
+
+    if(!n) return toast('⚠️ Preencha o nome');
+    if(myFoods.some(x => x.n.toLowerCase() === n.toLowerCase()))
+        return toast('⚠️ Já existe no banco');
+
     myFoods.push({n, cal:c, prot:p});
-    myFoods.sort((a,b)=>a.n.localeCompare(b.n,'pt'));
-    saveGlobal(); buildSelect(); updateBankCount();
+    myFoods.sort((a,b) => a.n.localeCompare(b.n, 'pt'));
+    saveGlobal();
+    buildSelect();
+    updateBankCount();
     if(bankOpen) renderBank();
-    upd(); toast('⭐ Salvo no banco!');
+    upd();
+    toast('⭐ Salvo no banco!');
 }
 
 function delMyFood(name){
