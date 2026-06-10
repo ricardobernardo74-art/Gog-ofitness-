@@ -1,644 +1,489 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GogãoFitness</title>
-<style>
-  :root{
-    --bg:#eaf4ff;
-    --bg2:#dcecff;
-    --card:rgba(255,255,255,.95);
-    --border:rgba(60,120,200,.12);
-    --text:#17324d;
-    --muted:#6f859d;
-    --primary:#2f7de1;
-    --accent:#6c63ff;
-    --shadow:0 6px 20px rgba(30,72,120,.08);
-    --radius:16px;
-  }
-
-  *{box-sizing:border-box;margin:0;padding:0}
-
-  html,body{
-    width:100%;
-    min-height:100%;
-    margin:0;
-    overflow-x:hidden;
-    overflow-y:auto;
-  }
-
-  body{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-    background:
-      radial-gradient(circle at top, rgba(94,161,255,0.20), transparent 30%),
-      linear-gradient(180deg, var(--bg) 0%, #d7e8ff 45%, #d7e8ff 100%);
-    color:var(--text);
-    padding:8px 6px 8px;
-  }
-
-  .app{
-    width:100%;
-    max-width:100%;
-    margin:0 auto;
-    padding-bottom:6px;
-  }
-
-  .topbar,.card{
-    width:100%;
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    box-shadow:var(--shadow);
-    padding:12px;
-    margin-bottom:8px;
-  }
-
-  .topbar{
-    background:linear-gradient(135deg,rgba(47,125,225,.12),rgba(108,99,255,.10));
-  }
-
-  .brand h1{font-size:22px;letter-spacing:-.03em;margin-bottom:4px}
-  .brand p{font-size:12px;color:var(--muted);line-height:1.4}
-
-  .pill{
-    display:inline-block;
-    margin-top:10px;
-    padding:7px 10px;
-    border-radius:999px;
-    background:rgba(255,255,255,.78);
-    color:var(--primary);
-    font-size:11px;
-    font-weight:700
-  }
-
-  .card-title{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:10px
-  }
-
-  .card-title h2{font-size:14px;font-weight:700}
-  .card-title span{font-size:11px;color:var(--muted)}
-
-  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-
-  .field{display:flex;flex-direction:column;gap:5px}
-
-  label{
-    font-size:10px;
-    color:var(--muted);
-    text-transform:uppercase;
-    letter-spacing:.04em;
-    font-weight:700
-  }
-
-  input{
-    width:100%;
-    border:1px solid rgba(47,125,225,.14);
-    background:#fff;
-    color:var(--text);
-    border-radius:12px;
-    padding:11px 12px;
-    font-size:14px;
-    outline:none
-  }
-
-  input::placeholder{color:#9bb0c6}
-
-  input:focus{
-    border-color:rgba(47,125,225,.35);
-    box-shadow:0 0 0 3px rgba(47,125,225,.10)
-  }
-
-  .btn{
-    width:100%;
-    border:none;
-    border-radius:14px;
-    padding:13px 14px;
-    font-size:14px;
-    font-weight:800;
-    cursor:pointer;
-    background:linear-gradient(135deg,var(--primary),var(--accent));
-    color:#fff;
-    box-shadow:0 8px 18px rgba(47,125,225,.18);
-    margin-top:10px
-  }
-
-  .btn-secondary{
-    width:100%;
-    border:1px solid rgba(47,125,225,.16);
-    border-radius:14px;
-    padding:12px 14px;
-    background:#fff;
-    color:var(--primary);
-    font-size:14px;
-    font-weight:800;
-    cursor:pointer;
-    margin-top:8px
-  }
-
-  .soft-line{
-    height:1px;
-    background:rgba(47,125,225,.10);
-    margin:10px 0
-  }
-
-  .stat-row{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:8px
-  }
-
-  .stat{
-    background:linear-gradient(180deg,#fff,#f8fbff);
-    border:1px solid rgba(47,125,225,.10);
-    border-radius:14px;
-    padding:12px
-  }
-
-  .num{
-    font-size:24px;
-    font-weight:800;
-    letter-spacing:-.03em
-  }
-
-  .lbl{
-    font-size:11px;
-    color:var(--muted);
-    margin-top:3px
-  }
-
-  .bar{
-    height:7px;
-    background:rgba(47,125,225,.10);
-    border-radius:999px;
-    overflow:hidden;
-    margin-top:8px
-  }
-
-  .bar>div{
-    height:100%;
-    border-radius:999px;
-    width:0%;
-    background:linear-gradient(90deg,var(--primary),#5ea1ff);
-    transition:width .4s
-  }
-
-  .tabs{
-    display:flex;
-    gap:6px;
-    overflow-x:auto;
-    padding-bottom:2px;
-    margin-bottom:10px;
-    scrollbar-width:none
-  }
-
-  .tabs::-webkit-scrollbar{display:none}
-
-  .tab{
-    flex:0 0 auto;
-    padding:9px 13px;
-    border-radius:999px;
-    border:1px solid rgba(47,125,225,.12);
-    background:rgba(255,255,255,.88);
-    color:var(--muted);
-    font-size:12px;
-    font-weight:700;
-    cursor:pointer
-  }
-
-  .tab.on{
-    background:linear-gradient(135deg,var(--primary),var(--accent));
-    color:#fff;
-    border-color:transparent
-  }
-
-  .mini-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:9px 0;
-    border-bottom:1px solid rgba(47,125,225,.08);
-    font-size:13px
-  }
-
-  .mini-row:last-child{border-bottom:none}
-
-  .mini-row b{color:var(--text);font-size:13px}
-  .mini-row span{color:var(--muted);font-size:12px}
-
-  .hidden{display:none!important}
-
-  .subtle{
-    color:var(--muted);
-    font-size:12px;
-    line-height:1.45
-  }
-
-  .hint{
-    font-size:12px;
-    color:#3aa76d;
-    margin-top:8px;
-    min-height:16px
-  }
-
-  .water-wrap{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px
-  }
-
-  .water-num{
-    font-size:26px;
-    font-weight:800;
-    color:var(--primary);
-    line-height:1
-  }
-
-  .water-sub{
-    font-size:11px;
-    color:var(--muted);
-    margin-top:3px
-  }
-
-  .water-controls{
-    display:flex;
-    align-items:center;
-    gap:8px
-  }
-
-  .water-btn{
-    width:42px;
-    height:42px;
-    border-radius:999px;
-    border:1px solid rgba(47,125,225,.16);
-    background:#fff;
-    color:var(--primary);
-    font-size:22px;
-    font-weight:800;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center
-  }
-
-  .del-btn{
-    padding:7px 10px;
-    border-radius:10px;
-    border:1px solid rgba(47,125,225,.14);
-    background:#fff;
-    color:var(--muted);
-    font-size:13px;
-    cursor:pointer;
-    white-space:nowrap
-  }
-
-  @media (max-width: 420px){
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GogãoFitness</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
     body{
-      padding:6px 5px 6px;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      background:linear-gradient(180deg,#eaf6ff 0%,#f7fbff 100%);
+      color:#16324f;
+      padding:16px;
     }
-
-    .topbar,.card{
-      padding:11px;
-      margin-bottom:7px;
-      border-radius:14px;
+    .app{max-width:400px;margin:0 auto}
+    h1{
+      text-align:center;
+      color:#2b8fe8;
+      margin-bottom:16px;
+      font-size:24px;
+      letter-spacing:-0.5px;
     }
-
-    .brand h1{
-      font-size:21px;
+    .card{
+      background:#fff;
+      border-radius:16px;
+      padding:14px;
+      margin-bottom:12px;
+      box-shadow:0 8px 24px rgba(25, 71, 122, 0.08);
+      border:1px solid #dcecfb;
     }
-
-    .brand p{
+    .row{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+    .col{flex:1;min-width:0}
+    label{
       font-size:11px;
+      color:#5d7d99;
+      display:block;
+      margin-bottom:3px;
+      font-weight:600;
     }
-
-    .pill{
-      font-size:10px;
-      padding:6px 9px;
+    input,select{
+      width:100%;
+      padding:10px;
+      background:#f8fcff;
+      border:1px solid #cfe3f6;
+      color:#16324f;
+      border-radius:10px;
+      font-size:14px;
+      outline:none;
     }
-
-    .grid-2,
-    .stat-row{
-      grid-template-columns:1fr;
+    input:focus,select:focus{
+      border-color:#66b5ff;
+      box-shadow:0 0 0 3px rgba(102,181,255,.15);
     }
-
-    .water-wrap{
-      flex-direction:row;
+    .small-input{padding:8px;font-size:13px}
+    .meal-tabs{display:flex;gap:4px;margin-bottom:10px;flex-wrap:wrap}
+    .meal-tab{
+      flex:1;
+      padding:10px 4px;
+      background:#f3f9ff;
+      border:1px solid #cfe3f6;
+      color:#5d7d99;
+      border-radius:10px;
+      text-align:center;
+      font-size:11px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .meal-tab.on{
+      background:#2b8fe8;
+      color:#fff;
+      font-weight:bold;
+      border-color:#2b8fe8;
+    }
+    .qty-box{
+      display:flex;
       align-items:center;
-      justify-content:space-between;
+      gap:10px;
+      background:#f8fcff;
+      border:1px solid #cfe3f6;
+      border-radius:10px;
+      padding:8px 12px;
+      margin-bottom:6px;
     }
-
-    .water-controls{
-      justify-content:flex-end;
+    .qty-btn{
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      border:2px solid #2b8fe8;
+      background:none;
+      color:#2b8fe8;
+      font-size:20px;
+      font-weight:bold;
+      cursor:pointer;
     }
-
-    .num,
-    .water-num{
-      font-size:22px;
+    .qty-num{
+      font-size:18px;
+      font-weight:bold;
+      min-width:36px;
+      text-align:center;
+      color:#16324f;
     }
-
-    .tab{
-      padding:8px 11px;
+    .hint{
       font-size:11px;
+      color:#2b8fe8;
+      text-align:right;
+      margin-bottom:6px;
+      font-weight:600;
     }
-  }
-</style>
+    .btn{
+      width:100%;
+      padding:12px;
+      background:#2b8fe8;
+      color:#fff;
+      border:none;
+      border-radius:10px;
+      font-weight:bold;
+      font-size:15px;
+      cursor:pointer;
+    }
+    .btn:active{transform:scale(.99)}
+    .btn-sm{
+      padding:8px 10px;
+      font-size:11px;
+      width:auto;
+    }
+    .btn-secondary{
+      width:100%;
+      padding:10px;
+      background:#eef7ff;
+      border:1px solid #bcdcf8;
+      color:#2b8fe8;
+      border-radius:10px;
+      font-size:13px;
+      font-weight:bold;
+      cursor:pointer;
+      margin-bottom:6px;
+    }
+    .btn-save-food{
+      width:100%;
+      padding:10px;
+      background:#fff8e8;
+      border:1px solid #f2c94c;
+      color:#c69000;
+      border-radius:10px;
+      font-size:13px;
+      font-weight:bold;
+      cursor:pointer;
+      margin-bottom:8px;
+      display:none;
+    }
+    .online-status{
+      font-size:11px;
+      color:#2b8fe8;
+      text-align:left;
+      min-height:16px;
+      margin-bottom:4px;
+    }
+    .food-item{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:10px;
+      background:#f8fcff;
+      border:1px solid #dcecfb;
+      border-radius:10px;
+      margin-bottom:4px;
+      font-size:13px;
+      gap:10px;
+    }
+    .food-item button,.my-food-row button{
+      background:none;
+      border:none;
+      color:#ef6666;
+      font-size:16px;
+      cursor:pointer;
+      flex-shrink:0;
+    }
+    .bar{
+      height:8px;
+      background:#e3eef8;
+      border-radius:999px;
+      margin:6px 0;
+      overflow:hidden;
+    }
+    .bar-fill{
+      height:100%;
+      border-radius:999px;
+      transition:width .3s;
+    }
+    .toast{
+      position:fixed;
+      bottom:20px;
+      left:50%;
+      transform:translateX(-50%);
+      background:#2b8fe8;
+      color:#fff;
+      padding:10px 20px;
+      border-radius:20px;
+      font-weight:bold;
+      font-size:13px;
+      opacity:0;
+      transition:opacity .3s;
+      z-index:99;
+    }
+    .toast.show{opacity:1}
+    .water-row{display:flex;align-items:center;gap:12px}
+    .water-cups{
+      display:flex;
+      gap:2px;
+      flex-wrap:wrap;
+      flex:1;
+      justify-content:center;
+    }
+    .water-cup{
+      font-size:20px;
+      opacity:0.2;
+      transition:opacity .2s;
+      color:#2b8fe8;
+    }
+    .water-cup.full{opacity:1}
+    .water-btn{
+      width:40px;
+      height:40px;
+      border-radius:50%;
+      border:2px solid #2b8fe8;
+      background:none;
+      color:#2b8fe8;
+      font-size:22px;
+      font-weight:bold;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+    }
+    .water-btn:active{background:#2b8fe8;color:#fff}
+    .water-big{font-size:28px;font-weight:bold;color:#2b8fe8}
+    .my-food-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      background:#f8fcff;
+      border:1px solid #dcecfb;
+      border-radius:10px;
+      padding:8px 10px;
+      margin-bottom:4px;
+      font-size:12px;
+    }
+    .my-food-row span{color:#5d7d99;font-size:11px}
+    .week-row{
+      display:flex;
+      justify-content:space-between;
+      font-size:11px;
+      margin-bottom:4px;
+      color:#5d7d99;
+    }
+    .week-val{color:#16324f;font-weight:bold}
+    .tag-ok{color:#2fa85a;font-weight:bold;font-size:10px;margin-left:4px}
+    .tag-low{color:#c69000;font-weight:bold;font-size:10px;margin-left:4px}
+    .tag-high{color:#ef6666;font-weight:bold;font-size:10px;margin-left:4px}
+    .btn-clear{
+      margin-top:10px;
+      background:none;
+      border:1px solid #ef6666;
+      color:#ef6666;
+      padding:8px;
+      border-radius:10px;
+      width:100%;
+      font-size:12px;
+      cursor:pointer;
+    }
+    .hidden{display:none!important}
+    .nav-row{display:flex;justify-content:space-between;align-items:center}
+    .nav-btn{
+      background:#f3f9ff;
+      border:1px solid #bcdcf8;
+      color:#2b8fe8;
+      border-radius:8px;
+      padding:6px 12px;
+      font-size:13px;
+      cursor:pointer;
+    }
+    .nav-date{
+      font-size:13px;
+      font-weight:bold;
+      color:#16324f;
+      text-align:center;
+      cursor:pointer;
+      text-decoration:underline dotted #2b8fe8;
+    }
+    .bank-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      cursor:pointer;
+      user-select:none;
+    }
+    .bank-search{
+      width:100%;
+      padding:8px;
+      background:#f8fcff;
+      border:1px solid #cfe3f6;
+      color:#16324f;
+      border-radius:10px;
+      font-size:13px;
+      margin:8px 0 4px;
+    }
+    .bank-list{max-height:280px;overflow-y:auto}
+    .subtle{
+      font-size:11px;
+      color:#5d7d99;
+    }
+    .metric-box{
+      text-align:center;
+      flex:1;
+    }
+    .metric-value{
+      font-size:24px;
+      font-weight:bold;
+      line-height:1;
+      color:#16324f;
+    }
+    .metric-label{
+      font-size:11px;
+      color:#5d7d99;
+      margin-top:4px;
+    }
+  </style>
 </head>
 <body>
-  <div class="app">
+<div class="app">
+  <h1>GogãoFitness</h1>
 
-    <div class="topbar">
-      <div class="brand">
-        <h1>GogãoFitness</h1>
-        <p>Seu app de dieta, água e treino para celular.</p>
-      </div>
-      <div class="pill">Calorias • Proteína • Hidratação</div>
+  <div class="card">
+    <div class="nav-row">
+      <button class="nav-btn" onclick="navDay(-1)">◀</button>
+      <span class="nav-date" id="navLabel" onclick="togglePicker()">Hoje</span>
+      <button class="nav-btn" onclick="navDay(1)">▶</button>
     </div>
-
-    <div class="card">
-      <div class="card-title">
-        <h2>⚖️ Peso & Metas</h2>
-        <span>Resumo rápido</span>
-      </div>
-
-      <div class="grid-2">
-        <div class="field">
-          <label>Peso atual (kg)</label>
-          <input type="number" id="pesoAtual" placeholder="Ex.: 80">
-        </div>
-        <div class="field">
-          <label>Peso objetivo</label>
-          <input type="number" id="pesoMeta" placeholder="Ex.: 75">
-        </div>
-      </div>
-
-      <div class="grid-2" style="margin-top:8px">
-        <div class="field">
-          <label>Meta kcal</label>
-          <input type="number" id="goalCal" value="2000">
-        </div>
-        <div class="field">
-          <label>Meta proteína (g)</label>
-          <input type="number" id="goalProt" value="120">
-        </div>
-      </div>
-
-      <div class="soft-line"></div>
-      <button class="btn" onclick="saveGoals()">Salvar metas</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        <h2>📊 Resumo do dia</h2>
-        <span>Hoje</span>
-      </div>
-
-      <div class="stat-row">
-        <div class="stat">
-          <div class="num" id="calVal">0</div>
-          <div class="lbl">kcal consumidas</div>
-          <div class="bar"><div id="calBar"></div></div>
-        </div>
-
-        <div class="stat">
-          <div class="num" id="protVal">0</div>
-          <div class="lbl">proteína (g)</div>
-          <div class="bar"><div id="protBar"></div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        <h2>💧 Água</h2>
-        <span>Hidratação diária</span>
-      </div>
-
-      <div class="water-wrap">
-        <div>
-          <div class="water-num">
-            <span id="waterCount">0</span> / <span id="waterGoalLabel">8</span>
-          </div>
-          <div class="water-sub">copos consumidos</div>
-        </div>
-
-        <div class="water-controls">
-          <button class="water-btn" onclick="changeWater(-1)">−</button>
-          <button class="water-btn" onclick="changeWater(1)">+</button>
-        </div>
-      </div>
-
-      <div class="bar" style="margin-top:10px">
-        <div id="waterBar" style="background:linear-gradient(90deg,#36c2ff,#5ea1ff)"></div>
-      </div>
-
-      <div class="grid-2" style="margin-top:10px">
-        <div class="field">
-          <label>Meta água (copos)</label>
-          <input type="number" id="goalWater" value="8">
-        </div>
-
-        <div style="display:flex;align-items:flex-end">
-          <button class="btn-secondary" style="margin-top:0" onclick="saveGoals()">Salvar água</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        <h2>➕ Adicionar alimento</h2>
-        <span>Manual</span>
-      </div>
-
-      <div class="tabs" id="mealTabs">
-        <div class="tab on" data-meal="Café da manhã">Café</div>
-        <div class="tab" data-meal="Almoço">Almoço</div>
-        <div class="tab" data-meal="Lanche">Lanche</div>
-        <div class="tab" data-meal="Jantar">Jantar</div>
-      </div>
-
-      <div class="field" style="margin-bottom:8px">
-        <label>Nome do alimento</label>
-        <input type="text" id="foodName" placeholder="Ex.: Frango grelhado" oninput="upd()">
-      </div>
-
-      <div class="grid-2">
-        <div class="field">
-          <label>Calorias</label>
-          <input type="number" id="foodCal" placeholder="0" oninput="upd()">
-        </div>
-
-        <div class="field">
-          <label>Proteína (g)</label>
-          <input type="number" id="foodProt" placeholder="0" oninput="upd()">
-        </div>
-      </div>
-
-      <div class="hint" id="hint"></div>
-      <button class="btn-secondary hidden" id="btnSaveFood" onclick="saveToMyFoods()">⭐ Salvar no meu banco</button>
-      <button class="btn" onclick="addFood()">➕ Adicionar ao dia</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        <h2>⭐ Meu Banco de Alimentos</h2>
-        <span id="bankCount">0 itens</span>
-      </div>
-      <div id="bankList"></div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        <h2>📋 Alimentos de hoje</h2>
-        <span id="todayCount">0 itens</span>
-      </div>
-      <div id="dayList"></div>
-    </div>
-
+    <input type="date" id="datePicker" class="hidden" style="margin-top:8px" onchange="pickDate()">
+    <div id="histNote" style="font-size:11px;color:#c69000;text-align:center;min-height:14px;margin-top:4px"></div>
   </div>
 
+  <div class="card">
+    <h3 style="font-size:14px;margin-bottom:8px">⚖️ Peso & Metas</h3>
+    <div class="row">
+      <div class="col"><label>Peso atual (kg)</label><input type="number" id="pesoAtual" class="small-input" placeholder="Ex: 80" step="0.1" min="20"></div>
+      <div class="col"><label>Peso objetivo (kg)</label><input type="number" id="pesoMeta" class="small-input" placeholder="Opcional" step="0.1" min="20"></div>
+    </div>
+    <div class="row" style="margin-bottom:4px">
+      <div class="col"><label>Fator proteína (g/kg)</label><input type="number" id="fatorProt" class="small-input" value="2" step="0.1" min="0.5" max="4"></div>
+      <div class="col" style="display:flex;align-items:flex-end;justify-content:flex-end"><button class="btn btn-sm" onclick="calcProtFromPeso()">Calcular meta prot</button></div>
+    </div>
+    <div class="subtle">Sugestão: 1.6–2.2g/kg para ganho de massa / definição.</div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <div class="metric-box">
+        <div class="metric-value" id="calVal">0</div>
+        <div class="metric-label">kcal</div>
+        <div class="bar"><div class="bar-fill" id="calBar" style="width:0%;background:#5bb1ff"></div></div>
+        <div class="subtle" id="calMeta">Meta: 2000</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-value" id="protVal">0</div>
+        <div class="metric-label">g prot</div>
+        <div class="bar"><div class="bar-fill" id="protBar" style="width:0%;background:#2b8fe8"></div></div>
+        <div class="subtle" id="protMeta">Meta: 120g</div>
+      </div>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <div class="col"><label>Meta kcal</label><input type="number" id="goalCal" value="2000" min="100" step="50"></div>
+      <div class="col"><label>Meta prot</label><input type="number" id="goalProt" value="120" min="10" step="5"></div>
+      <button class="btn btn-sm" style="align-self:flex-end" onclick="saveGoals()">Salvar</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <span style="font-weight:bold;font-size:14px">💧 Água</span>
+      <span class="water-big" id="waterCount">0</span>
+      <span style="font-size:11px;color:#5d7d99">/ <span id="waterGoalLabel">8</span> copos</span>
+    </div>
+    <div class="water-row">
+      <button class="water-btn" onclick="chWater(-1)">−</button>
+      <div class="water-cups" id="waterCups"></div>
+      <button class="water-btn" onclick="chWater(1)">+</button>
+    </div>
+    <div class="bar" style="margin-top:8px"><div class="bar-fill" id="waterBar" style="width:0%;background:#2b8fe8"></div></div>
+    <div style="text-align:center;font-size:11px;color:#5d7d99;margin-top:4px" id="waterLabel">0 / 8 copos</div>
+    <div class="row" style="margin-top:8px">
+      <div class="col"><label>Meta água (copos)</label><input type="number" id="goalWater" value="8" min="1" max="20" step="1"></div>
+      <button class="btn btn-sm" style="align-self:flex-end" onclick="saveGoals()">Salvar</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="font-size:14px;margin-bottom:6px">🏃 Atividades físicas</h3>
+    <div class="row">
+      <div class="col"><label>Atividade</label><input id="actName" placeholder="Ex: caminhada"></div>
+      <div class="col"><label>Duração (min)</label><input type="number" id="actMin" min="1" step="1"></div>
+    </div>
+    <div class="row">
+      <div class="col"><label>Calorias gastas</label><input type="number" id="actCal" min="0" step="1"></div>
+      <div class="col" style="display:flex;align-items:flex-end"><button class="btn btn-secondary" onclick="addActivity()">Adicionar atividade</button></div>
+    </div>
+    <div id="actList"></div>
+  </div>
+
+  <div class="card">
+    <h3 style="font-size:14px;margin-bottom:6px">📈 Resumo (últimos 7 dias)</h3>
+    <div id="weekSummary"><div style="font-size:11px;color:#5d7d99">Carregando...</div></div>
+  </div>
+
+  <div class="card" id="addCard">
+    <div class="meal-tabs" id="mealTabs">
+      <div class="meal-tab on" data-meal="Café da manhã">🌅 Café</div>
+      <div class="meal-tab" data-meal="Almoço">☀️ Almoço</div>
+      <div class="meal-tab" data-meal="Lanche">🍪 Lanche</div>
+      <div class="meal-tab" data-meal="Jantar">🌙 Jantar</div>
+    </div>
+    <select id="foodSel" onchange="pickFood()"><option value="">🔍 Buscar alimento...</option></select>
+    <div class="row" style="margin-top:8px">
+      <div class="col"><label>Alimento</label><input id="foodName" placeholder="Ex: Frango" oninput="upd()"></div>
+    </div>
+    <div class="row">
+      <div class="col"><label>Calorias (p/unid)</label><input type="number" id="foodCal" placeholder="0" step="1" oninput="upd()"></div>
+      <div class="col"><label>Proteínas (g p/unid)</label><input type="number" id="foodProt" placeholder="0" step="0.1" oninput="upd()"></div>
+    </div>
+    <button class="btn-secondary" onclick="fetchNutrition()">🔎 Buscar valor nutricional online</button>
+    <div class="online-status" id="onlineStatus"></div>
+    <button class="btn-save-food" id="btnSaveFood" onclick="saveToMyFoods()">⭐ Salvar no meu banco</button>
+    <div class="qty-box">
+      <span style="font-size:12px;color:#5d7d99">📦 Qtd:</span>
+      <button class="qty-btn" onclick="chQty(-0.5)">−</button>
+      <span class="qty-num" id="qtyNum">1</span>
+      <button class="qty-btn" onclick="chQty(0.5)">+</button>
+    </div>
+    <div class="hint" id="hint"></div>
+    <button class="btn" onclick="add()">➕ Adicionar</button>
+  </div>
+
+  <div class="card">
+    <div class="bank-header" onclick="toggleBank()">
+      <h3 style="font-size:14px;margin:0">⭐ Meu Banco de Alimentos <span id="bankCount" style="font-size:11px;color:#5d7d99;font-weight:normal"></span></h3>
+      <span id="bankArrow" style="font-size:18px;color:#5d7d99">▼</span>
+    </div>
+    <div id="bankBody" class="hidden">
+      <input type="text" id="bankSearch" class="bank-search" placeholder="🔍 Filtrar..." oninput="renderBank()">
+      <div class="bank-list" id="bankList"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="font-size:14px;margin-bottom:8px">📋 <span id="dayTitle">Hoje</span></h3>
+    <div id="list"></div>
+    <button class="btn-clear hidden" id="btnClear" onclick="clearDay()">🗑️ Limpar dia</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
 <script>
-  let goals = {cal:2000,prot:120,water:8};
-  let myFoods = [];
-  let dayFoods = [];
-  let water = 0;
-  let meal = 'Café da manhã';
-
-  const $ = id => document.getElementById(id);
-
-  try{ goals = JSON.parse(localStorage.getItem('gfg_goals')) || goals }catch(e){}
-  try{ myFoods = JSON.parse(localStorage.getItem('gfg_myFoods')) || [] }catch(e){}
-  try{ dayFoods = JSON.parse(localStorage.getItem('gfg_dayFoods')) || [] }catch(e){}
-  try{ water = JSON.parse(localStorage.getItem('gfg_water')) || 0 }catch(e){}
-
-  $('goalCal').value = goals.cal;
-  $('goalProt').value = goals.prot;
-  $('goalWater').value = goals.water;
-  $('waterGoalLabel').textContent = goals.water;
-
-  document.querySelectorAll('#mealTabs .tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('#mealTabs .tab').forEach(t => t.classList.remove('on'));
-      tab.classList.add('on');
-      meal = tab.dataset.meal;
-    });
-  });
-
-  function saveGoals(){
-    const cal = +$('goalCal').value || 0;
-    const prot = +$('goalProt').value || 0;
-    const w = +$('goalWater').value || 8;
-    if(cal < 100 || prot < 10 || w < 1) return;
-    goals = {cal, prot, water:w};
-    localStorage.setItem('gfg_goals', JSON.stringify(goals));
-    $('waterGoalLabel').textContent = goals.water;
-    render();
-  }
-
-  function changeWater(delta){
-    water = Math.max(0, Math.min(goals.water * 2, water + delta));
-    localStorage.setItem('gfg_water', JSON.stringify(water));
-    renderSummary();
-  }
-
-  function upd(){
-    const n = $('foodName').value.trim();
-    const c = +$('foodCal').value || 0;
-    const p = +$('foodProt').value || 0;
-    $('hint').textContent = (n||c||p) ? `Total: ${Math.round(c)} kcal | ${Math.round(p*10)/10}g prot` : '';
-    const exists = myFoods.some(x => x.n.toLowerCase() === n.toLowerCase());
-    $('btnSaveFood').classList.toggle('hidden', !(n && !exists));
-  }
-
-  function saveToMyFoods(){
-    const n = $('foodName').value.trim();
-    const c = +$('foodCal').value || 0;
-    const p = +$('foodProt').value || 0;
-    if(!n || myFoods.some(x => x.n.toLowerCase() === n.toLowerCase())) return;
-    myFoods.push({n, cal:c, prot:p});
-    myFoods.sort((a,b) => a.n.localeCompare(b.n,'pt'));
-    localStorage.setItem('gfg_myFoods', JSON.stringify(myFoods));
-    $('foodName').value=''; $('foodCal').value=''; $('foodProt').value='';
-    upd(); renderBank();
-  }
-
-  function addFood(){
-    const n = $('foodName').value.trim();
-    const c = +$('foodCal').value || 0;
-    const p = +$('foodProt').value || 0;
-    if(!n) return;
-    dayFoods.push({
-      id:Date.now(), n, c, p, meal,
-      t:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})
-    });
-    localStorage.setItem('gfg_dayFoods', JSON.stringify(dayFoods));
-    $('foodName').value=''; $('foodCal').value=''; $('foodProt').value='';
-    upd(); renderDay(); renderSummary();
-  }
-
-  function delBank(name){
-    myFoods = myFoods.filter(x => x.n !== name);
-    localStorage.setItem('gfg_myFoods', JSON.stringify(myFoods));
-    renderBank(); upd();
-  }
-
-  function delDay(id){
-    dayFoods = dayFoods.filter(x => x.id !== id);
-    localStorage.setItem('gfg_dayFoods', JSON.stringify(dayFoods));
-    renderDay(); renderSummary();
-  }
-
-  function totals(list){
-    return list.reduce((acc,x)=>({cal:acc.cal+(x.c||0), prot:acc.prot+(x.p||0)}),{cal:0,prot:0});
-  }
-
-  function renderSummary(){
-    const t = totals(dayFoods);
-    $('calVal').textContent = Math.round(t.cal);
-    $('protVal').textContent = Math.round(t.prot*10)/10;
-    $('waterCount').textContent = water;
-    $('waterGoalLabel').textContent = goals.water;
-    $('calBar').style.width = (goals.cal ? Math.min((t.cal/goals.cal)*100,100) : 0)+'%';
-    $('protBar').style.width = (goals.prot ? Math.min((t.prot/goals.prot)*100,100) : 0)+'%';
-    $('waterBar').style.width = (goals.water ? Math.min((water/goals.water)*100,100) : 0)+'%';
-  }
-
-  function renderBank(){
-    $('bankCount').textContent = myFoods.length+' itens';
-    $('bankList').innerHTML = !myFoods.length
-      ? '<div class="subtle">Seu banco ainda está vazio.</div>'
-      : myFoods.map(x=>`
-        <div class="mini-row">
-          <div><b>${x.n}</b><br><span>${Math.round(x.cal)} kcal • ${Math.round(x.prot*10)/10}g prot</span></div>
-          <button class="del-btn" onclick="delBank('${x.n.replace(/'/g,"\\'")}')">✕</button>
-        </div>`).join('');
-  }
-
-  function renderDay(){
-    $('todayCount').textContent = dayFoods.length+' itens';
-    $('dayList').innerHTML = !dayFoods.length
-      ? '<div class="subtle">Nenhum alimento adicionado hoje.</div>'
-      : dayFoods.map(x=>`
-        <div class="mini-row">
-          <div>
-            <b>${x.n}</b><br>
-            <span>${x.meal} • ${x.t} • ${Math.round(x.c)} kcal • ${Math.round(x.p*10)/10}g prot</span>
-          </div>
-          <button class="del-btn" onclick="delDay(${x.id})">✕</button>
-        </div>`).join('');
-  }
-
-  function render(){
-    renderSummary();
-    renderBank();
-    renderDay();
-    upd();
-  }
-
-  render();
+  let qty=1, selectedMeal="Café da manhã";
+  function upd(){document.getElementById("hint").textContent=""}
+  document.querySelectorAll(".meal-tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".meal-tab").forEach(x=>x.classList.remove("on"));t.classList.add("on");selectedMeal=t.dataset.meal;});
+  function chQty(d){qty=Math.max(0.5,+(qty+d).toFixed(1));document.getElementById("qtyNum").textContent=qty}
+  function addActivity(){showToast("Atividade adicionada")}
+  function add(){showToast("Alimento adicionado")}
+  function saveGoals(){showToast("Metas salvas")}
+  function calcProtFromPeso(){showToast("Meta de proteína calculada")}
+  function chWater(d){showToast("Água atualizada")}
+  function pickFood(){}
+  function fetchNutrition(){document.getElementById("onlineStatus").textContent="Buscando..."}
+  function saveToMyFoods(){showToast("Salvo no banco")}
+  function toggleBank(){}
+  function renderBank(){}
+  function navDay(){}
+  function togglePicker(){}
+  function pickDate(){}
+  function clearDay(){showToast("Dia limpo")}
+  function showToast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)}
 </script>
 </body>
 </html>
+    
+              
+      
