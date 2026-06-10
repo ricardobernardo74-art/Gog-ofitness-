@@ -17,185 +17,235 @@
     --shadow:0 6px 20px rgba(30,72,120,.08);
     --radius:16px;
   }
-
   *{box-sizing:border-box;margin:0;padding:0}
-  html,body{
-    width:100%;
-    min-height:100vh;
-    overflow-x:hidden;
-  }
+  html,body{width:100%;min-height:100vh;overflow-x:hidden}
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
     background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);
     color:var(--text);
-    padding:8px 6px 24px 6px;
+    padding:8px 6px 24px;
   }
-
-  .app{
-    width:100%;
-    max-width:100%;
-    margin:0;
-    padding:0;
-  }
-
+  .app{width:100%;max-width:100%;margin:0;padding:0}
   .topbar,.card{
     width:100%;
     background:var(--card);
     border:1px solid var(--border);
     border-radius:var(--radius);
     box-shadow:var(--shadow);
-    padding:12px 12px;
+    padding:12px;
     margin-bottom:10px;
   }
-
-  .topbar{
-    background:linear-gradient(135deg,rgba(47,125,225,.12),rgba(108,99,255,.10));
-  }
-
+  .topbar{background:linear-gradient(135deg,rgba(47,125,225,.12),rgba(108,99,255,.10))}
   .brand h1{font-size:22px;letter-spacing:-.03em;margin-bottom:4px}
   .brand p{font-size:12px;color:var(--muted);line-height:1.4}
-
   .pill{
-    display:inline-block;margin-top:10px;padding:7px 10px;border-radius:999px;
-    background:rgba(255,255,255,.78);color:var(--primary);font
-
-
+    display:inline-block;margin-top:10px;padding:7px 10px;
+    border-radius:999px;background:rgba(255,255,255,.78);
+    color:var(--primary);font-size:11px;font-weight:700
+  }
+  .card-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .card-title h2{font-size:14px;font-weight:700}
+  .card-title span{font-size:11px;color:var(--muted)}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .field{display:flex;flex-direction:column;gap:5px}
+  label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:700}
+  input{
+    width:100%;border:1px solid rgba(47,125,225,.14);background:#fff;
+    color:var(--text);border-radius:12px;padding:11px 12px;font-size:14px;outline:none
+  }
+  input::placeholder{color:#9bb0c6}
+  input:focus{border-color:rgba(47,125,225,.35);box-shadow:0 0 0 3px rgba(47,125,225,.10)}
+  .btn{
+    width:100%;border:none;border-radius:14px;padding:13px 14px;
+    font-size:14px;font-weight:800;cursor:pointer;
+    background:linear-gradient(135deg,var(--primary),var(--accent));
+    color:#fff;box-shadow:0 8px 18px rgba(47,125,225,.18);margin-top:10px
+  }
+  .btn-secondary{
+    width:100%;border:1px solid rgba(47,125,225,.16);border-radius:14px;
+    padding:12px 14px;background:#fff;color:var(--primary);
+    font-size:14px;font-weight:800;cursor:pointer;margin-top:8px
+  }
+  .soft-line{height:1px;background:rgba(47,125,225,.10);margin:10px 0}
+  .stat-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .stat{
+    background:linear-gradient(180deg,#fff,#f8fbff);
+    border:1px solid rgba(47,125,225,.10);border-radius:14px;padding:12px
+  }
+  .num{font-size:24px;font-weight:800;letter-spacing:-.03em}
+  .lbl{font-size:11px;color:var(--muted);margin-top:3px}
+  .bar{height:7px;background:rgba(47,125,225,.10);border-radius:999px;overflow:hidden;margin-top:8px}
+  .bar>div{height:100%;border-radius:999px;width:0%;background:linear-gradient(90deg,var(--primary),#5ea1ff);transition:width .4s}
+  .tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;margin-bottom:10px;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{
+    flex:0 0 auto;padding:9px 13px;border-radius:999px;
+    border:1px solid rgba(47,125,225,.12);background:rgba(255,255,255,.88);
+    color:var(--muted);font-size:12px;font-weight:700;cursor:pointer
+  }
+  .tab.on{background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;border-color:transparent}
+  .mini-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:11px 0;border-bottom:1px solid rgba(47,125,225,.08);font-size:13px
+  }
+  .mini-row:last-child{border-bottom:none}
+  .mini-row b{color:var(--text);font-size:13px}
+  .mini-row span{color:var(--muted);font-size:12px}
+  .hidden{display:none!important}
+  .subtle{color:var(--muted);font-size:12px;line-height:1.45}
+  .hint{font-size:12px;color:#3aa76d;margin-top:8px;min-height:16px}
+  .water-wrap{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .water-num{font-size:26px;font-weight:800;color:var(--primary);line-height:1}
+  .water-sub{font-size:11px;color:var(--muted);margin-top:3px}
+  .water-controls{display:flex;align-items:center;gap:8px}
+  .water-btn{
+    width:42px;height:42px;border-radius:999px;border:1px solid rgba(47,125,225,.16);
+    background:#fff;color:var(--primary);font-size:22px;font-weight:800;cursor:pointer;
+    display:flex;align-items:center;justify-content:center
+  }
+  .del-btn{
+    padding:7px 10px;border-radius:10px;border:1px solid rgba(47,125,225,.14);
+    background:#fff;color:var(--muted);font-size:13px;cursor:pointer;white-space:nowrap
+  }
+</style>
 </head>
 <body>
-  <div class="app">
+<div class="app">
 
-    <div class="topbar">
-      <div class="brand">
-        <h1>GogãoFitness</h1>
-        <p>Seu app de dieta, água e treino para celular.</p>
-      </div>
-      <div class="pill">Calorias • Proteína • Hidratação</div>
+  <div class="topbar">
+    <div class="brand">
+      <h1>GogãoFitness</h1>
+      <p>Seu app de dieta, água e treino para celular.</p>
     </div>
-
-    <div class="card">
-      <div class="card-title">
-        <h2>⚖️ Peso & Metas</h2>
-        <span>Resumo rápido</span>
-      </div>
-      <div class="grid-2">
-        <div class="field">
-          <label>Peso atual (kg)</label>
-          <input type="number" id="pesoAtual" placeholder="Ex.: 80">
-        </div>
-        <div class="field">
-          <label>Peso objetivo</label>
-          <input type="number" id="pesoMeta" placeholder="Ex.: 75">
-        </div>
-      </div>
-      <div class="grid-2" style="margin-top:8px">
-        <div class="field">
-          <label>Meta kcal</label>
-          <input type="number" id="goalCal" value="2000">
-        </div>
-        <div class="field">
-          <label>Meta proteína (g)</label>
-          <input type="number" id="goalProt" value="120">
-        </div>
-      </div>
-      <div class="soft-line"></div>
-      <button class="btn" onclick="saveGoals()">Salvar metas</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        <h2>📊 Resumo do dia</h2>
-        <span>Hoje</span>
-      </div>
-      <div class="stat-row">
-        <div class="stat">
-          <div class="num" id="calVal">0</div>
-          <div class="lbl">kcal consumidas</div>
-          <div class="bar"><div id="calBar"></div></div>
-        </div>
-        <div class="stat">
-          <div class="num" id="protVal">0</div>
-          <div class="lbl">proteína (g)</div>
-          <div class="bar"><div id="protBar"></div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        <h2>💧 Água</h2>
-        <span>Hidratação diária</span>
-      </div>
-      <div class="water-wrap">
-        <div>
-          <div class="water-num"><span id="waterCount">0</span> / <span id="waterGoalLabel">8</span></div>
-          <div class="water-sub">copos consumidos</div>
-        </div>
-        <div class="water-controls">
-          <button class="water-btn" onclick="changeWater(-1)">−</button>
-          <button class="water-btn" onclick="changeWater(1)">+</button>
-        </div>
-      </div>
-      <div class="bar" style="margin-top:10px">
-        <div id="waterBar" style="background:linear-gradient(90deg,#36c2ff,#5ea1ff)"></div>
-      </div>
-      <div class="grid-2" style="margin-top:10px">
-        <div class="field">
-          <label>Meta água (copos)</label>
-          <input type="number" id="goalWater" value="8">
-        </div>
-        <div style="display:flex;align-items:flex-end">
-          <button class="btn-secondary" style="margin-top:0" onclick="saveGoals()">Salvar água</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        <h2>➕ Adicionar alimento</h2>
-        <span>Manual</span>
-      </div>
-      <div class="tabs" id="mealTabs">
-        <div class="tab on" data-meal="Café da manhã">Café</div>
-        <div class="tab" data-meal="Almoço">Almoço</div>
-        <div class="tab" data-meal="Lanche">Lanche</div>
-        <div class="tab" data-meal="Jantar">Jantar</div>
-      </div>
-      <div class="field" style="margin-bottom:8px">
-        <label>Nome do alimento</label>
-        <input type="text" id="foodName" placeholder="Ex.: Frango grelhado" oninput="upd()">
-      </div>
-      <div class="grid-2">
-        <div class="field">
-          <label>Calorias</label>
-          <input type="number" id="foodCal" placeholder="0" oninput="upd()">
-        </div>
-        <div class="field">
-          <label>Proteína (g)</label>
-          <input type="number" id="foodProt" placeholder="0" oninput="upd()">
-        </div>
-      </div>
-      <div class="hint" id="hint"></div>
-      <button class="btn-secondary hidden" id="btnSaveFood" onclick="saveToMyFoods()">⭐ Salvar no meu banco</button>
-      <button class="btn" onclick="addFood()">➕ Adicionar ao dia</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        <h2>⭐ Meu Banco de Alimentos</h2>
-        <span id="bankCount">0 itens</span>
-      </div>
-      <div id="bankList"></div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        <h2>📋 Alimentos de hoje</h2>
-        <span id="todayCount">0 itens</span>
-      </div>
-      <div id="dayList"></div>
-    </div>
-
+    <div class="pill">Calorias • Proteína • Hidratação</div>
   </div>
+
+  <div class="card">
+    <div class="card-title">
+      <h2>⚖️ Peso & Metas</h2>
+      <span>Resumo rápido</span>
+    </div>
+    <div class="grid-2">
+      <div class="field">
+        <label>Peso atual (kg)</label>
+        <input type="number" id="pesoAtual" placeholder="Ex.: 80">
+      </div>
+      <div class="field">
+        <label>Peso objetivo</label>
+        <input type="number" id="pesoMeta" placeholder="Ex.: 75">
+      </div>
+    </div>
+    <div class="grid-2" style="margin-top:8px">
+      <div class="field">
+        <label>Meta kcal</label>
+        <input type="number" id="goalCal" value="2000">
+      </div>
+      <div class="field">
+        <label>Meta proteína (g)</label>
+        <input type="number" id="goalProt" value="120">
+      </div>
+    </div>
+    <div class="soft-line"></div>
+    <button class="btn" onclick="saveGoals()">Salvar metas</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <h2>📊 Resumo do dia</h2>
+      <span>Hoje</span>
+    </div>
+    <div class="stat-row">
+      <div class="stat">
+        <div class="num" id="calVal">0</div>
+        <div class="lbl">kcal consumidas</div>
+        <div class="bar"><div id="calBar"></div></div>
+      </div>
+      <div class="stat">
+        <div class="num" id="protVal">0</div>
+        <div class="lbl">proteína (g)</div>
+        <div class="bar"><div id="protBar"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <h2>💧 Água</h2>
+      <span>Hidratação diária</span>
+    </div>
+    <div class="water-wrap">
+      <div>
+        <div class="water-num">
+          <span id="waterCount">0</span> / <span id="waterGoalLabel">8</span>
+        </div>
+        <div class="water-sub">copos consumidos</div>
+      </div>
+      <div class="water-controls">
+        <button class="water-btn" onclick="changeWater(-1)">−</button>
+        <button class="water-btn" onclick="changeWater(1)">+</button>
+      </div>
+    </div>
+    <div class="bar" style="margin-top:10px">
+      <div id="waterBar" style="background:linear-gradient(90deg,#36c2ff,#5ea1ff)"></div>
+    </div>
+    <div class="grid-2" style="margin-top:10px">
+      <div class="field">
+        <label>Meta água (copos)</label>
+        <input type="number" id="goalWater" value="8">
+      </div>
+      <div style="display:flex;align-items:flex-end">
+        <button class="btn-secondary" style="margin-top:0" onclick="saveGoals()">Salvar água</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <h2>➕ Adicionar alimento</h2>
+      <span>Manual</span>
+    </div>
+    <div class="tabs" id="mealTabs">
+      <div class="tab on" data-meal="Café da manhã">Café</div>
+      <div class="tab" data-meal="Almoço">Almoço</div>
+      <div class="tab" data-meal="Lanche">Lanche</div>
+      <div class="tab" data-meal="Jantar">Jantar</div>
+    </div>
+    <div class="field" style="margin-bottom:8px">
+      <label>Nome do alimento</label>
+      <input type="text" id="foodName" placeholder="Ex.: Frango grelhado" oninput="upd()">
+    </div>
+    <div class="grid-2">
+      <div class="field">
+        <label>Calorias</label>
+        <input type="number" id="foodCal" placeholder="0" oninput="upd()">
+      </div>
+      <div class="field">
+        <label>Proteína (g)</label>
+        <input type="number" id="foodProt" placeholder="0" oninput="upd()">
+      </div>
+    </div>
+    <div class="hint" id="hint"></div>
+    <button class="btn-secondary hidden" id="btnSaveFood" onclick="saveToMyFoods()">⭐ Salvar no meu banco</button>
+    <button class="btn" onclick="addFood()">➕ Adicionar ao dia</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <h2>⭐ Meu Banco de Alimentos</h2>
+      <span id="bankCount">0 itens</span>
+    </div>
+    <div id="bankList"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <h2>📋 Alimentos de hoje</h2>
+      <span id="todayCount">0 itens</span>
+    </div>
+    <div id="dayList"></div>
+  </div>
+
+</div>
 <script>
   let goals = {cal:2000,prot:120,water:8};
   let myFoods = [];
@@ -205,14 +255,10 @@
 
   const $ = id => document.getElementById(id);
 
-  const savedGoals = localStorage.getItem('gfg_goals');
-  if(savedGoals) goals = JSON.parse(savedGoals);
-  const savedFoods = localStorage.getItem('gfg_myFoods');
-  if(savedFoods) myFoods = JSON.parse(savedFoods);
-  const savedDay = localStorage.getItem('gfg_dayFoods');
-  if(savedDay) dayFoods = JSON.parse(savedDay);
-  const savedWater = localStorage.getItem('gfg_water');
-  if(savedWater) water = JSON.parse(savedWater);
+  try{ goals = JSON.parse(localStorage.getItem('gfg_goals')) || goals }catch(e){}
+  try{ myFoods = JSON.parse(localStorage.getItem('gfg_myFoods')) || [] }catch(e){}
+  try{ dayFoods = JSON.parse(localStorage.getItem('gfg_dayFoods')) || [] }catch(e){}
+  try{ water = JSON.parse(localStorage.getItem('gfg_water')) || 0 }catch(e){}
 
   $('goalCal').value = goals.cal;
   $('goalProt').value = goals.prot;
@@ -232,7 +278,7 @@
     const prot = +$('goalProt').value || 0;
     const w = +$('goalWater').value || 8;
     if(cal < 100 || prot < 10 || w < 1) return;
-    goals = {cal, prot, water: w};
+    goals = {cal, prot, water:w};
     localStorage.setItem('gfg_goals', JSON.stringify(goals));
     $('waterGoalLabel').textContent = goals.water;
     render();
@@ -248,8 +294,7 @@
     const n = $('foodName').value.trim();
     const c = +$('foodCal').value || 0;
     const p = +$('foodProt').value || 0;
-    $('hint').textContent = (n || c || p)
-      ? `Total: ${Math.round(c)} kcal | ${Math.round(p*10)/10}g prot` : '';
+    $('hint').textContent = (n||c||p) ? `Total: ${Math.round(c)} kcal | ${Math.round(p*10)/10}g prot` : '';
     const exists = myFoods.some(x => x.n.toLowerCase() === n.toLowerCase());
     $('btnSaveFood').classList.toggle('hidden', !(n && !exists));
   }
@@ -262,7 +307,7 @@
     myFoods.push({n, cal:c, prot:p});
     myFoods.sort((a,b) => a.n.localeCompare(b.n,'pt'));
     localStorage.setItem('gfg_myFoods', JSON.stringify(myFoods));
-    $('foodName').value = ''; $('foodCal').value = ''; $('foodProt').value = '';
+    $('foodName').value=''; $('foodCal').value=''; $('foodProt').value='';
     upd(); renderBank();
   }
 
@@ -272,11 +317,11 @@
     const p = +$('foodProt').value || 0;
     if(!n) return;
     dayFoods.push({
-      id: Date.now(), n, c, p, meal,
-      t: new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})
+      id:Date.now(), n, c, p, meal,
+      t:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})
     });
     localStorage.setItem('gfg_dayFoods', JSON.stringify(dayFoods));
-    $('foodName').value = ''; $('foodCal').value = ''; $('foodProt').value = '';
+    $('foodName').value=''; $('foodCal').value=''; $('foodProt').value='';
     upd(); renderDay(); renderSummary();
   }
 
@@ -293,9 +338,7 @@
   }
 
   function totals(list){
-    return list.reduce((acc,x) => {
-      acc.cal += (x.c||0); acc.prot += (x.p||0); return acc;
-    },{cal:0,prot:0});
+    return list.reduce((acc,x)=>({cal:acc.cal+(x.c||0), prot:acc.prot+(x.p||0)}),{cal:0,prot:0});
   }
 
   function renderSummary(){
@@ -304,39 +347,34 @@
     $('protVal').textContent = Math.round(t.prot*10)/10;
     $('waterCount').textContent = water;
     $('waterGoalLabel').textContent = goals.water;
-    const calPct = goals.cal ? Math.min((t.cal/goals.cal)*100,100) : 0;
-    const protPct = goals.prot ? Math.min((t.prot/goals.prot)*100,100) : 0;
-    const waterPct = goals.water ? Math.min((water/goals.water)*100,100) : 0;
-    $('calBar').style.width = calPct+'%';
-    $('protBar').style.width = protPct+'%';
-    $('waterBar').style.width = waterPct+'%';
+    $('calBar').style.width = (goals.cal ? Math.min((t.cal/goals.cal)*100,100) : 0)+'%';
+    $('protBar').style.width = (goals.prot ? Math.min((t.prot/goals.prot)*100,100) : 0)+'%';
+    $('waterBar').style.width = (goals.water ? Math.min((water/goals.water)*100,100) : 0)+'%';
   }
 
   function renderBank(){
     $('bankCount').textContent = myFoods.length+' itens';
-    if(!myFoods.length){
-      $('bankList').innerHTML = '<div class="subtle">Seu banco ainda está vazio.</div>'; return;
-    }
-    $('bankList').innerHTML = myFoods.map(x => `
-      <div class="mini-row">
-        <div><b>${x.n}</b><br><span>${Math.round(x.cal)} kcal • ${Math.round(x.prot*10)/10}g prot</span></div>
-        <button class="del-btn" onclick="delBank('${x.n.replace(/'/g,"\\'")}')">✕</button>
-      </div>`).join('');
+    $('bankList').innerHTML = !myFoods.length
+      ? '<div class="subtle">Seu banco ainda está vazio.</div>'
+      : myFoods.map(x=>`
+        <div class="mini-row">
+          <div><b>${x.n}</b><br><span>${Math.round(x.cal)} kcal • ${Math.round(x.prot*10)/10}g prot</span></div>
+          <button class="del-btn" onclick="delBank('${x.n.replace(/'/g,"\\'")}')">✕</button>
+        </div>`).join('');
   }
 
   function renderDay(){
     $('todayCount').textContent = dayFoods.length+' itens';
-    if(!dayFoods.length){
-      $('dayList').innerHTML = '<div class="subtle">Nenhum alimento adicionado hoje.</div>'; return;
-    }
-    $('dayList').innerHTML = dayFoods.map(x => `
-      <div class="mini-row">
-        <div>
-          <b>${x.n}</b><br>
-          <span>${x.meal} • ${x.t} • ${Math.round(x.c)} kcal • ${Math.round(x.p*10)/10}g prot</span>
-        </div>
-        <button class="del-btn" onclick="delDay(${x.id})">✕</button>
-      </div>`).join('');
+    $('dayList').innerHTML = !dayFoods.length
+      ? '<div class="subtle">Nenhum alimento adicionado hoje.</div>'
+      : dayFoods.map(x=>`
+        <div class="mini-row">
+          <div>
+            <b>${x.n}</b><br>
+            <span>${x.meal} • ${x.t} • ${Math.round(x.c)} kcal • ${Math.round(x.p*10)/10}g prot</span>
+          </div>
+          <button class="del-btn" onclick="delDay(${x.id})">✕</button>
+        </div>`).join('');
   }
 
   function render(){
